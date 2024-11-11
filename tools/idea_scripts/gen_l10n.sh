@@ -1,3 +1,4 @@
 #!/bin/bash
-cd ..
+cd ../..
+
 fvm flutter gen-l10n

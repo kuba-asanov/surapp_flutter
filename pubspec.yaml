@@ -15,14 +15,14 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  go_router: ^14.3.0
+  go_router: ^14.4.1
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
   take_it: ^1.0.2
   shared_preferences: ^2.3.3
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.2
   dio: ^5.7.0
   connectivity_plus: ^6.1.0
   alice: ^1.0.0-dev.12

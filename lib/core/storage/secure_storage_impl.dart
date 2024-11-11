@@ -6,7 +6,9 @@ import 'package:surapp_flutter/common/utils/try_or_utils.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
 
 class SecureStorageImpl implements SecureStorage {
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+  );
 
   @override
   Future<String?> getValue(SecureStorageKey key) async {
