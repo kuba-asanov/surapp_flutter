@@ -1,0 +1,78 @@
+name: surapp_flutter
+description: "A new Flutter project."
+
+# Prevent accidental publishing to pub.dev.
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  go_router: ^14.4.1
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  take_it: ^1.0.2
+  shared_preferences: ^2.3.3
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  flutter_secure_storage: ^9.2.2
+  dio: ^5.7.0
+  connectivity_plus: ^6.1.0
+  alice: ^1.0.0-dev.12
+  alice_dio: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  dart_code_metrics: ^5.7.4
+  build_runner: ^2.4.13
+  freezed: ^3.0.0-0.0.dev
+  json_serializable: ^6.8.0
+  change_app_package_name: ^1.4.0
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter_18pt-Black.ttf
+        - asset: assets/fonts/Inter_18pt-BlackItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-Bold.ttf
+        - asset: assets/fonts/Inter_18pt-BoldItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-ExtraBold.ttf
+        - asset: assets/fonts/Inter_18pt-ExtraBoldItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-ExtraLight.ttf
+        - asset: assets/fonts/Inter_18pt-ExtraLightItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-Italic.ttf
+        - asset: assets/fonts/Inter_18pt-Light.ttf
+        - asset: assets/fonts/Inter_18pt-LightItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-Medium.ttf
+        - asset: assets/fonts/Inter_18pt-MediumItalic.ttf
+        - asset: assets/fonts/Inter_18pt-Regular.ttf
+        - asset: assets/fonts/Inter_18pt-SemiBold.ttf
+        - asset: assets/fonts/Inter_18pt-SemiBoldItalic.ttf
+          style: italic
+        - asset: assets/fonts/Inter_18pt-Thin.ttf
+        - asset: assets/fonts/Inter_18pt-ThinItalic.ttf
+          style: italic

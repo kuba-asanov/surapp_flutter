@@ -1,0 +1,17 @@
+{
+  "homeTitle": "Sample Items",
+  "settings": "Settings",
+  "systemTheme": "System Theme",
+  "lightTheme": "Light Theme",
+  "darkTheme": "Dark Theme",
+  "sampleItem": "SampleItem {number}",
+  "@sampleItem": {
+    "placeholders": {
+      "number": {
+        "type": "num"
+      }
+    }
+  },
+  "theme": "Theme",
+  "localization": "Localization"
+}

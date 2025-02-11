@@ -1,0 +1,50 @@
+name: Flutter CI
+
+on: 
+  pull_request:
+  push:
+    tags:
+      - 'qa_android'  # Trigger only on "qa_android" tag push
+
+jobs:
+  danger:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: fvm flutter pub get
+
+      - name: Run Danger
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
+        run: tools/ci_cd_scripts/run_danger.sh
+
+  tests:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: fvm flutter pub get
+      
+      - name: Run Tests Script
+        run: tools/ci_cd_scripts/run_tests.sh
+
+  build_android_apk:
+    runs-on: self-hosted
+    needs: tests
+    if: github.ref == 'refs/tags/qa_android'  # Only runs for the "qa_android" tag
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Android QA Build Script
+        run: tools/ci_cd_scripts/build_android_apk.sh
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

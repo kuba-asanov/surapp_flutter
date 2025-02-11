@@ -1,0 +1,13 @@
+part of '{{name.snakeCase()}}_bloc.dart';
+
+enum {{name.pascalCase()}}Status {
+  initial,
+  loading,
+  loaded,
+  failure;
+
+  bool get isInitial => this == {{name.pascalCase()}}Status.initial;
+  bool get isLoading => this == {{name.pascalCase()}}Status.loading;
+  bool get isLoaded => this == {{name.pascalCase()}}Status.loaded;
+  bool get isFailure => this == {{name.pascalCase()}}Status.failure;
+}

@@ -1,0 +1,153 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "bricks/*/__brick__/**"
+  plugins:
+    - dart_code_metrics
+  errors:
+    missing_required_param: error
+    missing_return: error
+    dead_code: info
+    unused_import: error
+    avoid_relative_lib_imports: error
+    always_use_package_imports: error
+    invalid_annotation_target: error
+    avoid_renaming_method_parameters: error
+    must_call_super: error
+    invalid_use_of_visible_for_testing_member: error
+    unused_catch_stack: error
+    invalid_null_aware_operator: error
+    dead_null_aware_expression: error
+    duplicate_import: error
+    unused_local_variable: error
+    unused_field: error
+
+linter:
+  rules:
+    - avoid_unnecessary_containers
+    - avoid_multiple_declarations_per_line
+    - valid_regexps
+    - sort_constructors_first
+    - sort_child_properties_last
+    - sort_unnamed_constructors_first
+    - sized_box_for_whitespace
+    - always_declare_return_types
+    - depend_on_referenced_packages
+    - avoid_print
+    - empty_statements
+    - no_duplicate_case_values
+
+    # STYLE
+    - camel_case_types
+    - camel_case_extensions
+    - library_names
+    - file_names
+    - library_prefixes
+    - non_constant_identifier_names
+    - constant_identifier_names # prefer
+    - directives_ordering
+    - lines_longer_than_80_chars # avoid
+    - curly_braces_in_flow_control_structures
+    # - avoid_dynamic_calls
+    # - avoid_annotating_with_dynamic
+
+    # DOCUMENTATION
+    - slash_for_doc_comments
+    - package_api_docs # prefer
+    #- comment_references # Unused because https://github.com/dart-lang/sdk/issues/36974
+
+    # USAGE
+    - implementation_imports
+    - prefer_adjacent_string_concatenation
+    - prefer_interpolation_to_compose_strings # prefer
+    - unnecessary_brace_in_string_interps # avoid
+    - prefer_collection_literals
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - avoid_function_literals_in_foreach_calls # avoid
+    - prefer_iterable_whereType
+    - prefer_function_declarations_over_variables
+    - unnecessary_lambdas
+    - avoid_init_to_null
+    - unnecessary_getters_setters
+    #- unnecessary_getters # prefer # Disabled pending fix: https://github.com/dart-lang/linter/issues/23
+    #- prefer_expression_function_bodies # consider
+    - unnecessary_this
+    - prefer_initializing_formals
+    - type_init_formals
+    - empty_constructor_bodies
+    - unnecessary_new
+    - unnecessary_const
+    - avoid_catching_errors
+    - use_rethrow_when_possible
+
+    # DESIGN
+    - use_to_and_as_if_applicable # prefer
+    - prefer_mixin
+    - prefer_final_fields # prefer
+    - use_setters_to_change_properties
+    - avoid_setters_without_getters
+    - avoid_returning_this # avoid
+    - type_annotate_public_apis # prefer
+    #- prefer_typing_uninitialized_variables # consider
+    - omit_local_variable_types # avoid
+    - avoid_types_on_closure_parameters # avoid
+    - avoid_return_types_on_setters
+    - prefer_generic_function_type_aliases
+    - avoid_private_typedef_functions # prefer
+    #- use_function_type_syntax_for_parameters # consider
+    #- avoid_positional_boolean_parameters # avoid
+    - hash_and_equals
+    - avoid_equals_and_hash_code_on_mutable_classes # avoid
+    - avoid_null_checks_in_equality_operators
+
+dart_code_metrics:
+  # Игнорируем генерируемые файлы для проверок код-стайла + тесты
+  rules-exclude:
+    - ./**/*.g.dart
+    - ./**/*.freezed.dart
+    - ./**/generated/**
+    - test/**
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    maximum-nesting-level: 3
+  rules:
+    - avoid-cascade-after-if-null
+    - avoid-double-slash-imports
+    - avoid-duplicate-exports
+    - avoid-redundant-async
+    - avoid-unnecessary-conditionals
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-returning-widgets
+    - avoid-shrink-wrap-in-lists
+    - always-remove-listener
+    - binary-expression-operand-order
+    - double-literal-format
+    - list-all-equatable-fields
+    - no-boolean-literal-compare
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - no-object-declaration
+    - prefer-enums-by-name
+    - prefer-first
+    - prefer-last
+    - prefer-immediate-return
+    - prefer-match-file-name
+    # - prefer-moving-to-variable Проблема с copyWith, поэтому убрали
+    - prefer-conditional-expressions
+    - prefer-trailing-comma
+    - prefer-correct-edge-insets-constructor
+    - avoid-unrelated-type-assertions:
+        severity: error
+    - avoid-nested-conditional-expressions:
+        acceptable-level: 3
+    - avoid-dynamic:
+        severity: error
+    - avoid-non-null-assertion:
+        severity: error
+    - avoid-unused-parameters:
+        severity: error
