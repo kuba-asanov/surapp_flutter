@@ -1,0 +1,3 @@
+class EmptyUseCaseParams {
+  const EmptyUseCaseParams();
+}

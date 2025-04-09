@@ -62,9 +62,7 @@ class CoreDiModule extends DiModuleAsync {
           connectTimeout: networkTimeout,
         ));
         dio.interceptors.addAll([
-          LocaleInterceptor(
-            localeGetter: locale.languageCode.toUpperCase,
-          ),
+          LocaleInterceptor(localeGetter: locale.languageCode.toUpperCase),
           aliceDioAdapter,
         ]);
         if (kDebugMode) {

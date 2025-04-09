@@ -1,27 +1,28 @@
-import 'package:common_base/di/base_di_module.dart';
-import '../presentation/bloc/sign_in_bloc.dart';
+import 'package:take_it/take_it.dart';
+
+import '../data/data_sources/remote/sign_in_remote_data_source.dart';
+import '../data/repositories/sign_in_repository_impl.dart';
 import '../domain/repository_interfaces/sign_in_repository.dart';
 import '../domain/usecases/get_some_data_usecase.dart';
-import '../data/repositories/sign_in_repository_impl.dart';
-import '../data/data_sources/remote/sign_in_remote_data_source.dart';
+import '../presentation/bloc/sign_in_bloc.dart';
 
-class SignInDiModule extends BaseDiModule {
-  const SignInDiModule();
+class SignInDiModule extends DiModule {
+  SignInDiModule();
 
   @override
-  void initModule(GetIt getIt) {
-    getIt 
+  void setup(SyncRegistrar it) {
+    it
       // Data
       //
       ..registerFactory<SignInRemoteDataSource>(
         () => const SignInRemoteDataSourceFake(), // TODO replace to Impl:
         // () => SignInRemoteDataSourceImpl(
-        //   restClientService: getIt<RestClientService>(),
+        //   restClientService: get<RestClientService>(),
         // ),
       )
       ..registerFactory<SignInRepository>(
         () => SignInRepositoryImpl(
-          remoteDataSource: getIt<SignInRemoteDataSource>(),
+          remoteDataSource: get<SignInRemoteDataSource>(),
         ),
       )
 
@@ -29,14 +30,14 @@ class SignInDiModule extends BaseDiModule {
       //
       ..registerFactory<GetSomeDataUsecase>(
         () => GetSomeDataUsecase(
-          getIt<SignInRepository>(),
+          get<SignInRepository>(),
         ),
       )
       // Presentation
       //
       ..registerFactory<SignInBloc>(
         () => SignInBloc(
-          getSomeDataUsecase: getIt<GetSomeDataUsecase>(),
+          getSomeDataUsecase: get<GetSomeDataUsecase>(),
         ),
       );
   }

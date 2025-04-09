@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_renaming_method_parameters
 import 'dart:async';
-import 'package:common_base/usecase/usecase.dart';
+import 'package:surapp_flutter/common/utils/base_usecase.dart';
 
 import '../models/some_data.dart';
-import '../repository_interfaces/signIn_repository.dart';
+import '../repository_interfaces/sign_in_repository.dart';
 
 class GetSomeDataUsecase
-    extends UseCase<SomeData, GetSomeDataParams>{
+    extends BaseUseCase<SomeData, GetSomeDataParams>{
   GetSomeDataUsecase(SignInRepository signInRepository): 
     _repository = signInRepository;
 

@@ -1,27 +1,28 @@
-import 'package:common_base/di/base_di_module.dart';
-import '../presentation/bloc/{{name.snakeCase()}}_bloc.dart';
+import 'package:take_it/take_it.dart';
+
+import '../data/data_sources/remote/{{name.snakeCase()}}_remote_data_source.dart';
+import '../data/repositories/{{name.snakeCase()}}_repository_impl.dart';
 import '../domain/repository_interfaces/{{name.snakeCase()}}_repository.dart';
 import '../domain/usecases/get_some_data_usecase.dart';
-import '../data/repositories/{{name.snakeCase()}}_repository_impl.dart';
-import '../data/data_sources/remote/{{name.snakeCase()}}_remote_data_source.dart';
+import '../presentation/bloc/{{name.snakeCase()}}_bloc.dart';
 
-class {{name.pascalCase()}}DiModule extends BaseDiModule {
+class {{name.pascalCase()}}DiModule extends DiModule {
   const {{name.pascalCase()}}DiModule();
 
   @override
-  void initModule(GetIt getIt) {
-    getIt 
+  void setup(SyncRegistrar it) {
+    it 
       // Data
       //
       ..registerFactory<{{name.pascalCase()}}RemoteDataSource>(
         () => const {{name.pascalCase()}}RemoteDataSourceFake(), // TODO replace to Impl:
         // () => {{name.pascalCase()}}RemoteDataSourceImpl(
-        //   restClientService: getIt<RestClientService>(),
+        //   restClientService: get<RestClientService>(),
         // ),
       )
       ..registerFactory<{{name.pascalCase()}}Repository>(
         () => {{name.pascalCase()}}RepositoryImpl(
-          remoteDataSource: getIt<{{name.pascalCase()}}RemoteDataSource>(),
+          remoteDataSource: get<{{name.pascalCase()}}RemoteDataSource>(),
         ),
       )
 
@@ -29,14 +30,14 @@ class {{name.pascalCase()}}DiModule extends BaseDiModule {
       //
       ..registerFactory<GetSomeDataUsecase>(
         () => GetSomeDataUsecase(
-          getIt<{{name.pascalCase()}}Repository>(),
+          get<{{name.pascalCase()}}Repository>(),
         ),
       )
       // Presentation
       //
       ..registerFactory<{{name.pascalCase()}}Bloc>(
         () => {{name.pascalCase()}}Bloc(
-          getSomeDataUsecase: getIt<GetSomeDataUsecase>(),
+          getSomeDataUsecase: get<GetSomeDataUsecase>(),
         ),
       );
   }
