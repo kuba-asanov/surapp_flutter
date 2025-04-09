@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -11,10 +14,7 @@ class SignInScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/logo.png', // Add your logo image in assets folder
-              height: 60,
-            ),
+            SvgPicture.asset('assets/images/mosque.svg'),
             const SizedBox(height: 30),
             TextField(
               decoration: InputDecoration(
@@ -62,7 +62,9 @@ class SignInScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.router.replaceAll([NavigationRoute()]);
+                },
                 child: const Text(
                   'Кируу',
                   style: TextStyle(fontSize: 18, color: Colors.white),
