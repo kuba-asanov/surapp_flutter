@@ -8,6 +8,8 @@ import '../../features/home_feature/presentation/page/home_page.dart';
 import '../../features/home_feature/presentation/page/navigation_page.dart';
 import '../../features/home_feature/presentation/page/notification_page.dart';
 import '../../features/home_feature/presentation/page/profile_page.dart';
+import '../../features/home_feature/presentation/page/select_ustaz_page.dart';
+import '../../features/home_feature/presentation/page/send_question_page.dart';
 import '../../features/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 
 /* Local dependencies */
@@ -54,6 +56,7 @@ class AppRouter extends RootStackRouter {
             ),
           ],
         ),
-        // AutoRoute(page: ProfileEditRoute.page),
+        AutoRoute(page: SendQuestionRoute.page),
+        AutoRoute(page: SelectUstazRoute.page),
       ];
 }

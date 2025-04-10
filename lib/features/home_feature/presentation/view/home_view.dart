@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
+import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -86,6 +89,17 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton( 
+            shape: CircleBorder(),
+            backgroundColor: AppColorScheme.primary,
+            onPressed: () {
+              context.router.push(SendQuestionRoute());
+            },
+            child: Icon(
+              Icons.add,
+              size: 40,
             ),
           ),
           //
@@ -195,7 +209,7 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.share_outlined, size: 20),
+                                icon: Icon(Icons.ios_share_rounded, size: 20),
                               ),
                             ],
                           ),

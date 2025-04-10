@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColorScheme {
-  static Color get primary => const Color(0xFF10B1C8);
+  static Color get primary => const Color(0xFF007AFF);
 
   static Color get secondary => const Color(0xFF28323F);
 

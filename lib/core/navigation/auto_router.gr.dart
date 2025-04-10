@@ -123,6 +123,38 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SelectUstazPage]
+class SelectUstazRoute extends PageRouteInfo<void> {
+  const SelectUstazRoute({List<PageRouteInfo>? children})
+    : super(SelectUstazRoute.name, initialChildren: children);
+
+  static const String name = 'SelectUstazRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SelectUstazPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SendQuestionPage]
+class SendQuestionRoute extends PageRouteInfo<void> {
+  const SendQuestionRoute({List<PageRouteInfo>? children})
+    : super(SendQuestionRoute.name, initialChildren: children);
+
+  static const String name = 'SendQuestionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SendQuestionPage();
+    },
+  );
+}
+
+/// generated route for
 /// [SignInPage]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute({List<PageRouteInfo>? children})

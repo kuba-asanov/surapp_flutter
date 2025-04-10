@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -9,16 +10,21 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset('assets/images/mosque.svg'),
+            SvgPicture.asset(
+              'assets/images/mosque.svg',
+              height: 60,
+              width: 60,
+            ),
             const SizedBox(height: 30),
             TextField(
               decoration: InputDecoration(
-                hintText: 'Имя пользователя',
+                hintText: 'Телефон, колдонуучунун аты',
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
@@ -31,7 +37,7 @@ class SignInScreen extends StatelessWidget {
             TextField(
               obscureText: true,
               decoration: InputDecoration(
-                hintText: 'Пароль',
+                hintText: 'Купуя сөз',
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
@@ -65,9 +71,10 @@ class SignInScreen extends StatelessWidget {
                 onPressed: () {
                   context.router.replaceAll([NavigationRoute()]);
                 },
-                child: const Text(
+                child: Text(
                   'Кируу',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style:
+                      SurAppTextStyle.fS14FW500.copyWith(color: Colors.white),
                 ),
               ),
             ),

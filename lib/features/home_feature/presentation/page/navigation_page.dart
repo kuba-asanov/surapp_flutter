@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:take_it/take_it.dart';
 
+import '../../../../common/ui_kit/app_color_scheme.dart';
 import '../../../../core/navigation/auto_router.dart';
 
 @RoutePage()
@@ -62,20 +63,20 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
         tabsRouter.setActiveIndex(index);
       }
     },
-    // backgroundColor: Colors.blue,
+    // backgroundColor: AppColorScheme.primary,
     currentIndex: tabsRouter.activeIndex,
-    selectedItemColor: Colors.blue,
+    selectedItemColor: AppColorScheme.primary,
     unselectedItemColor: Colors.white,
     showSelectedLabels: true,
     showUnselectedLabels: true,
     type: BottomNavigationBarType.fixed,
     selectedFontSize: 12,
     unselectedFontSize: 12,
-    selectedLabelStyle: const TextStyle(
+    selectedLabelStyle: TextStyle(
       fontSize: 10,
       height: 1.33,
       fontWeight: FontWeight.w500,
-      color: Colors.blue,
+      color: AppColorScheme.primary,
     ),
     unselectedLabelStyle: const TextStyle(
       fontSize: 10,
@@ -90,7 +91,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            tabsRouter.activeIndex == 0 ? Colors.blue : Colors.black,
+            tabsRouter.activeIndex == 0 ? AppColorScheme.primary : Colors.black,
             BlendMode.srcIn,
           ),
         ),
@@ -105,7 +106,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            tabsRouter.activeIndex == 1 ? Colors.blue : Colors.black,
+            tabsRouter.activeIndex == 1 ? AppColorScheme.primary : Colors.black,
             BlendMode.srcIn,
           ),
         ),
@@ -117,7 +118,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            tabsRouter.activeIndex == 2 ? Colors.blue : Colors.black,
+            tabsRouter.activeIndex == 2 ? AppColorScheme.primary : Colors.black,
             BlendMode.srcIn,
           ),
         ),
