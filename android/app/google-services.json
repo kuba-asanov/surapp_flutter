@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "566238229277",
+    "project_id": "surapp-kg",
+    "storage_bucket": "surapp-kg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566238229277:android:d52409cb478a0d927927f4",
+        "android_client_info": {
+          "package_name": "kg.surapp.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6xdm59sFzO2jvQ8SScWIe55vzsx2RTB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

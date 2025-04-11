@@ -32,6 +32,7 @@ dependencies:
 
   #svg
   flutter_svg: ^2.0.17
+  firebase_core: ^3.13.0
 
 dev_dependencies:
   flutter_test:
