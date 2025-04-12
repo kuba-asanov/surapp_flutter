@@ -11,6 +11,38 @@
 part of 'auto_router.dart';
 
 /// generated route for
+/// [AddPhonePage]
+class AddPhoneRoute extends PageRouteInfo<void> {
+  const AddPhoneRoute({List<PageRouteInfo>? children})
+    : super(AddPhoneRoute.name, initialChildren: children);
+
+  static const String name = 'AddPhoneRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AddPhonePage();
+    },
+  );
+}
+
+/// generated route for
+/// [CreatePasswordPage]
+class CreatePasswordRoute extends PageRouteInfo<void> {
+  const CreatePasswordRoute({List<PageRouteInfo>? children})
+    : super(CreatePasswordRoute.name, initialChildren: children);
+
+  static const String name = 'CreatePasswordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreatePasswordPage();
+    },
+  );
+}
+
+/// generated route for
 /// [EmptyFirstPage]
 class EmptyFirstRoute extends PageRouteInfo<void> {
   const EmptyFirstRoute({List<PageRouteInfo>? children})
@@ -166,6 +198,22 @@ class SignInRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SignInPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SignUpPage]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+    : super(SignUpRoute.name, initialChildren: children);
+
+  static const String name = 'SignUpRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SignUpPage();
     },
   );
 }

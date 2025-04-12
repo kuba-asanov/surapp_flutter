@@ -94,7 +94,9 @@ class SignInScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.grey),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.router.push(SignUpRoute());
+                  },
                   child: const Text(
                     'Катталыныз',
                     style: TextStyle(color: Colors.blue),

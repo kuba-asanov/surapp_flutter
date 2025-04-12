@@ -9,9 +9,11 @@ class AuthRestClient extends RestClient {
     this._client,
     SecureStorage secureStorage,
   ) : super(_client, errorHandler: NetworkErrorHandlerImpl()) {
-    _client.interceptors.add(AuthInterceptor(
-      tokenGetter: () => secureStorage.getValue(SecureStorageKey.authToken),
-    ));
+    _client.interceptors.add(
+      AuthInterceptor(
+        tokenGetter: () => secureStorage.getValue(SecureStorageKey.authToken),
+      ),
+    );
   }
 
   final Dio _client;
