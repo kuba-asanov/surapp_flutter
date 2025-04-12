@@ -14,7 +14,7 @@ class GetSomeDataUsecase
 
   @override
   FutureOr<SomeData> makeRequest(GetSomeDataParams params) {
-    return _repository.getSomeData();
+    return _repository.verifyPhoneNumber();
   }
 }
 

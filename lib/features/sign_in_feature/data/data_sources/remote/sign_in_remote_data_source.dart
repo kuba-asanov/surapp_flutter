@@ -1,14 +1,14 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:surapp_flutter/common/network/auth_rest_client.dart';
 import 'package:surapp_flutter/common/utils/data_parser.dart';
 import '../../models/some_data_response/some_data_response.dart';
 
 abstract interface class SignInRemoteDataSource {
-  FutureOr<SomeDataResponse> getSomeData();
+  FutureOr<SomeDataResponse> verifyPhoneNumber();
 }
 
-class SignInRemoteDataSourceImpl
-    implements SignInRemoteDataSource {
+class SignInRemoteDataSourceImpl implements SignInRemoteDataSource {
   const SignInRemoteDataSourceImpl({
     required AuthRestClient restClientService,
   }) : _restClientService = restClientService;
@@ -16,7 +16,14 @@ class SignInRemoteDataSourceImpl
   final AuthRestClient _restClientService;
 
   @override
-  FutureOr<SomeDataResponse> getSomeData() {
+  Future<SomeDataResponse> verifyPhoneNumber() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+996 706 74 76 75',
+      verificationCompleted: (credential) {},
+      verificationFailed: (e) {},
+      codeSent: (verificationId, resendToken) {},
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
     return _restClientService.get(
       'StreamUrls.someData',
       parser: ObjectParser(SomeDataResponse.fromJson),
@@ -24,12 +31,11 @@ class SignInRemoteDataSourceImpl
   }
 }
 
-class SignInRemoteDataSourceFake
-    implements SignInRemoteDataSource {
+class SignInRemoteDataSourceFake implements SignInRemoteDataSource {
   const SignInRemoteDataSourceFake();
 
   @override
-  FutureOr<SomeDataResponse> getSomeData() {
+  FutureOr<SomeDataResponse> verifyPhoneNumber() {
     return SomeDataResponse();
   }
 }

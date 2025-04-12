@@ -8,12 +8,12 @@ class SignInRepositoryImpl implements SignInRepository {
   SignInRepositoryImpl({
     required SignInRemoteDataSource remoteDataSource,
   }) : _remoteDataSource = remoteDataSource;
-  
+
   final SignInRemoteDataSource _remoteDataSource;
-  
+
   @override
-  Future<SomeData> getSomeData() async{
-    final response = await _remoteDataSource.getSomeData();
+  Future<SomeData> verifyPhoneNumber() async {
+    final response = await _remoteDataSource.verifyPhoneNumber();
     return response.toEntity();
   }
 }

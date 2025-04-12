@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
+import 'package:surapp_flutter/features/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+  const SignInScreen({
+    super.key,
+    required this.bloc,
+  });
+
+  final SignInBloc bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +75,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  bloc.add(InitEvent());
                   context.router.replaceAll([NavigationRoute()]);
                 },
                 child: Text(
