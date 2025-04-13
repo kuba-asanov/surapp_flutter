@@ -18,7 +18,7 @@ class {{name.pascalCase()}}RemoteDataSourceImpl
   @override
   FutureOr<SomeDataResponse> getSomeData() {
     return _restClientService.get(
-      'StreamUrls.someData',
+      'AppUrls.someData',
       parser: ObjectParser(SomeDataResponse.fromJson),
     );
   }

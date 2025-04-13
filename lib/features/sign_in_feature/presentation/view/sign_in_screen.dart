@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
-import 'package:surapp_flutter/features/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({

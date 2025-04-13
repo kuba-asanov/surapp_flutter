@@ -17,7 +17,7 @@ class {{name.pascalCase()}}DiModule extends DiModule {
       ..registerFactory<{{name.pascalCase()}}RemoteDataSource>(
         () => const {{name.pascalCase()}}RemoteDataSourceFake(), // TODO replace to Impl:
         // () => {{name.pascalCase()}}RemoteDataSourceImpl(
-        //   restClientService: get<RestClientService>(),
+        //   restClientService: get<AuthRestClient>(),
         // ),
       )
       ..registerFactory<{{name.pascalCase()}}Repository>(

@@ -17,7 +17,7 @@ class HomeDiModule extends DiModule {
       ..registerFactory<HomeRemoteDataSource>(
         () => const HomeRemoteDataSourceFake(), // TODO replace to Impl:
         // () => HomeRemoteDataSourceImpl(
-        //   restClientService: get<RestClientService>(),
+        //   restClientService: get<AuthRestClient>(),
         // ),
       )
       ..registerFactory<HomeRepository>(

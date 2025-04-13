@@ -1,0 +1,4 @@
+enum InitialAuthStatus {
+  auth,
+  unauth,
+}

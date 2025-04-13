@@ -1,6 +1,8 @@
 /* External dependencies */
 import 'package:auto_route/auto_route.dart';
+import 'package:surapp_flutter/core/navigation/auth_guard.dart';
 
+import '../../features/authorization/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 import '../../features/home_feature/presentation/page/empty_first_page.dart';
 import '../../features/home_feature/presentation/page/empty_second_page.dart';
 import '../../features/home_feature/presentation/page/empty_third_page.dart';
@@ -13,7 +15,6 @@ import '../../features/home_feature/presentation/page/send_question_page.dart';
 import '../../features/sign_in_feature/presentation/pages/add_phone_page.dart';
 import '../../features/sign_in_feature/presentation/pages/create_password_page.dart';
 import '../../features/sign_in_feature/presentation/pages/sign_up_page.dart';
-import '../../features/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 
 /* Local dependencies */
 
@@ -23,13 +24,11 @@ part 'auto_router.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(page: SignInRoute.page),
         AutoRoute(
-          page: SignInRoute.page,
-          initial: true,
-        ),
-        AutoRoute(
-          // initial: true,
           page: NavigationRoute.page,
+          initial: true,
+          guards: [AuthGuard()],
           children: [
             AutoRoute(
               page: EmptyFirstRoute.page,
@@ -44,7 +43,6 @@ class AppRouter extends RootStackRouter {
               children: [
                 AutoRoute(
                   page: NotificationRoute.page,
-                  // initial: true,
                 ),
               ],
             ),

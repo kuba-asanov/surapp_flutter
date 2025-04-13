@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/ui_kit/app_text_styles.dart';
@@ -30,7 +31,9 @@ class App extends StatelessWidget {
               ),
               darkTheme: ThemeData.dark(),
               themeMode: state.themeMode,
-              routerConfig: _appRouter.config(),
+              routerConfig: _appRouter.config(
+                navigatorObservers: () => [AutoRouteObserver()],
+              ),
             );
           },
         );

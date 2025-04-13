@@ -1,6 +1,6 @@
-import 'package:alice/alice.dart';
-import 'package:alice/model/alice_configuration.dart';
-import 'package:alice_dio/alice_dio_adapter.dart';
+// import 'package:alice/alice.dart';
+// import 'package:alice/model/alice_configuration.dart';
+// import 'package:alice_dio/alice_dio_adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +12,10 @@ import 'package:surapp_flutter/core/storage/local_storage.dart';
 import 'package:surapp_flutter/core/storage/local_storage_impl.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
 import 'package:surapp_flutter/core/storage/secure_storage_impl.dart';
+import 'package:surapp_flutter/features/authorization/auth_token/data/auth_token_repository_impl.dart';
+import 'package:surapp_flutter/features/authorization/auth_token/domain/auth_token_repository.dart';
+import 'package:surapp_flutter/features/authorization/auth_token/domain/check_is_authorized_usecase.dart';
+import 'package:surapp_flutter/features/authorization/auth_token/domain/initial_auth_status.dart';
 import 'package:surapp_flutter/features/settings/data/settings_service.dart';
 import 'package:surapp_flutter/features/settings/domain/usecases/update_locale_usecase.dart';
 import 'package:surapp_flutter/features/settings/domain/usecases/update_theme_usecase.dart';
@@ -44,17 +48,17 @@ class CoreDiModule extends DiModuleAsync {
 
     /// Network
     ///
-    final aliceDioAdapter = AliceDioAdapter();
+    // final aliceDioAdapter = AliceDioAdapter();
 
     it
-      ..registerFactory(
-        () => Alice(
-          configuration: AliceConfiguration(
-            showNotification: false,
-            showInspectorOnShake: true,
-          ),
-        )..addAdapter(aliceDioAdapter),
-      )
+      // ..registerFactory(
+      //   () => Alice(
+      //     configuration: AliceConfiguration(
+      //       showNotification: false,
+      //       showInspectorOnShake: true,
+      //     ),
+      //   )..addAdapter(aliceDioAdapter),
+      // )
       ..registerFactory(() {
         final dio = Dio(BaseOptions(
           baseUrl: AppUrls.baseUrl,
@@ -63,7 +67,7 @@ class CoreDiModule extends DiModuleAsync {
         ));
         dio.interceptors.addAll([
           LocaleInterceptor(localeGetter: locale.languageCode.toUpperCase),
-          aliceDioAdapter,
+          // aliceDioAdapter,
         ]);
         if (kDebugMode) {
           dio.interceptors.add(
@@ -97,7 +101,15 @@ class CoreDiModule extends DiModuleAsync {
       )
       ..registerFactory<UpdateLocaleUsecase>(
         () => UpdateLocaleUsecase(get<SettingsService>()),
-      );
+      )
+      ..registerFactory<AuthTokenRepository>(
+          () => AuthTokenRepositoryImpl(get<SecureStorage>()))
+      ..registerFactory(
+          () => CheckIsAuthorizedUseCase(get<AuthTokenRepository>()))
+      ..registerSingletonAsync<InitialAuthStatus>(() async {
+        final isAuth = await get<CheckIsAuthorizedUseCase>().isAuthorized;
+        return isAuth ? InitialAuthStatus.auth : InitialAuthStatus.unauth;
+      });
 
     /// Presentation
     ///

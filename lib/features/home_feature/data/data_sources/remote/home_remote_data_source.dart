@@ -7,8 +7,7 @@ abstract interface class HomeRemoteDataSource {
   FutureOr<SomeDataResponse> getSomeData();
 }
 
-class HomeRemoteDataSourceImpl
-    implements HomeRemoteDataSource {
+class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   const HomeRemoteDataSourceImpl({
     required AuthRestClient restClientService,
   }) : _restClientService = restClientService;
@@ -18,14 +17,13 @@ class HomeRemoteDataSourceImpl
   @override
   FutureOr<SomeDataResponse> getSomeData() {
     return _restClientService.get(
-      'StreamUrls.someData',
+      'AppUrls.someData',
       parser: ObjectParser(SomeDataResponse.fromJson),
     );
   }
 }
 
-class HomeRemoteDataSourceFake
-    implements HomeRemoteDataSource {
+class HomeRemoteDataSourceFake implements HomeRemoteDataSource {
   const HomeRemoteDataSourceFake();
 
   @override
