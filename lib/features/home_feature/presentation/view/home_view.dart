@@ -1,13 +1,16 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/bloc/get_posts_bloc.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  final GetPostsBloc bloc;
+  const HomeView({super.key, required this.bloc});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -91,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton( 
+          floatingActionButton: FloatingActionButton(
             shape: CircleBorder(),
             backgroundColor: AppColorScheme.primary,
             onPressed: () {
@@ -103,122 +106,146 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           //
-          body: ListView.separated(
-            itemCount: 10,
-            separatorBuilder: (context, index) {
-              return Divider(
-                color: Colors.grey,
-                height: 1,
-              );
-            },
-            itemBuilder: (context, index) {
-              final isQExpanded = listQExpanded[index];
-              final isAExpanded = listAExpanded[index];
+          body: BlocBuilder<GetPostsBloc, GetPostsState>(
+            bloc: widget.bloc,
+            builder: (context, state) {
+              if (state is GetPostsLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is GetPostsError) {
+                return Center(
+                  child: Text('Error: ${state.errorMessage}'),
+                );
+              }
+              if (state is GetPostsFetched) {
+                return ListView.separated(
+                  itemCount: state.data.length,
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      color: Colors.grey,
+                      height: 1,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    final isQExpanded = listQExpanded[index];
+                    final isAExpanded = listAExpanded[index];
+                    final post = state.data[index];
 
-              return Padding(
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 27,
-                      backgroundImage: NetworkImage(
-                          'https://steela.ir/en/wp-content/uploads/2022/11/User-Avatar-in-Suit-PNG.png'), // replace with actual avatar
-                    ),
-                    8.toWidth,
-                    Expanded(
-                      child: Column(
+                    return Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text.rich(
-                            TextSpan(
+                          CircleAvatar(
+                            radius: 27,
+                            backgroundImage: NetworkImage(
+                                'https://steela.ir/en/wp-content/uploads/2022/11/User-Avatar-in-Suit-PNG.png'), // replace with actual avatar
+                          ),
+                          8.toWidth,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextSpan(
-                                  text: 'Randy Calzoni ',
+                                Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Randy Calzoni ',
+                                        style: SurAppTextStyle.fS14FW700,
+                                      ),
+                                      TextSpan(
+                                        text: '@randycalzoni • 5м',
+                                        style: SurAppTextStyle.fS14FW500,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Суроо:',
                                   style: SurAppTextStyle.fS14FW700,
                                 ),
-                                TextSpan(
-                                  text: '@randycalzoni • 5м',
-                                  style: SurAppTextStyle.fS14FW500,
+                                SizedBox(height: 8),
+                                Text(
+                                  post.content,
+                                  style: SurAppTextStyle.fS14FW400,
+                                  maxLines: isQExpanded ? null : 1,
+                                  overflow: isQExpanded
+                                      ? TextOverflow.visible
+                                      : TextOverflow.ellipsis,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        listQExpanded[index] =
+                                            !listQExpanded[index];
+                                      });
+                                    },
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero),
+                                    child: Text(
+                                        listQExpanded[index] ? 'Hide' : 'Show'),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Жооп:',
+                                      style: SurAppTextStyle.fS14FW700,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  post.answer ?? 'No answer provided',
+                                  style: SurAppTextStyle.fS14FW400,
+                                  maxLines: isAExpanded ? null : 3,
+                                  overflow: isAExpanded
+                                      ? TextOverflow.visible
+                                      : TextOverflow.ellipsis,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        listAExpanded[index] =
+                                            !listAExpanded[index];
+                                      });
+                                    },
+                                    style: TextButton.styleFrom(
+                                        padding: EdgeInsets.zero),
+                                    child: Text(
+                                        listAExpanded[index] ? 'Hide' : 'Show'),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.ios_share_rounded,
+                                          size: 20),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Суроо:',
-                            style: SurAppTextStyle.fS14FW700,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            """ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker """,
-                            style: SurAppTextStyle.fS14FW400,
-                            maxLines: isQExpanded ? null : 3,
-                            overflow: isQExpanded
-                                ? TextOverflow.visible
-                                : TextOverflow.ellipsis,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  listQExpanded[index] = !listQExpanded[index];
-                                });
-                              },
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero),
-                              child:
-                                  Text(listQExpanded[index] ? 'Hide' : 'Show'),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Жооп:',
-                                style: SurAppTextStyle.fS14FW700,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            """ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker """,
-                            style: SurAppTextStyle.fS14FW400,
-                            maxLines: isAExpanded ? null : 3,
-                            overflow: isAExpanded
-                                ? TextOverflow.visible
-                                : TextOverflow.ellipsis,
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  listAExpanded[index] = !listAExpanded[index];
-                                });
-                              },
-                              style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero),
-                              child:
-                                  Text(listAExpanded[index] ? 'Hide' : 'Show'),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.ios_share_rounded, size: 20),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              );
+                    );
+                  },
+                );
+              } else {
+                return SizedBox();
+              }
             },
           ),
         ));

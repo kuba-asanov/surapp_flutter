@@ -8,6 +8,8 @@ class AppUrls {
   static const telegramSupport = "https://t.me/barakat_solutions";
 
   static const auth = "/auth/login";
+  static const posts = "/posts";
+
   static const authValidate = "/api/auth/validate";
   static const authReissueOtp = "/api/auth/reissue-otp";
   static const profile = "/api/profile";

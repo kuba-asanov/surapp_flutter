@@ -188,18 +188,36 @@ class SendQuestionRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SignInPage]
-class SignInRoute extends PageRouteInfo<void> {
-  const SignInRoute({List<PageRouteInfo>? children})
-    : super(SignInRoute.name, initialChildren: children);
+class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({
+    required dynamic Function(bool) onResult,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SignInRoute.name,
+         args: SignInRouteArgs(onResult: onResult),
+         initialChildren: children,
+       );
 
   static const String name = 'SignInRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SignInPage();
+      final args = data.argsAs<SignInRouteArgs>();
+      return SignInPage(onResult: args.onResult);
     },
   );
+}
+
+class SignInRouteArgs {
+  const SignInRouteArgs({required this.onResult});
+
+  final dynamic Function(bool) onResult;
+
+  @override
+  String toString() {
+    return 'SignInRouteArgs{onResult: $onResult}';
+  }
 }
 
 /// generated route for

@@ -2,8 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 
-import '../../../../common/ui_kit/text_styles.dart';
-import '../../../../core/navigation/auto_router.dart';
+import '../../../../../common/ui_kit/text_styles.dart';
+import '../../../../../core/navigation/auto_router.dart';
+
 
 class CreatePasswordView extends StatefulWidget {
   const CreatePasswordView({super.key});

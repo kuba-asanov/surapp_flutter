@@ -1,6 +1,6 @@
 import 'dart:async';
-import '../models/some_data.dart';
 
+import '../../data/models/response_post_model/response_post_model.dart';
 abstract interface class HomeRepository {  
-    Future<SomeData> getSomeData();
+    Future<ResponsePostModel> getPosts();
 }

@@ -1,19 +1,21 @@
 import 'dart:async';
+import 'package:surapp_flutter/features/home_feature/data/models/response_post_model/response_post_model.dart';
+
 import '../../domain/repository_interfaces/home_repository.dart';
-import '../../domain/models/some_data.dart';
 import '../data_sources/remote/home_remote_data_source.dart';
-import '../mappers/some_data_mapper.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   HomeRepositoryImpl({
     required HomeRemoteDataSource remoteDataSource,
   }) : _remoteDataSource = remoteDataSource;
-  
+
   final HomeRemoteDataSource _remoteDataSource;
+
   
+
   @override
-  Future<SomeData> getSomeData() async{
-    final response = await _remoteDataSource.getSomeData();
-    return response.toEntity();
+  Future<ResponsePostModel> getPosts() async {
+    final response = await _remoteDataSource.getPosts();
+    return response;
   }
 }

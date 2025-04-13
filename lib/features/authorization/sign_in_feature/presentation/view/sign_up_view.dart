@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
-import '../../../../common/ui_kit/text_styles.dart';
+import '../../../../../common/ui_kit/text_styles.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});

@@ -12,9 +12,9 @@ import '../../features/home_feature/presentation/page/notification_page.dart';
 import '../../features/home_feature/presentation/page/profile_page.dart';
 import '../../features/home_feature/presentation/page/select_ustaz_page.dart';
 import '../../features/home_feature/presentation/page/send_question_page.dart';
-import '../../features/sign_in_feature/presentation/pages/add_phone_page.dart';
-import '../../features/sign_in_feature/presentation/pages/create_password_page.dart';
-import '../../features/sign_in_feature/presentation/pages/sign_up_page.dart';
+import '../../features/authorization/sign_in_feature/presentation/pages/add_phone_page.dart';
+import '../../features/authorization/sign_in_feature/presentation/pages/create_password_page.dart';
+import '../../features/authorization/sign_in_feature/presentation/pages/sign_up_page.dart';
 
 /* Local dependencies */
 
