@@ -11,10 +11,8 @@ class HomeRepositoryImpl implements HomeRepository {
 
   final HomeRemoteDataSource _remoteDataSource;
 
-  
-
   @override
-  Future<ResponsePostModel> getPosts() async {
+  Future<ResponseModel> getPosts() async {
     final response = await _remoteDataSource.getPosts();
     return response;
   }

@@ -9,12 +9,12 @@ part 'response_post_model.freezed.dart';
 part 'response_post_model.g.dart';
 
 @freezed
-abstract class ResponsePostModel with _$ResponsePostModel {
-  const factory ResponsePostModel({
+abstract class ResponseModel with _$ResponseModel {
+  const factory ResponseModel({
     required List<PostModel> data,
     required MetaModel meta,
   }) = _ResponsePostModel;
 
-  factory ResponsePostModel.fromJson(Map<String, Object?> json) =>
+  factory ResponseModel.fromJson(Map<String, Object?> json) =>
       _$ResponsePostModelFromJson(json);
 }

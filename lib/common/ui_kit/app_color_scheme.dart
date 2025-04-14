@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AppColorScheme {
   static Color get primary => const Color(0xFF007AFF);
 
+  static Color get white => const Color(0xFFFFFFFF);
+
   static Color get secondary => const Color(0xFF28323F);
 
   static Color get tertiary => const Color(0xFFECEFF2);

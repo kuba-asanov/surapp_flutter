@@ -9,7 +9,6 @@ part 'post_model.g.dart';
 abstract class PostModel with _$PostModel {
   const factory PostModel({
     required int id,
-    required String title,
     required String content,
     String? answer,
     @JsonKey(name: 'created_at') required String createdAt,

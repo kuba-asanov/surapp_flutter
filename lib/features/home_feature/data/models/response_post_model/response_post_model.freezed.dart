@@ -12,28 +12,31 @@ part of 'response_post_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+ResponseModel _$ResponseModelFromJson(Map<String, dynamic> json) {
+  return _ResponsePostModel.fromJson(json);
+}
 
 /// @nodoc
-mixin _$ResponsePostModel {
+mixin _$ResponseModel {
   List<PostModel> get data;
   MetaModel get meta;
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ResponsePostModelCopyWith<ResponsePostModel> get copyWith =>
-      _$ResponsePostModelCopyWithImpl<ResponsePostModel>(
-          this as ResponsePostModel, _$identity);
+  $ResponseModelCopyWith<ResponseModel> get copyWith =>
+      _$ResponseModelCopyWithImpl<ResponseModel>(
+          this as ResponseModel, _$identity);
 
-  /// Serializes this ResponsePostModel to a JSON map.
+  /// Serializes this ResponseModel to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ResponsePostModel &&
+            other is ResponseModel &&
             const DeepCollectionEquality().equals(other.data, data) &&
             (identical(other.meta, meta) || other.meta == meta));
   }
@@ -45,15 +48,15 @@ mixin _$ResponsePostModel {
 
   @override
   String toString() {
-    return 'ResponsePostModel(data: $data, meta: $meta)';
+    return 'ResponseModel(data: $data, meta: $meta)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ResponsePostModelCopyWith<$Res> {
-  factory $ResponsePostModelCopyWith(
-          ResponsePostModel value, $Res Function(ResponsePostModel) _then) =
-      _$ResponsePostModelCopyWithImpl;
+abstract mixin class $ResponseModelCopyWith<$Res> {
+  factory $ResponseModelCopyWith(
+          ResponseModel value, $Res Function(ResponseModel) _then) =
+      _$ResponseModelCopyWithImpl;
   @useResult
   $Res call({List<PostModel> data, MetaModel meta});
 
@@ -61,14 +64,14 @@ abstract mixin class $ResponsePostModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ResponsePostModelCopyWithImpl<$Res>
-    implements $ResponsePostModelCopyWith<$Res> {
-  _$ResponsePostModelCopyWithImpl(this._self, this._then);
+class _$ResponseModelCopyWithImpl<$Res>
+    implements $ResponseModelCopyWith<$Res> {
+  _$ResponseModelCopyWithImpl(this._self, this._then);
 
-  final ResponsePostModel _self;
-  final $Res Function(ResponsePostModel) _then;
+  final ResponseModel _self;
+  final $Res Function(ResponseModel) _then;
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -88,7 +91,7 @@ class _$ResponsePostModelCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -101,7 +104,7 @@ class _$ResponsePostModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _ResponsePostModel implements ResponsePostModel {
+class _ResponsePostModel implements ResponseModel {
   const _ResponsePostModel(
       {required final List<PostModel> data, required this.meta})
       : _data = data;
@@ -119,7 +122,7 @@ class _ResponsePostModel implements ResponsePostModel {
   @override
   final MetaModel meta;
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -150,13 +153,13 @@ class _ResponsePostModel implements ResponsePostModel {
 
   @override
   String toString() {
-    return 'ResponsePostModel(data: $data, meta: $meta)';
+    return 'ResponseModel(data: $data, meta: $meta)';
   }
 }
 
 /// @nodoc
 abstract mixin class _$ResponsePostModelCopyWith<$Res>
-    implements $ResponsePostModelCopyWith<$Res> {
+    implements $ResponseModelCopyWith<$Res> {
   factory _$ResponsePostModelCopyWith(
           _ResponsePostModel value, $Res Function(_ResponsePostModel) _then) =
       __$ResponsePostModelCopyWithImpl;
@@ -176,7 +179,7 @@ class __$ResponsePostModelCopyWithImpl<$Res>
   final _ResponsePostModel _self;
   final $Res Function(_ResponsePostModel) _then;
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -196,7 +199,7 @@ class __$ResponsePostModelCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of ResponsePostModel
+  /// Create a copy of ResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')

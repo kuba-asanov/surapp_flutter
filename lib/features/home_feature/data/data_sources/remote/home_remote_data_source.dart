@@ -7,7 +7,7 @@ import '../../models/some_data_response/some_data_response.dart';
 
 abstract interface class HomeRemoteDataSource {
   FutureOr<SomeDataResponse> getSomeData();
-  Future<ResponsePostModel> getPosts();
+  Future<ResponseModel> getPosts();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -26,10 +26,10 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<ResponsePostModel> getPosts() {
+  Future<ResponseModel> getPosts() {
     return _restClientService.get(
       AppUrls.posts,
-      parser: ObjectParser(ResponsePostModel.fromJson),
+      parser: ObjectParser(ResponseModel.fromJson),
     );
   }
 }
@@ -43,7 +43,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 //   }
 
 //   @override
-//   Future<ResponsePostModel> getPosts() {
+//   Future<ResponseModel> getPosts() {
 //     // TODO: implement getPosts
 //     throw UnimplementedError();
 //   }

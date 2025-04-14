@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
-import 'package:surapp_flutter/core/navigation/auto_router.dart';
+import 'package:surapp_flutter/features/ustaz_selector/presentation/ustaz_selector_wrapper.dart';
 
 class SendQuestioniew extends StatelessWidget {
   const SendQuestioniew({super.key});
@@ -55,7 +55,8 @@ class SendQuestioniew extends StatelessWidget {
               16.toHeight,
               GestureDetector(
                 onTap: () {
-                  context.router.push(SelectUstazRoute());
+                  showUstazPicker(context, selectedId: 1);
+                  // context.router.push(SelectUstazRoute());
                 },
                 child: Container(
                   margin: EdgeInsets.only(bottom: 12),

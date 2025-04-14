@@ -16,7 +16,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PostModel {
   int get id;
-  String get title;
   String get content;
   String? get answer;
   @JsonKey(name: 'created_at')
@@ -40,7 +39,6 @@ mixin _$PostModel {
         (other.runtimeType == runtimeType &&
             other is PostModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.createdAt, createdAt) ||
@@ -51,12 +49,12 @@ mixin _$PostModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, content, answer, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, content, answer, createdAt, updatedAt);
 
   @override
   String toString() {
-    return 'PostModel(id: $id, title: $title, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostModel(id: $id, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -67,7 +65,6 @@ abstract mixin class $PostModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String title,
       String content,
       String? answer,
       @JsonKey(name: 'created_at') String createdAt,
@@ -87,7 +84,6 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = null,
-    Object? title = null,
     Object? content = null,
     Object? answer = freezed,
     Object? createdAt = null,
@@ -98,10 +94,6 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _self.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -127,7 +119,6 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
 class _PostModel implements PostModel {
   const _PostModel(
       {required this.id,
-      required this.title,
       required this.content,
       this.answer,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -137,8 +128,6 @@ class _PostModel implements PostModel {
 
   @override
   final int id;
-  @override
-  final String title;
   @override
   final String content;
   @override
@@ -171,7 +160,6 @@ class _PostModel implements PostModel {
         (other.runtimeType == runtimeType &&
             other is _PostModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.createdAt, createdAt) ||
@@ -182,12 +170,12 @@ class _PostModel implements PostModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, content, answer, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, content, answer, createdAt, updatedAt);
 
   @override
   String toString() {
-    return 'PostModel(id: $id, title: $title, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostModel(id: $id, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
@@ -201,7 +189,6 @@ abstract mixin class _$PostModelCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String title,
       String content,
       String? answer,
       @JsonKey(name: 'created_at') String createdAt,
@@ -221,7 +208,6 @@ class __$PostModelCopyWithImpl<$Res> implements _$PostModelCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? title = null,
     Object? content = null,
     Object? answer = freezed,
     Object? createdAt = null,
@@ -232,10 +218,6 @@ class __$PostModelCopyWithImpl<$Res> implements _$PostModelCopyWith<$Res> {
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _self.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _self.content
           : content // ignore: cast_nullable_to_non_nullable

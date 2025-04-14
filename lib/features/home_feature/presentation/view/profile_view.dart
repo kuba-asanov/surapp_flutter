@@ -24,6 +24,15 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   title: Text("Профиль"),
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.settings),
+      //       onPressed: () => context.router.push(SettingsRoute()),
+      //     ),
+      //   ],
+      // ),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 60,
@@ -82,9 +91,7 @@ class _ProfileViewState extends State<ProfileView> {
                     log("loggedout");
 
                     // ignore: use_build_context_synchronously
-                    // context
-                    //     .read<LoginBloc>()
-                    //     .add(const LoginEvent.logOut());
+                    // context.read<LoginBloc>().add(const LoginEvent.logOut());
                     // context.router.replaceAll([const LoginRoute()]);
                   }
                 }
