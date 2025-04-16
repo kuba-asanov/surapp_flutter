@@ -29,6 +29,10 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<ResponseModel> getPosts() {
     return _restClientService.get(
       AppUrls.posts,
+      params: {
+        'orderField': 'created_at',
+        'order': 'desc'
+      },
       parser: ObjectParser(ResponseModel.fromJson),
     );
   }
