@@ -26,6 +26,7 @@ import 'sign_in_screen.dart';
 @RoutePage()
 class SignInPage extends StatelessWidget {
   const SignInPage({
+    super.key,
     required this.onResult,
   });
 

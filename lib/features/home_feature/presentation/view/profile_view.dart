@@ -1,17 +1,19 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/get_user_bloc.dart';
+import 'package:surapp_flutter/core/navigation/auto_router.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 
 import '../../../../common/ui_kit/text_styles.dart';
 import '../../../../common/widgets/logout_dialog.dart';
 
 class ProfileView extends StatefulWidget {
-  final GetUserBloc bloc;
   const ProfileView({super.key, required this.bloc});
+  final UserBloc bloc;
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -36,19 +38,19 @@ class _ProfileViewState extends State<ProfileView> {
       //     ),
       //   ],
       // ),
-      body: BlocBuilder<GetUserBloc, GetUserState>(
+      body: BlocBuilder<UserBloc, UserState>(
         bloc: widget.bloc,
         builder: (context, state) {
-          if (state is GetUserLoading) {
+          if (state.status.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is GetUserError) {
+          } else if (state.status.isFailure) {
             return Center(
               child: Text(
-                state.errorMessage,
+                "state.errorMessage",
                 style: const TextStyle(color: Colors.red),
               ),
             );
-          } else if (state is GetUserFetched) {
+          } else if (state.status.isLoaded) {
             final user = state.user;
             return Padding(
               padding: const EdgeInsets.only(
@@ -67,7 +69,7 @@ class _ProfileViewState extends State<ProfileView> {
                   SizedBox(height: 16),
 
                   Text(
-                    '${user.username}',
+                    user?.username ?? '',
                     style: SurAppTextStyle.fS18FW600,
                   ),
                   SizedBox(height: 24),
@@ -106,10 +108,15 @@ class _ProfileViewState extends State<ProfileView> {
                       if (resp != null) {
                         if (resp == true) {
                           log("loggedout");
+                          widget.bloc.add(LogoutUserEvent());
+                          context.router.replaceAll(
+                            [
+                              SignInRoute(onResult: (bool) => false),
+                            ],
+                          );
 
                           // ignore: use_build_context_synchronously
                           // context.read<LoginBloc>().add(const LoginEvent.logOut());
-                          // context.router.replaceAll([const LoginRoute()]);
                         }
                       }
                     },

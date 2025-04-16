@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/get_user_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:take_it/take_it.dart';
 
 import '../../../../common/ui_kit/app_color_scheme.dart';
@@ -28,22 +29,28 @@ class _NavigationPageState extends State<NavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DiScopeBuilder(builder: (context, module) {
-      var isUstaz = module.get<GetUserBloc>().isUstaz;
-      isUstaz = true;
-      log("isUstaz $isUstaz");
-      return AutoTabsScaffold(
-        routes: [
-          HomeRoute(),
-          if (isUstaz) NotificationRoute(),
-          ProfileRoute(),
-        ],
-        bottomNavigationBuilder: (_, tabsRouter) {
-          return buildBottomNavigationBar(
-              context, tabsRouter, bottomNavigatorKey, isUstaz);
-        },
-      );
-    });
+    return DiScopeBuilder(
+      builder: (context, module) {
+        final bloc = module.get<UserBloc>();
+        return BlocBuilder<UserBloc, UserState>(
+          bloc: bloc,
+          builder: (context, state) {
+            final isUstaz = state.user?.role == 1;
+            return AutoTabsScaffold(
+              routes: [
+                HomeRoute(),
+                if (isUstaz) NotificationRoute(),
+                ProfileRoute(),
+              ],
+              bottomNavigationBuilder: (_, tabsRouter) {
+                return buildBottomNavigationBar(
+                    context, tabsRouter, bottomNavigatorKey, isUstaz);
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }
 

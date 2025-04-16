@@ -18,7 +18,8 @@ import 'package:surapp_flutter/features/authorization/auth_token/domain/auth_tok
 import 'package:surapp_flutter/features/authorization/auth_token/domain/check_is_authorized_usecase.dart';
 import 'package:surapp_flutter/features/authorization/auth_token/domain/get_user_usecase.dart';
 import 'package:surapp_flutter/features/authorization/auth_token/domain/initial_auth_status.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/get_user_bloc.dart';
+import 'package:surapp_flutter/features/authorization/auth_token/domain/logout_usecase.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:surapp_flutter/features/settings/data/settings_service.dart';
 import 'package:surapp_flutter/features/settings/domain/usecases/update_locale_usecase.dart';
 import 'package:surapp_flutter/features/settings/domain/usecases/update_theme_usecase.dart';
@@ -128,12 +129,18 @@ class CoreDiModule extends DiModuleAsync {
           get<AuthTokenRepository>(),
         ),
       )
+      ..registerFactory<LogoutUseCase>(
+        () => LogoutUseCase(
+          get<AuthTokenRepository>(),
+        ),
+      )
       // Presentation
       //
-      ..registerFactory<GetUserBloc>(
-        () => GetUserBloc(
+      ..registerSingleton<UserBloc>(
+        UserBloc(
           getUserUsecase: get<GetUserUseCase>(),
-        ),
+          logoutUseCase: get<LogoutUseCase>(),
+        )..add(GetUserEvent()),
       );
 
     /// Presentation

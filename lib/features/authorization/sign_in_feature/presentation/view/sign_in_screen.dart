@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
+import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/authorization/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -132,7 +134,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     style: TextStyle(color: Colors.grey),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.router.push(SignUpRoute());
+                    },
                     child: const Text(
                       'Катталыныз',
                       style: TextStyle(color: Colors.blue),
