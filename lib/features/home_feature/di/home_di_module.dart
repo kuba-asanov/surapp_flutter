@@ -1,4 +1,4 @@
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/bloc/get_posts_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:take_it/take_it.dart';
 
 import '../../../common/network/auth_rest_client.dart';

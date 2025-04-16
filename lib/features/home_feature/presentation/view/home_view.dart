@@ -6,7 +6,7 @@ import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/bloc/get_posts_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 
 class HomeView extends StatefulWidget {
   final GetPostsBloc bloc;
