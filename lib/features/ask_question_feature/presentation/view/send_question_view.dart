@@ -1,12 +1,36 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
+import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
+import 'package:surapp_flutter/features/ask_question_feature/presentation/bloc/ask_question_bloc.dart';
 import 'package:surapp_flutter/features/ustaz_selector/presentation/ustaz_selector_wrapper.dart';
 
-class SendQuestioniew extends StatelessWidget {
-  const SendQuestioniew({super.key});
+class SendQuestioniew extends StatefulWidget {
+  const SendQuestioniew({
+    super.key,
+    required this.bloc,
+  });
+
+  final AskQuestionBloc bloc;
+
+  @override
+  State<SendQuestioniew> createState() => _SendQuestioniewState();
+}
+
+class _SendQuestioniewState extends State<SendQuestioniew> {
+  final textController = TextEditingController();
+
+  @override
+  void initState() {
+    textController.addListener(_onUserNameChange);
+    super.initState();
+  }
+
+  void _onUserNameChange() {
+    widget.bloc.add(TextChangedEvent(textController.text.trim()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +53,29 @@ class SendQuestioniew extends StatelessWidget {
         floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStatePropertyAll(AppColorScheme.primary)),
-                  onPressed: () {},
-                  child: Text(
-                    "Жарыялоо",
-                    style:
-                        SurAppTextStyle.fS15FW600.copyWith(color: Colors.white),
-                  ))),
+            width: double.infinity,
+            height: 50,
+            child: BlocConsumer<AskQuestionBloc, AskQuestionState>(
+              bloc: widget.bloc,
+              listenWhen: (p, c) => p.status != c.status,
+              buildWhen: (p, c) =>
+                  p.status != c.status || p.question != c.question,
+              listener: (context, state) {
+                context.router.pop();
+              },
+              builder: (context, state) {
+                return AppButton.primary(
+                  isLoading: state.status.isLoading,
+                  child: Text('Жарыялоо'),
+                  onPressed: () {
+                    if (state.question.isNotEmpty) {
+                      widget.bloc.add(CreateQuestionEvent());
+                    }
+                  },
+                );
+              },
+            ),
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Padding(
@@ -55,47 +90,66 @@ class SendQuestioniew extends StatelessWidget {
               16.toHeight,
               GestureDetector(
                 onTap: () {
-                  showUstazPicker(context, selectedId: 1);
+                  showUstazPicker(
+                    context,
+                    selectedId: 1,
+                    onSelect: (user) {
+                      widget.bloc.add(SelectUstazEvent(user));
+                    },
+                  );
                   // context.router.push(SelectUstazRoute());
                 },
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 12),
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFF7F7FB),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 26,
-                        backgroundImage: NetworkImage(
-                            "https://static.vecteezy.com/system/resources/previews/011/209/565/non_2x/user-profile-avatar-free-vector.jpg"),
+                child: BlocBuilder<AskQuestionBloc, AskQuestionState>(
+                  buildWhen: (p, c) => p.selectedReciter != c.selectedReciter,
+                  bloc: widget.bloc,
+                  builder: (context, state) {
+                    final reciter = state.selectedReciter;
+                    final name = [reciter?.name ?? '', reciter?.surname ?? '']
+                        .join(" ")
+                        .trim();
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 12),
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF7F7FB),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "teacher.name",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 26,
+                            backgroundImage: NetworkImage(
+                                "https://static.vecteezy.com/system/resources/previews/011/209/565/non_2x/user-profile-avatar-free-vector.jpg"),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  name.isNotEmpty ||
+                                          reciter?.username.isNotEmpty == true
+                                      ? name
+                                      : "Устазды танданыз",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  reciter?.username ?? "",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
                             ),
-                            Text(
-                              " teacher.username",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
+                          ),
+                          // if (teacher.isSelected)
+                          Icon(Icons.arrow_forward_ios,
+                              color: Colors.black, size: 18),
+                        ],
                       ),
-                      // if (teacher.isSelected)
-                      Icon(Icons.arrow_forward_ios,
-                          color: Colors.black, size: 18),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ),
               Column(
@@ -107,6 +161,7 @@ class SendQuestioniew extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
+                    controller: textController,
                     maxLines: 6, // Makes it "big"
                     style: SurAppTextStyle.fS15FW400,
                     decoration: InputDecoration(
