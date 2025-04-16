@@ -1,18 +1,39 @@
 import 'dart:async';
 
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
-import 'package:surapp_flutter/features/authorization/auth_token/domain/auth_token_repository.dart';
+
+import '../domain/auth_token_repository.dart';
+import '../domain/models/user_model/get_user_model.dart';
+import 'data_sources/remote/get_user_remote_data_source.dart';
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
-  AuthTokenRepositoryImpl(this.secureStorage);
+  AuthTokenRepositoryImpl(
+      {required this.secureStorage,
+      required GetUserRemoteDataSource remoteDataSource})
+      : _remoteDataSource = remoteDataSource;
 
   final SecureStorage secureStorage;
+  final GetUserRemoteDataSource _remoteDataSource;
 
   @override
   Future<bool> isAuthorized() async {
     final token = await secureStorage.getValue(SecureStorageKey.authToken);
-    print("TOKEN: $token");
+    var payload = token != null ? Jwt.parseJwt(token) : null;
+    print("__________________________________${payload}");
     return token?.isNotEmpty ?? false;
+  }
+
+  @override
+  Future<GetUserModel> getUser() async {
+    final token = await secureStorage.getValue(SecureStorageKey.authToken);
+
+    var payload = token != null ? Jwt.parseJwt(token) : null;
+    int userId = payload != null ? payload['sub'] : 0;
+
+    final response = _remoteDataSource.getUser(id: userId);
+
+    return response;
   }
 
   @override

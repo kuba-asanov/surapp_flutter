@@ -9,6 +9,7 @@ class AppUrls {
 
   static const auth = "/auth/login";
   static const posts = "/posts";
+  static const getUser = "/users";
   static const reciters = "/users/reciters";
 
   static const authValidate = "/api/auth/validate";

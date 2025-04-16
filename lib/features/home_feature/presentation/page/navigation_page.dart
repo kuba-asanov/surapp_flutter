@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/get_user_bloc.dart';
 import 'package:take_it/take_it.dart';
 
 import '../../../../common/ui_kit/app_color_scheme.dart';
@@ -28,15 +29,18 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return DiScopeBuilder(builder: (context, module) {
+      var isUstaz = module.get<GetUserBloc>().isUstaz;
+      isUstaz = true;
+      log("isUstaz $isUstaz");
       return AutoTabsScaffold(
-        routes: const [
+        routes: [
           HomeRoute(),
-          NotificationRoute(),
+          if (isUstaz) NotificationRoute(),
           ProfileRoute(),
         ],
         bottomNavigationBuilder: (_, tabsRouter) {
           return buildBottomNavigationBar(
-              context, tabsRouter, bottomNavigatorKey);
+              context, tabsRouter, bottomNavigatorKey, isUstaz);
         },
       );
     });
@@ -44,24 +48,24 @@ class _NavigationPageState extends State<NavigationPage> {
 }
 
 Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
-    GlobalKey<State<BottomNavigationBar>> navBarKey) {
+    GlobalKey<State<BottomNavigationBar>> navBarKey, bool isUstaz) {
   return BottomNavigationBar(
     backgroundColor: Colors.white,
     key: navBarKey,
     onTap: (index) {
-      if (index == tabsRouter.activeIndex) {
-        log("Index  ===${tabsRouter.activeIndex}");
-        if (index == 0) {
-          context.router.replaceAll([const HomeRoute()]);
-        } else if (index == 1) {
-          context.router.replaceAll([const NotificationRoute()]);
-        } else if (index == 2) {
-          context.router.replaceAll([const ProfileRoute()]);
-        }
-      } else {
-        log("Index ${tabsRouter.activeIndex}");
-        tabsRouter.setActiveIndex(index);
-      }
+      // if (index == tabsRouter.activeIndex) {
+      //   log("Index  ===${tabsRouter.activeIndex}");
+      //   if (index == 0) {
+      //     context.router.replaceAll([const HomeRoute()]);
+      //   } else if (index == 1) {
+      //     context.router.replaceAll([const NotificationRoute()]);
+      //   } else if (index == 2) {
+      //     context.router.replaceAll([const ProfileRoute()]);
+      //   }
+      // } else {
+      log("Index ${tabsRouter.activeIndex}");
+      tabsRouter.setActiveIndex(index);
+      // }
     },
     // backgroundColor: AppColorScheme.primary,
     currentIndex: tabsRouter.activeIndex,
@@ -100,25 +104,30 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
 
         label: '',
       ),
-      BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          'assets/images/navbar2icon.svg',
-          width: 24,
-          height: 24,
-          colorFilter: ColorFilter.mode(
-            tabsRouter.activeIndex == 1 ? AppColorScheme.primary : Colors.black,
-            BlendMode.srcIn,
+      if (isUstaz)
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            'assets/images/navbar2icon.svg',
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              tabsRouter.activeIndex == (isUstaz ? 1 : 3)
+                  ? AppColorScheme.primary
+                  : Colors.black,
+              BlendMode.srcIn,
+            ),
           ),
+          label: '',
         ),
-        label: '',
-      ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
           'assets/images/navbar3icon.svg',
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            tabsRouter.activeIndex == 2 ? AppColorScheme.primary : Colors.black,
+            tabsRouter.activeIndex == (isUstaz ? 2 : 1)
+                ? AppColorScheme.primary
+                : Colors.black,
             BlendMode.srcIn,
           ),
         ),
