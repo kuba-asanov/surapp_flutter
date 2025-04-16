@@ -1,28 +1,15 @@
 part of 'ask_question_bloc.dart';
 
-sealed class AskQuestionState extends Equatable {
-  const AskQuestionState();
+@freezed
+abstract class AskQuestionState with _$AskQuestionState {
+  const factory AskQuestionState({
+    required AskQuestionStatus status,
+    @Default("") String question,
+    final UserModel? selectedReciter,
+  }) = _AskQuestionState;
 
-  @override
-  List<Object?> get props => [];
-}
+  factory AskQuestionState.initial() =>
+      AskQuestionState(status: AskQuestionStatus.initial);
 
-class InitialAskQuestionState extends AskQuestionState {}
-
-class LoadingAskQuestionState extends AskQuestionState {}
-
-class LoadedAskQuestionState extends AskQuestionState {
-  const LoadedAskQuestionState({
-    required this.reciters,
-    this.selectedReciter,
-  });
-
-  final List<UserModel> reciters;
-  final UserModel? selectedReciter;
-
-  @override
-  List<Object?> get props => [
-        reciters,
-        selectedReciter,
-      ];
+  const AskQuestionState._();
 }

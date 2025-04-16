@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
-import 'package:surapp_flutter/features/authorization/sign_in_feature/data/mappers/some_data_mapper.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/data/mappers/login_data_mapper.dart';
 import 'package:surapp_flutter/features/authorization/sign_in_feature/data/models/sign_in_request.dart';
 import 'package:surapp_flutter/features/authorization/sign_in_feature/domain/models/login_data.dart';
 import 'package:surapp_flutter/features/authorization/sign_in_feature/domain/usecases/get_some_data_usecase.dart';

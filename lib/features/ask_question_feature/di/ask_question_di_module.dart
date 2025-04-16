@@ -4,7 +4,7 @@ import 'package:take_it/take_it.dart';
 import '../data/data_sources/remote/ask_question_remote_data_source.dart';
 import '../data/repositories/ask_question_repository_impl.dart';
 import '../domain/repository_interfaces/ask_question_repository.dart';
-import '../domain/usecases/get_reciters_usecase.dart';
+import '../domain/usecases/ask_question_usecase.dart';
 import '../presentation/bloc/ask_question_bloc.dart';
 
 class AskQuestionDiModule extends DiModule {
@@ -28,8 +28,8 @@ class AskQuestionDiModule extends DiModule {
 
       // Domain
       //
-      ..registerFactory<GetRecitersUsecase>(
-        () => GetRecitersUsecase(
+      ..registerFactory<AskQuestionUsecase>(
+        () => AskQuestionUsecase(
           get<AskQuestionRepository>(),
         ),
       )
@@ -37,7 +37,7 @@ class AskQuestionDiModule extends DiModule {
       //
       ..registerFactory<AskQuestionBloc>(
         () => AskQuestionBloc(
-          getRecitersUsecase: get<GetRecitersUsecase>(),
+          askQuestionUsecase: get<AskQuestionUsecase>(),
         ),
       );
   }
