@@ -121,9 +121,11 @@ class _HomeViewState extends State<HomeView> {
                 );
               }
               if (state is GetPostsFetched) {
-                return EmptyHomeWidget(onAddPressed: () {
-                  context.router.push(SendQuestionRoute());
-                });
+                if (state.data.isEmpty) {
+                  return EmptyHomeWidget(onAddPressed: () {
+                    context.router.push(SendQuestionRoute());
+                  });
+                }
                 return ListView.separated(
                   itemCount: state.data.length,
                   separatorBuilder: (context, index) {
