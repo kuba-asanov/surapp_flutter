@@ -1,13 +1,15 @@
 import 'dart:async';
+import 'package:surapp_flutter/features/home_feature/domain/usecases/answer_to_question_usecase.dart';
+
 import '../../../../../common/app_urls.dart';
 import '../../../../../common/network/auth_rest_client.dart';
 import '../../../../../common/utils/data_parser.dart';
 import '../../models/response_post_model/response_post_model.dart';
-import '../../models/some_data_response/some_data_response.dart';
 
 abstract interface class HomeRemoteDataSource {
-  FutureOr<SomeDataResponse> getSomeData();
   Future<ResponseModel> getPosts();
+  Future<ResponseModel> getQuestions();
+  Future<void> answerToQuestion(AnswerToQuestionParams params);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -18,37 +20,31 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final AuthRestClient _restClientService;
 
   @override
-  FutureOr<SomeDataResponse> getSomeData() {
+  Future<ResponseModel> getPosts() {
     return _restClientService.get(
-      'AppUrls.someData',
-      parser: ObjectParser(SomeDataResponse.fromJson),
+      AppUrls.answeredPosts,
+      params: {'orderField': 'created_at', 'order': 'desc'},
+      parser: ObjectParser(ResponseModel.fromJson),
     );
   }
 
   @override
-  Future<ResponseModel> getPosts() {
+  Future<ResponseModel> getQuestions() {
     return _restClientService.get(
-      AppUrls.posts,
-      params: {
-        'orderField': 'created_at',
-        'order': 'desc'
-      },
+      AppUrls.questionsForMe,
+      // params: {
+      //   'orderField': 'created_at',
+      //   'order': 'desc'
+      // },
       parser: ObjectParser(ResponseModel.fromJson),
     );
   }
+
+  @override
+  Future<void> answerToQuestion(AnswerToQuestionParams params) {
+    return _restClientService.patch(
+      AppUrls.answerToQuestion(params.id),
+      body: {'answer': params.answer},
+    );
+  }
 }
-
-// class HomeRemoteDataSourceFake implements HomeRemoteDataSource {
-//   const HomeRemoteDataSourceFake();
-
-//   @override
-//   FutureOr<SomeDataResponse> getSomeData() {
-//     return SomeDataResponse();
-//   }
-
-//   @override
-//   Future<ResponseModel> getPosts() {
-//     // TODO: implement getPosts
-//     throw UnimplementedError();
-//   }
-// }

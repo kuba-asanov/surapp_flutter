@@ -18,10 +18,13 @@ mixin _$PostModel {
   int get id;
   String get content;
   String? get answer;
+  int get status;
   @JsonKey(name: 'created_at')
   String get createdAt;
   @JsonKey(name: 'updated_at')
   String get updatedAt;
+  UserModel get author;
+  UserModel? get recipient;
 
   /// Create a copy of PostModel
   /// with the given fields replaced by the non-null parameter values.
@@ -41,20 +44,24 @@ mixin _$PostModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.author, author) || other.author == author) &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, content, answer, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, content, answer, status,
+      createdAt, updatedAt, author, recipient);
 
   @override
   String toString() {
-    return 'PostModel(id: $id, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostModel(id: $id, content: $content, answer: $answer, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, author: $author, recipient: $recipient)';
   }
 }
 
@@ -67,8 +74,14 @@ abstract mixin class $PostModelCopyWith<$Res> {
       {int id,
       String content,
       String? answer,
+      int status,
       @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt});
+      @JsonKey(name: 'updated_at') String updatedAt,
+      UserModel author,
+      UserModel? recipient});
+
+  $UserModelCopyWith<$Res> get author;
+  $UserModelCopyWith<$Res>? get recipient;
 }
 
 /// @nodoc
@@ -86,8 +99,11 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
     Object? id = null,
     Object? content = null,
     Object? answer = freezed,
+    Object? status = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? author = null,
+    Object? recipient = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -102,6 +118,10 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
           ? _self.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -110,7 +130,39 @@ class _$PostModelCopyWithImpl<$Res> implements $PostModelCopyWith<$Res> {
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      author: null == author
+          ? _self.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      recipient: freezed == recipient
+          ? _self.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ));
+  }
+
+  /// Create a copy of PostModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res> get author {
+    return $UserModelCopyWith<$Res>(_self.author, (value) {
+      return _then(_self.copyWith(author: value));
+    });
+  }
+
+  /// Create a copy of PostModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res>? get recipient {
+    if (_self.recipient == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_self.recipient!, (value) {
+      return _then(_self.copyWith(recipient: value));
+    });
   }
 }
 
@@ -121,8 +173,11 @@ class _PostModel implements PostModel {
       {required this.id,
       required this.content,
       this.answer,
+      required this.status,
       @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt});
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      required this.author,
+      this.recipient});
   factory _PostModel.fromJson(Map<String, dynamic> json) =>
       _$PostModelFromJson(json);
 
@@ -133,11 +188,17 @@ class _PostModel implements PostModel {
   @override
   final String? answer;
   @override
+  final int status;
+  @override
   @JsonKey(name: 'created_at')
   final String createdAt;
   @override
   @JsonKey(name: 'updated_at')
   final String updatedAt;
+  @override
+  final UserModel author;
+  @override
+  final UserModel? recipient;
 
   /// Create a copy of PostModel
   /// with the given fields replaced by the non-null parameter values.
@@ -162,20 +223,24 @@ class _PostModel implements PostModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.answer, answer) || other.answer == answer) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.author, author) || other.author == author) &&
+            (identical(other.recipient, recipient) ||
+                other.recipient == recipient));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, content, answer, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, content, answer, status,
+      createdAt, updatedAt, author, recipient);
 
   @override
   String toString() {
-    return 'PostModel(id: $id, content: $content, answer: $answer, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostModel(id: $id, content: $content, answer: $answer, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, author: $author, recipient: $recipient)';
   }
 }
 
@@ -191,8 +256,16 @@ abstract mixin class _$PostModelCopyWith<$Res>
       {int id,
       String content,
       String? answer,
+      int status,
       @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt});
+      @JsonKey(name: 'updated_at') String updatedAt,
+      UserModel author,
+      UserModel? recipient});
+
+  @override
+  $UserModelCopyWith<$Res> get author;
+  @override
+  $UserModelCopyWith<$Res>? get recipient;
 }
 
 /// @nodoc
@@ -210,8 +283,11 @@ class __$PostModelCopyWithImpl<$Res> implements _$PostModelCopyWith<$Res> {
     Object? id = null,
     Object? content = null,
     Object? answer = freezed,
+    Object? status = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? author = null,
+    Object? recipient = freezed,
   }) {
     return _then(_PostModel(
       id: null == id
@@ -226,6 +302,10 @@ class __$PostModelCopyWithImpl<$Res> implements _$PostModelCopyWith<$Res> {
           ? _self.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: null == createdAt
           ? _self.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -234,7 +314,39 @@ class __$PostModelCopyWithImpl<$Res> implements _$PostModelCopyWith<$Res> {
           ? _self.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      author: null == author
+          ? _self.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+      recipient: freezed == recipient
+          ? _self.recipient
+          : recipient // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
     ));
+  }
+
+  /// Create a copy of PostModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res> get author {
+    return $UserModelCopyWith<$Res>(_self.author, (value) {
+      return _then(_self.copyWith(author: value));
+    });
+  }
+
+  /// Create a copy of PostModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserModelCopyWith<$Res>? get recipient {
+    if (_self.recipient == null) {
+      return null;
+    }
+
+    return $UserModelCopyWith<$Res>(_self.recipient!, (value) {
+      return _then(_self.copyWith(recipient: value));
+    });
   }
 }
 

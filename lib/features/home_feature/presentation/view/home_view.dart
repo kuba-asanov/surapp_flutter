@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,9 +8,13 @@ import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/view/empty_home_widget.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.bloc});
+  const HomeView({
+    super.key,
+    required this.bloc,
+  });
   final GetPostsBloc bloc;
 
   @override
@@ -18,9 +23,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final TextEditingController _controller = TextEditingController();
-
-  List<bool> listQExpanded = List.generate(10000, (index) => false);
-  List<bool> listAExpanded = List.generate(10000, (index) => false);
 
   @override
   void initState() {
@@ -105,7 +107,6 @@ class _HomeViewState extends State<HomeView> {
               size: 40,
             ),
           ),
-          //
           body: BlocBuilder<GetPostsBloc, GetPostsState>(
             bloc: widget.bloc,
             builder: (context, state) {
@@ -120,6 +121,9 @@ class _HomeViewState extends State<HomeView> {
                 );
               }
               if (state is GetPostsFetched) {
+                return EmptyHomeWidget(onAddPressed: () {
+                  context.router.push(SendQuestionRoute());
+                });
                 return ListView.separated(
                   itemCount: state.data.length,
                   separatorBuilder: (context, index) {
@@ -129,8 +133,6 @@ class _HomeViewState extends State<HomeView> {
                     );
                   },
                   itemBuilder: (context, index) {
-                    final isQExpanded = listQExpanded[index];
-                    final isAExpanded = listAExpanded[index];
                     final post = state.data[index];
 
                     return Padding(
@@ -141,7 +143,7 @@ class _HomeViewState extends State<HomeView> {
                           CircleAvatar(
                             radius: 27,
                             backgroundImage: NetworkImage(
-                                'https://steela.ir/en/wp-content/uploads/2022/11/User-Avatar-in-Suit-PNG.png'), // replace with actual avatar
+                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s'), // replace with actual avatar
                           ),
                           8.toWidth,
                           Expanded(
@@ -152,11 +154,13 @@ class _HomeViewState extends State<HomeView> {
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: 'Randy Calzoni ',
+                                        text: post.recipient?.name ??
+                                            "" +
+                                                " ${post.recipient?.surname ?? ''}",
                                         style: SurAppTextStyle.fS14FW700,
                                       ),
                                       TextSpan(
-                                        text: '@randycalzoni • 5м',
+                                        text: ' @${post.recipient?.username}',
                                         style: SurAppTextStyle.fS14FW500,
                                       ),
                                     ],
@@ -168,62 +172,27 @@ class _HomeViewState extends State<HomeView> {
                                   style: SurAppTextStyle.fS14FW700,
                                 ),
                                 SizedBox(height: 8),
-                                Text(
+                                ExpandableText(
                                   post.content,
                                   style: SurAppTextStyle.fS14FW400,
-                                  maxLines: isQExpanded ? null : 1,
-                                  overflow: isQExpanded
-                                      ? TextOverflow.visible
-                                      : TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  expandText: 'толук коруу',
+                                  collapseText: 'жабуу',
+                                  linkColor: Colors.blue,
                                 ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        listQExpanded[index] =
-                                            !listQExpanded[index];
-                                      });
-                                    },
-                                    style: TextButton.styleFrom(
-                                        padding: EdgeInsets.zero),
-                                    child: Text(
-                                        listQExpanded[index] ? 'Hide' : 'Show'),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Жооп:',
-                                      style: SurAppTextStyle.fS14FW700,
-                                    ),
-                                  ],
+                                SizedBox(height: 10),
+                                Text(
+                                  'Жооп:',
+                                  style: SurAppTextStyle.fS14FW700,
                                 ),
                                 SizedBox(height: 8),
-                                Text(
-                                  post.answer ?? 'No answer provided',
+                                ExpandableText(
+                                  post.answer ?? '',
                                   style: SurAppTextStyle.fS14FW400,
-                                  maxLines: isAExpanded ? null : 3,
-                                  overflow: isAExpanded
-                                      ? TextOverflow.visible
-                                      : TextOverflow.ellipsis,
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        listAExpanded[index] =
-                                            !listAExpanded[index];
-                                      });
-                                    },
-                                    style: TextButton.styleFrom(
-                                        padding: EdgeInsets.zero),
-                                    child: Text(
-                                        listAExpanded[index] ? 'Hide' : 'Show'),
-                                  ),
+                                  maxLines: 3,
+                                  expandText: 'толук коруу',
+                                  collapseText: 'жабуу',
+                                  linkColor: Colors.blue,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -243,9 +212,8 @@ class _HomeViewState extends State<HomeView> {
                     );
                   },
                 );
-              } else {
-                return SizedBox();
               }
+              return SizedBox();
             },
           ),
         ));

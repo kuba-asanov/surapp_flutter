@@ -36,6 +36,8 @@ dependencies:
   firebase_auth: ^5.5.2
   l: ^5.0.0
   jwt_decode: ^0.3.1
+  expandable_text: ^2.3.0
+  lottie: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/animations/
 
   fonts:
     - family: Inter

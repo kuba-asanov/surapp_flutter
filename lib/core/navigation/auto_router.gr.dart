@@ -27,6 +27,48 @@ class AddPhoneRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [AnswerToQuestionPage]
+class AnswerToQuestionRoute extends PageRouteInfo<AnswerToQuestionRouteArgs> {
+  AnswerToQuestionRoute({
+    required PostModel question,
+    required GetQuestionsBloc bloc,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AnswerToQuestionRoute.name,
+          args: AnswerToQuestionRouteArgs(question: question, bloc: bloc),
+          initialChildren: children,
+        );
+
+  static const String name = 'AnswerToQuestionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AnswerToQuestionRouteArgs>();
+      return AnswerToQuestionPage(
+        question: args.question,
+        bloc: args.bloc,
+      );
+    },
+  );
+}
+
+class AnswerToQuestionRouteArgs {
+  const AnswerToQuestionRouteArgs({
+    required this.question,
+    required this.bloc,
+  });
+
+  final PostModel question;
+  final GetQuestionsBloc bloc;
+
+  @override
+  String toString() {
+    return 'AnswerToQuestionRouteArgs{ question: $question}';
+  }
+}
+
+/// generated route for
 /// [CreatePasswordPage]
 class CreatePasswordRoute extends PageRouteInfo<void> {
   const CreatePasswordRoute({List<PageRouteInfo>? children})
@@ -155,22 +197,6 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [SelectUstazPage]
-class SelectUstazRoute extends PageRouteInfo<void> {
-  const SelectUstazRoute({List<PageRouteInfo>? children})
-      : super(SelectUstazRoute.name, initialChildren: children);
-
-  static const String name = 'SelectUstazRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const SelectUstazPage();
-    },
-  );
-}
-
-/// generated route for
 /// [SendQuestionPage]
 class SendQuestionRoute extends PageRouteInfo<void> {
   const SendQuestionRoute({List<PageRouteInfo>? children})
@@ -216,7 +242,7 @@ class SignInRouteArgs {
 
   @override
   String toString() {
-    return 'SignInRouteArgs{onResult: $onResult}';
+    return 'SignInRouteArgs{ onResult: $onResult}';
   }
 }
 

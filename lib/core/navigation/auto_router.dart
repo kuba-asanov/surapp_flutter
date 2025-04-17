@@ -1,13 +1,15 @@
 /* External dependencies */
 import 'package:auto_route/auto_route.dart';
 import 'package:surapp_flutter/core/navigation/auth_guard.dart';
+import 'package:surapp_flutter/features/home_feature/data/models/post_model/post_model.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_questions/get_questions_bloc.dart';
 
-import '../../features/ask_question_feature/presentation/view/select_ustaz_page.dart';
 import '../../features/ask_question_feature/presentation/view/send_question_page.dart';
 import '../../features/authorization/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/add_phone_page.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/create_password_page.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/sign_up_page.dart';
+import '../../features/home_feature/presentation/answer_to_question/answer_to_question_page.dart';
 import '../../features/home_feature/presentation/page/empty_first_page.dart';
 import '../../features/home_feature/presentation/page/empty_second_page.dart';
 import '../../features/home_feature/presentation/page/empty_third_page.dart';
@@ -33,17 +35,15 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               page: EmptyFirstRoute.page,
               children: [
-                AutoRoute(
-                  page: HomeRoute.page,
-                ),
+                AutoRoute(page: HomeRoute.page),
+                AutoRoute(page: SendQuestionRoute.page),
               ],
             ),
             AutoRoute(
               page: EmptySecondeRoute.page,
               children: [
-                AutoRoute(
-                  page: NotificationRoute.page,
-                ),
+                AutoRoute(page: NotificationRoute.page),
+                AutoRoute(page: AnswerToQuestionRoute.page),
               ],
             ),
             AutoRoute(
@@ -54,8 +54,6 @@ class AppRouter extends RootStackRouter {
             ),
           ],
         ),
-        AutoRoute(page: SendQuestionRoute.page),
-        AutoRoute(page: SelectUstazRoute.page),
         AutoRoute(page: SignUpRoute.page),
         AutoRoute(page: CreatePasswordRoute.page),
         AutoRoute(page: AddPhoneRoute.page),

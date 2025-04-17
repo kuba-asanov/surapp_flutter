@@ -52,7 +52,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           emit(state.copyWith(status: UserStatus.failure));
         },
         onSuccess: (_) {
-          emit(state.copyWith(status: UserStatus.initial));
+          emit(state.copyWith(status: UserStatus.logedOut));
         },
       );
     });

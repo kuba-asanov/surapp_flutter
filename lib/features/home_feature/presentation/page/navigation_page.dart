@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/features/home_feature/di/home_di_module.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:take_it/take_it.dart';
 
@@ -13,7 +14,6 @@ import '../../../../core/navigation/auto_router.dart';
 @RoutePage()
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
-  static const String routeName = 'navigation-page';
 
   @override
   State<NavigationPage> createState() => _NavigationPageState();
@@ -23,13 +23,13 @@ class _NavigationPageState extends State<NavigationPage> {
   final bottomNavigatorKey = GlobalKey<State<BottomNavigationBar>>();
   @override
   void initState() {
-    //
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return DiScopeBuilder(
+      createModule: HomeDiModule.new,
       builder: (context, module) {
         final bloc = module.get<UserBloc>()..add(GetUserEvent());
         return BlocBuilder<UserBloc, UserState>(

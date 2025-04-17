@@ -28,5 +28,6 @@ abstract class UserModel with _$UserModel {
 }
 
 extension UserExt on UserModel {
-  String get avatarUrl => "https://i.pravatar.cc/150?img=$id";
+  String get avatarUrl =>
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s";
 }

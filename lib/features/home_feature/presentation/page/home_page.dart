@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:surapp_flutter/features/home_feature/di/home_di_module.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:take_it/take_it.dart';
 
@@ -13,7 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DiScopeBuilder(
-      createModule: HomeDiModule.new,
       builder: (context, module) {
         return HomeView(
           bloc: module.get<GetPostsBloc>()..add(GetPostsEvent.started()),
@@ -22,3 +20,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+  

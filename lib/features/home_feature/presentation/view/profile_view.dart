@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
-import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 
@@ -20,8 +19,6 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String firstName = "Alex";
-  final String lastName = "Johnson";
   final int askedQuestions = 12;
   final int answeredQuestions = 34;
 
@@ -38,8 +35,13 @@ class _ProfileViewState extends State<ProfileView> {
       //     ),
       //   ],
       // ),
-      body: BlocBuilder<UserBloc, UserState>(
+      body: BlocConsumer<UserBloc, UserState>(
         bloc: widget.bloc,
+        listener: (context, state) {
+          if (state.status.isLogedOut) {
+            context.router.popAndPush(NavigationRoute());
+          }
+        },
         builder: (context, state) {
           if (state.status.isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -63,7 +65,7 @@ class _ProfileViewState extends State<ProfileView> {
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: NetworkImage(
-                      'https://static.vecteezy.com/system/resources/previews/011/209/565/non_2x/user-profile-avatar-free-vector.jpg', // Random avatar
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s', // Random avatar
                     ),
                   ),
                   SizedBox(height: 16),
@@ -77,8 +79,8 @@ class _ProfileViewState extends State<ProfileView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildStat('Asked', 30, Icons.help_outline),
-                      _buildStat('Answered', 20, Icons.check_circle_outline),
+                      _buildStat('Суроолорум', 30, Icons.help_outline),
+                      _buildStat('Жоопторум', 20, Icons.check_circle_outline),
                     ],
                   ),
                   SizedBox(height: 40),
@@ -109,11 +111,6 @@ class _ProfileViewState extends State<ProfileView> {
                         if (resp == true) {
                           log("loggedout");
                           widget.bloc.add(LogoutUserEvent());
-                          if (mounted) {
-                            context.router.replaceAll(
-                              [NavigationRoute()],
-                            );
-                          }
 
                           // ignore: use_build_context_synchronously
                           // context.read<LoginBloc>().add(const LoginEvent.logOut());
@@ -123,24 +120,23 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
 
                   // Delete account button
-                  ListTile(
-                    leading:
-                        Icon(Icons.delete_forever, color: Colors.redAccent),
-                    title: Text('Аккаунтту өчүрүү',
-                        style:
-                            TextStyle(color: Colors.redAccent, fontSize: 16)),
-                    onTap: () {
-                      showDeleteBottomSheet(context: context);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading:
+                  //       Icon(Icons.delete_forever, color: Colors.redAccent),
+                  //   title: Text('Аккаунтту өчүрүү',
+                  //       style:
+                  //           TextStyle(color: Colors.redAccent, fontSize: 16)),
+                  //   onTap: () {
+                  //     showDeleteBottomSheet(context: context);
+                  //   },
+                  // ),
                 ],
               ),
             );
-          } else {
-            return const Center(
-              child: Text('Unknown state'),
-            );
           }
+          return const Center(
+            child: Text('Unknown state'),
+          );
         },
       ),
     );
@@ -158,75 +154,75 @@ Widget _buildStat(String label, int count, IconData icon) {
   );
 }
 
-Future<bool?> showDeleteBottomSheet({
-  required BuildContext context,
-}) async {
-  return showModalBottomSheet<bool>(
-    backgroundColor: Colors.white,
-    context: context,
-    showDragHandle: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
-    builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Удаление профиля',
-              textAlign: TextAlign.center,
-              style: SurAppTextStyle.fS22FW600,
-            ),
-            8.toHeight,
-            Text('Вы действительно хотите безвозвратно удалить свой профиль?',
-                // textAlign: TextAlign.center,
-                style: SurAppTextStyle.fS15FW400
-                    .copyWith(color: const Color(0xFFACAEBA))),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF8FBFF),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Text(
-                  'Отменить',
-                  style:
-                      SurAppTextStyle.fS15FW600.copyWith(color: Colors.black),
-                ),
-              ),
-            ),
-            16.toHeight,
-            SizedBox(
-              height: 50,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: const Text(
-                  'Удалить аккаунт',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-            ),
-            50.toHeight,
-          ],
-        ),
-      );
-    },
-  );
-}
+// Future<bool?> showDeleteBottomSheet({
+//   required BuildContext context,
+// }) async {
+//   return showModalBottomSheet<bool>(
+//     backgroundColor: Colors.white,
+//     context: context,
+//     showDragHandle: true,
+//     shape: const RoundedRectangleBorder(
+//       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+//     ),
+//     builder: (context) {
+//       return Padding(
+//         padding: const EdgeInsets.all(16),
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text(
+//               'Удаление профиля',
+//               textAlign: TextAlign.center,
+//               style: SurAppTextStyle.fS22FW600,
+//             ),
+//             8.toHeight,
+//             Text('Вы действительно хотите безвозвратно удалить свой профиль?',
+//                 // textAlign: TextAlign.center,
+//                 style: SurAppTextStyle.fS15FW400
+//                     .copyWith(color: const Color(0xFFACAEBA))),
+//             const SizedBox(height: 16),
+//             SizedBox(
+//               height: 50,
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: const Color(0xFFF8FBFF),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.of(context).pop(false);
+//                 },
+//                 child: Text(
+//                   'Отменить',
+//                   style:
+//                       SurAppTextStyle.fS15FW600.copyWith(color: Colors.black),
+//                 ),
+//               ),
+//             ),
+//             16.toHeight,
+//             SizedBox(
+//               height: 50,
+//               width: double.infinity,
+//               child: ElevatedButton(
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: Colors.white,
+//                 ),
+//                 onPressed: () {
+//                   Navigator.of(context).pop(true);
+//                 },
+//                 child: const Text(
+//                   'Удалить аккаунт',
+//                   style: TextStyle(
+//                     fontWeight: FontWeight.w600,
+//                     color: Colors.red,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             50.toHeight,
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }

@@ -9,6 +9,9 @@ class AppUrls {
 
   static const auth = "/auth/login";
   static const posts = "/posts";
+  static const answeredPosts = "/posts/answered";
+  static const questionsForMe = "/posts/reciter/incoming";
+  static  answerToQuestion(id) => "/posts/answer/$id";
   static const getUser = "/users";
   static const reciters = "/users/reciters";
 }

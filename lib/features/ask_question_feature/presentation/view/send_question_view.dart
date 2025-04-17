@@ -119,7 +119,7 @@ class _SendQuestioniewState extends State<SendQuestioniew> {
                           CircleAvatar(
                             radius: 26,
                             backgroundImage: NetworkImage(
-                                "https://static.vecteezy.com/system/resources/previews/011/209/565/non_2x/user-profile-avatar-free-vector.jpg"),
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s"),
                           ),
                           SizedBox(width: 12),
                           Expanded(
