@@ -122,7 +122,7 @@ class _AddPhoneViewState extends State<AddPhoneView>
               ),
               if (phoneController.text.isNotEmpty)
                 GestureDetector(
-                  onTap: () => setState(() => phoneController.clear()),
+                  onTap: () => setState(phoneController.clear),
                   child: const Icon(Icons.clear, color: Colors.grey),
                 ),
             ],

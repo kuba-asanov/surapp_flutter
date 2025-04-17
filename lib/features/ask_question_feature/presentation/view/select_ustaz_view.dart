@@ -6,10 +6,6 @@ import '../../../../common/ui_kit/app_color_scheme.dart';
 import '../../../../common/ui_kit/text_styles.dart';
 
 class Teacher {
-  final String name;
-  final String username;
-  final String avatarUrl;
-  bool isSelected;
 
   Teacher({
     required this.name,
@@ -17,6 +13,10 @@ class Teacher {
     required this.avatarUrl,
     this.isSelected = false,
   });
+  final String name;
+  final String username;
+  final String avatarUrl;
+  bool isSelected;
 }
 
 class SelectUstazView extends StatefulWidget {
@@ -38,7 +38,7 @@ class _SelectUstazViewState extends State<SelectUstazView> {
 
   void selectTeacher(int index) {
     setState(() {
-      for (int i = 0; i < teachers.length; i++) {
+      for (var i = 0; i < teachers.length; i++) {
         teachers[i].isSelected = i == index;
       }
     });

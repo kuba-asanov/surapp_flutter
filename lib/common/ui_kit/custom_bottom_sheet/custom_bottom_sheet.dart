@@ -45,7 +45,7 @@ class CustomBottomSheet {
         maxHeight: getMaxHeight(context),
         maxWidth: double.infinity,
       ),
-      builder: (BuildContext context) => Padding(
+      builder: (context) => Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: StaticBottomSheetContent(
@@ -79,7 +79,7 @@ class CustomBottomSheet {
       ),
       context: context,
       constraints: BoxConstraints(maxHeight: getMaxHeight(context)),
-      builder: (BuildContext context) => ScrollableBottomSheetContent(
+      builder: (context) => ScrollableBottomSheetContent(
         title: title,
         withIndicator: withIndicator,
         showCloseButton: showCloseButton,

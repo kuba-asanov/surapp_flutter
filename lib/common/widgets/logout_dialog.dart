@@ -72,7 +72,7 @@ class LogOutDialog extends StatelessWidget {
                       },
                       child: const Text(
                         "Жок",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           height: 20 / 14,
                           // color: IbaratColor.primaryColor,

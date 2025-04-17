@@ -2,10 +2,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:surapp_flutter/core/navigation/auth_guard.dart';
 
+import '../../features/ask_question_feature/presentation/view/select_ustaz_page.dart';
+import '../../features/ask_question_feature/presentation/view/send_question_page.dart';
+import '../../features/authorization/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/add_phone_page.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/create_password_page.dart';
 import '../../features/authorization/sign_up_feature/presentation/view/sign_up_page.dart';
-import '../../features/authorization/sign_in_feature/presentation/view/sign_in_screen_route.dart';
 import '../../features/home_feature/presentation/page/empty_first_page.dart';
 import '../../features/home_feature/presentation/page/empty_second_page.dart';
 import '../../features/home_feature/presentation/page/empty_third_page.dart';
@@ -13,8 +15,6 @@ import '../../features/home_feature/presentation/page/home_page.dart';
 import '../../features/home_feature/presentation/page/navigation_page.dart';
 import '../../features/home_feature/presentation/page/notification_page.dart';
 import '../../features/home_feature/presentation/page/profile_page.dart';
-import '../../features/ask_question_feature/presentation/view/select_ustaz_page.dart';
-import '../../features/ask_question_feature/presentation/view/send_question_page.dart';
 
 /* Local dependencies */
 

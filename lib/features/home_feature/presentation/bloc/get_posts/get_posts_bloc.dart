@@ -9,7 +9,6 @@ part 'get_posts_state.dart';
 part 'get_posts_bloc.freezed.dart';
 
 class GetPostsBloc extends Bloc<GetPostsEvent, GetPostsState> {
-  final GetPostsUsecase _getPostsUsecase;
   GetPostsBloc({
     required GetPostsUsecase getPostsUsecase,
   })  : _getPostsUsecase = getPostsUsecase,
@@ -29,4 +28,5 @@ class GetPostsBloc extends Bloc<GetPostsEvent, GetPostsState> {
       );
     });
   }
+  final GetPostsUsecase _getPostsUsecase;
 }

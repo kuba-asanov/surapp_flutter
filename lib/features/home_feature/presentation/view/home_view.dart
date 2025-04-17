@@ -9,8 +9,8 @@ import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 
 class HomeView extends StatefulWidget {
-  final GetPostsBloc bloc;
   const HomeView({super.key, required this.bloc});
+  final GetPostsBloc bloc;
 
   @override
   State<HomeView> createState() => _HomeViewState();
