@@ -23,7 +23,7 @@ mixin _$UserModel {
   String? get name;
   String? get surname;
   String? get bio;
-  bool get onboarded;
+  bool? get onboarded;
   int get role;
   @JsonKey(name: 'device_id')
   String? get deviceId;
@@ -106,7 +106,7 @@ abstract mixin class $UserModelCopyWith<$Res> {
       String? name,
       String? surname,
       String? bio,
-      bool onboarded,
+      bool? onboarded,
       int role,
       @JsonKey(name: 'device_id') String? deviceId,
       @JsonKey(name: 'created_at') String createdAt,
@@ -133,7 +133,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? bio = freezed,
-    Object? onboarded = null,
+    Object? onboarded = freezed,
     Object? role = null,
     Object? deviceId = freezed,
     Object? createdAt = null,
@@ -172,10 +172,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _self.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
-      onboarded: null == onboarded
+      onboarded: freezed == onboarded
           ? _self.onboarded
           : onboarded // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       role: null == role
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -208,7 +208,7 @@ class _UserModel implements UserModel {
       this.name,
       this.surname,
       this.bio,
-      required this.onboarded,
+      this.onboarded,
       required this.role,
       @JsonKey(name: 'device_id') this.deviceId,
       @JsonKey(name: 'created_at') required this.createdAt,
@@ -233,7 +233,7 @@ class _UserModel implements UserModel {
   @override
   final String? bio;
   @override
-  final bool onboarded;
+  final bool? onboarded;
   @override
   final int role;
   @override
@@ -328,7 +328,7 @@ abstract mixin class _$UserModelCopyWith<$Res>
       String? name,
       String? surname,
       String? bio,
-      bool onboarded,
+      bool? onboarded,
       int role,
       @JsonKey(name: 'device_id') String? deviceId,
       @JsonKey(name: 'created_at') String createdAt,
@@ -355,7 +355,7 @@ class __$UserModelCopyWithImpl<$Res> implements _$UserModelCopyWith<$Res> {
     Object? name = freezed,
     Object? surname = freezed,
     Object? bio = freezed,
-    Object? onboarded = null,
+    Object? onboarded = freezed,
     Object? role = null,
     Object? deviceId = freezed,
     Object? createdAt = null,
@@ -394,10 +394,10 @@ class __$UserModelCopyWithImpl<$Res> implements _$UserModelCopyWith<$Res> {
           ? _self.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
-      onboarded: null == onboarded
+      onboarded: freezed == onboarded
           ? _self.onboarded
           : onboarded // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       role: null == role
           ? _self.role
           : role // ignore: cast_nullable_to_non_nullable

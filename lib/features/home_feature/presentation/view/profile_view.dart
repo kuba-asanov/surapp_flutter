@@ -109,11 +109,11 @@ class _ProfileViewState extends State<ProfileView> {
                         if (resp == true) {
                           log("loggedout");
                           widget.bloc.add(LogoutUserEvent());
-                          context.router.replaceAll(
-                            [
-                              SignInRoute(onResult: (bool) => false),
-                            ],
-                          );
+                          if (mounted) {
+                            context.router.replaceAll(
+                              [NavigationRoute()],
+                            );
+                          }
 
                           // ignore: use_build_context_synchronously
                           // context.read<LoginBloc>().add(const LoginEvent.logOut());

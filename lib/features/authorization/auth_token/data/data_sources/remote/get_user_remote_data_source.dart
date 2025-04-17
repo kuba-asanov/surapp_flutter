@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
+
 import '../../../../../../common/app_urls.dart';
 import '../../../../../../common/network/auth_rest_client.dart';
 import '../../../../../../common/utils/data_parser.dart';
-import '../../../domain/models/user_model/get_user_model.dart';
 
 abstract interface class GetUserRemoteDataSource {
-  Future<GetUserModel> getUser({required int id});
+  Future<UserModel> getUser({required int id});
 }
 
 class GetUserRemoteDataSourceImpl implements GetUserRemoteDataSource {
@@ -17,10 +18,10 @@ class GetUserRemoteDataSourceImpl implements GetUserRemoteDataSource {
   final AuthRestClient _restClientService;
 
   @override
-  Future<GetUserModel> getUser({required int id}) {
+  Future<UserModel> getUser({required int id}) {
     return _restClientService.get(
       "${AppUrls.getUser}/$id",
-      parser: ObjectParser(GetUserModel.fromJson),
+      parser: ObjectParser(UserModel.fromJson),
     );
   }
 }

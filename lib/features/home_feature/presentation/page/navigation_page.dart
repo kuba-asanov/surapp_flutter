@@ -31,7 +31,7 @@ class _NavigationPageState extends State<NavigationPage> {
   Widget build(BuildContext context) {
     return DiScopeBuilder(
       builder: (context, module) {
-        final bloc = module.get<UserBloc>();
+        final bloc = module.get<UserBloc>()..add(GetUserEvent());
         return BlocBuilder<UserBloc, UserState>(
           bloc: bloc,
           builder: (context, state) {

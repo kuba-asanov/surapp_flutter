@@ -16,7 +16,7 @@ abstract class UserModel with _$UserModel {
     String? name,
     String? surname,
     String? bio,
-    required bool onboarded,
+    bool? onboarded,
     required int role,
     @JsonKey(name: 'device_id') String? deviceId,
     @JsonKey(name: 'created_at') required String createdAt,

@@ -4,7 +4,7 @@ part of 'user_bloc.dart';
 abstract class UserState with _$UserState {
   const factory UserState({
     required UserStatus status,
-    GetUserModel? user,
+    UserModel? user,
   }) = _UserState;
 
   factory UserState.initial() => UserState(status: UserStatus.initial);

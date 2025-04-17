@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
+import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
 
 import '../domain/auth_token_repository.dart';
-import '../domain/models/user_model/get_user_model.dart';
 import 'data_sources/remote/get_user_remote_data_source.dart';
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
@@ -25,7 +25,7 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
   }
 
   @override
-  Future<GetUserModel> getUser() async {
+  Future<UserModel> getUser() async {
     final token = await secureStorage.getValue(SecureStorageKey.authToken);
 
     var payload = token != null ? Jwt.parseJwt(token) : null;

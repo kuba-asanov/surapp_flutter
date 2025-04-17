@@ -15,7 +15,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       bio: json['bio'] as String?,
-      onboarded: json['onboarded'] as bool,
+      onboarded: json['onboarded'] as bool?,
       role: (json['role'] as num).toInt(),
       deviceId: json['device_id'] as String?,
       createdAt: json['created_at'] as String,

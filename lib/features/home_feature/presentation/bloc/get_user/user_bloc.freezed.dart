@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserState {
   UserStatus get status;
-  GetUserModel? get user;
+  UserModel? get user;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -48,9 +48,9 @@ abstract mixin class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) _then) =
       _$UserStateCopyWithImpl;
   @useResult
-  $Res call({UserStatus status, GetUserModel? user});
+  $Res call({UserStatus status, UserModel? user});
 
-  $GetUserModelCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -76,7 +76,7 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
       user: freezed == user
           ? _self.user
           : user // ignore: cast_nullable_to_non_nullable
-              as GetUserModel?,
+              as UserModel?,
     ));
   }
 
@@ -84,12 +84,12 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $GetUserModelCopyWith<$Res>? get user {
+  $UserModelCopyWith<$Res>? get user {
     if (_self.user == null) {
       return null;
     }
 
-    return $GetUserModelCopyWith<$Res>(_self.user!, (value) {
+    return $UserModelCopyWith<$Res>(_self.user!, (value) {
       return _then(_self.copyWith(user: value));
     });
   }
@@ -103,7 +103,7 @@ class _UserState extends UserState {
   @override
   final UserStatus status;
   @override
-  final GetUserModel? user;
+  final UserModel? user;
 
   /// Create a copy of UserState
   /// with the given fields replaced by the non-null parameter values.
@@ -139,10 +139,10 @@ abstract mixin class _$UserStateCopyWith<$Res>
       __$UserStateCopyWithImpl;
   @override
   @useResult
-  $Res call({UserStatus status, GetUserModel? user});
+  $Res call({UserStatus status, UserModel? user});
 
   @override
-  $GetUserModelCopyWith<$Res>? get user;
+  $UserModelCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -168,7 +168,7 @@ class __$UserStateCopyWithImpl<$Res> implements _$UserStateCopyWith<$Res> {
       user: freezed == user
           ? _self.user
           : user // ignore: cast_nullable_to_non_nullable
-              as GetUserModel?,
+              as UserModel?,
     ));
   }
 
@@ -176,12 +176,12 @@ class __$UserStateCopyWithImpl<$Res> implements _$UserStateCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $GetUserModelCopyWith<$Res>? get user {
+  $UserModelCopyWith<$Res>? get user {
     if (_self.user == null) {
       return null;
     }
 
-    return $GetUserModelCopyWith<$Res>(_self.user!, (value) {
+    return $UserModelCopyWith<$Res>(_self.user!, (value) {
       return _then(_self.copyWith(user: value));
     });
   }

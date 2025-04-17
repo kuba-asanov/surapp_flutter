@@ -140,7 +140,7 @@ class CoreDiModule extends DiModuleAsync {
         UserBloc(
           getUserUsecase: get<GetUserUseCase>(),
           logoutUseCase: get<LogoutUseCase>(),
-        )..add(GetUserEvent()),
+        ),
       );
 
     /// Presentation
