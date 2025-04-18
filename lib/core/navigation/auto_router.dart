@@ -1,14 +1,15 @@
 /* External dependencies */
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:surapp_flutter/core/navigation/auth_guard.dart';
 import 'package:surapp_flutter/features/home_feature/data/models/post_model/post_model.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_questions/get_questions_bloc.dart';
 
 import '../../features/ask_question_feature/presentation/view/send_question_page.dart';
 import '../../features/authorization/sign_in_feature/presentation/view/sign_in_screen_route.dart';
-import '../../features/authorization/sign_up_feature/presentation/view/add_phone_page.dart';
-import '../../features/authorization/sign_up_feature/presentation/view/create_password_page.dart';
-import '../../features/authorization/sign_up_feature/presentation/view/sign_up_page.dart';
+import '../../features/authorization/sign_up_feature/presentation/pages/add_phone_page.dart';
+import '../../features/authorization/sign_up_feature/presentation/pages/create_password_page.dart';
+import '../../features/authorization/sign_up_feature/presentation/pages/sign_up_page.dart';
 import '../../features/home_feature/presentation/answer_to_question/answer_to_question_page.dart';
 import '../../features/home_feature/presentation/page/empty_first_page.dart';
 import '../../features/home_feature/presentation/page/empty_second_page.dart';

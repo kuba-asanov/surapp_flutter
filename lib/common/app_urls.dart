@@ -8,6 +8,7 @@ class AppUrls {
   static const telegramSupport = "https://t.me/asanovk";
 
   static const auth = "/auth/login";
+  static const signUp = "/auth/signup";
   static const posts = "/posts";
   static const answeredPosts = "/posts/answered";
   static const questionsForMe = "/posts/reciter/incoming";

@@ -4,9 +4,43 @@ import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
 import '../../../../../common/ui_kit/text_styles.dart';
+import '../../../../../common/widgets/buttons/app_button.dart';
 
-class SignUpView extends StatelessWidget {
+class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
+
+  @override
+  State<SignUpView> createState() => _SignUpViewState();
+}
+
+class _SignUpViewState extends State<SignUpView> {
+  final TextEditingController _controller = TextEditingController();
+  String? _errorText;
+
+  void _validateAndContinue() {
+    final username = _controller.text.trim();
+
+    if (username.isEmpty) {
+      setState(() {
+        _errorText = 'Колдонуучу атын жазыңыз';
+      });
+      return;
+    }
+    if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(username)) {
+      setState(() {
+        _errorText = 'Ат англис тамгалары менен гана болушу керек';
+      });
+      return;
+    }
+
+    // Optional: add more checks (length, invalid characters, etc.)
+
+    setState(() {
+      _errorText = null;
+    });
+
+    context.router.push(CreatePasswordRoute(username: username));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +62,24 @@ class SignUpView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Создание имени пользователя",
+              "Колдонуучу атын түзүү",
               style: SurAppTextStyle.fS24FW700,
               textAlign: TextAlign.center,
             ),
             16.toHeight,
             Text(
-              "Выберите имя пользователя для своего нового аккаунта",
+              "Жаңы каттоо эсебиңиз үчүн колдонуучу атын жазыңыз.",
               style:
                   SurAppTextStyle.fS14FW500.copyWith(color: Color(0xFFC7C7CC)),
               textAlign: TextAlign.center,
             ),
             16.toHeight,
             TextField(
+              controller: _controller,
+              style: SurAppTextStyle.fS15FW500,
               decoration: InputDecoration(
-                hintText: 'Имя пользователя',
+                hintText: 'Колдонуучу аты',
+                errorText: _errorText,
                 filled: true,
                 fillColor: Colors.grey[200],
                 border: OutlineInputBorder(
@@ -53,25 +90,9 @@ class SignUpView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  context.router.push(CreatePasswordRoute());
-                },
-                child: Text(
-                  'Далее',
-                  style:
-                      SurAppTextStyle.fS14FW500.copyWith(color: Colors.white),
-                ),
-              ),
+            AppButton.primary(
+              onPressed: _validateAndContinue,
+              child: Text('Улантуу'),
             ),
             const SizedBox(height: 20),
           ],

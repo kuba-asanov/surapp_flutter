@@ -12,32 +12,73 @@ part of 'auto_router.dart';
 
 /// generated route for
 /// [AddPhonePage]
-class AddPhoneRoute extends PageRouteInfo<void> {
-  const AddPhoneRoute({List<PageRouteInfo>? children})
-      : super(AddPhoneRoute.name, initialChildren: children);
+class AddPhoneRoute extends PageRouteInfo<AddPhoneRouteArgs> {
+  AddPhoneRoute({
+    Key? key,
+    required String username,
+    required String password,
+    List<PageRouteInfo>? children,
+  }) : super(
+         AddPhoneRoute.name,
+         args: AddPhoneRouteArgs(
+           key: key,
+           username: username,
+           password: password,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'AddPhoneRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AddPhonePage();
+      final args = data.argsAs<AddPhoneRouteArgs>();
+      return AddPhonePage(
+        key: args.key,
+        username: args.username,
+        password: args.password,
+      );
     },
   );
+}
+
+class AddPhoneRouteArgs {
+  const AddPhoneRouteArgs({
+    this.key,
+    required this.username,
+    required this.password,
+  });
+
+  final Key? key;
+
+  final String username;
+
+  final String password;
+
+  @override
+  String toString() {
+    return 'AddPhoneRouteArgs{key: $key, username: $username, password: $password}';
+  }
 }
 
 /// generated route for
 /// [AnswerToQuestionPage]
 class AnswerToQuestionRoute extends PageRouteInfo<AnswerToQuestionRouteArgs> {
   AnswerToQuestionRoute({
+    Key? key,
     required PostModel question,
     required GetQuestionsBloc bloc,
     List<PageRouteInfo>? children,
   }) : super(
-          AnswerToQuestionRoute.name,
-          args: AnswerToQuestionRouteArgs(question: question, bloc: bloc),
-          initialChildren: children,
-        );
+         AnswerToQuestionRoute.name,
+         args: AnswerToQuestionRouteArgs(
+           key: key,
+           question: question,
+           bloc: bloc,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'AnswerToQuestionRoute';
 
@@ -46,6 +87,7 @@ class AnswerToQuestionRoute extends PageRouteInfo<AnswerToQuestionRouteArgs> {
     builder: (data) {
       final args = data.argsAs<AnswerToQuestionRouteArgs>();
       return AnswerToQuestionPage(
+        key: args.key,
         question: args.question,
         bloc: args.bloc,
       );
@@ -55,40 +97,65 @@ class AnswerToQuestionRoute extends PageRouteInfo<AnswerToQuestionRouteArgs> {
 
 class AnswerToQuestionRouteArgs {
   const AnswerToQuestionRouteArgs({
+    this.key,
     required this.question,
     required this.bloc,
   });
 
+  final Key? key;
+
   final PostModel question;
+
   final GetQuestionsBloc bloc;
 
   @override
   String toString() {
-    return 'AnswerToQuestionRouteArgs{ question: $question}';
+    return 'AnswerToQuestionRouteArgs{key: $key, question: $question, bloc: $bloc}';
   }
 }
 
 /// generated route for
 /// [CreatePasswordPage]
-class CreatePasswordRoute extends PageRouteInfo<void> {
-  const CreatePasswordRoute({List<PageRouteInfo>? children})
-      : super(CreatePasswordRoute.name, initialChildren: children);
+class CreatePasswordRoute extends PageRouteInfo<CreatePasswordRouteArgs> {
+  CreatePasswordRoute({
+    Key? key,
+    required String username,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CreatePasswordRoute.name,
+         args: CreatePasswordRouteArgs(key: key, username: username),
+         initialChildren: children,
+       );
 
   static const String name = 'CreatePasswordRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CreatePasswordPage();
+      final args = data.argsAs<CreatePasswordRouteArgs>();
+      return CreatePasswordPage(key: args.key, username: args.username);
     },
   );
+}
+
+class CreatePasswordRouteArgs {
+  const CreatePasswordRouteArgs({this.key, required this.username});
+
+  final Key? key;
+
+  final String username;
+
+  @override
+  String toString() {
+    return 'CreatePasswordRouteArgs{key: $key, username: $username}';
+  }
 }
 
 /// generated route for
 /// [EmptyFirstPage]
 class EmptyFirstRoute extends PageRouteInfo<void> {
   const EmptyFirstRoute({List<PageRouteInfo>? children})
-      : super(EmptyFirstRoute.name, initialChildren: children);
+    : super(EmptyFirstRoute.name, initialChildren: children);
 
   static const String name = 'EmptyFirstRoute';
 
@@ -104,7 +171,7 @@ class EmptyFirstRoute extends PageRouteInfo<void> {
 /// [EmptySecondePage]
 class EmptySecondeRoute extends PageRouteInfo<void> {
   const EmptySecondeRoute({List<PageRouteInfo>? children})
-      : super(EmptySecondeRoute.name, initialChildren: children);
+    : super(EmptySecondeRoute.name, initialChildren: children);
 
   static const String name = 'EmptySecondeRoute';
 
@@ -120,7 +187,7 @@ class EmptySecondeRoute extends PageRouteInfo<void> {
 /// [EmptyThirdPage]
 class EmptyThirdRoute extends PageRouteInfo<void> {
   const EmptyThirdRoute({List<PageRouteInfo>? children})
-      : super(EmptyThirdRoute.name, initialChildren: children);
+    : super(EmptyThirdRoute.name, initialChildren: children);
 
   static const String name = 'EmptyThirdRoute';
 
@@ -136,7 +203,7 @@ class EmptyThirdRoute extends PageRouteInfo<void> {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-      : super(HomeRoute.name, initialChildren: children);
+    : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -152,7 +219,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [NavigationPage]
 class NavigationRoute extends PageRouteInfo<void> {
   const NavigationRoute({List<PageRouteInfo>? children})
-      : super(NavigationRoute.name, initialChildren: children);
+    : super(NavigationRoute.name, initialChildren: children);
 
   static const String name = 'NavigationRoute';
 
@@ -168,7 +235,7 @@ class NavigationRoute extends PageRouteInfo<void> {
 /// [NotificationPage]
 class NotificationRoute extends PageRouteInfo<void> {
   const NotificationRoute({List<PageRouteInfo>? children})
-      : super(NotificationRoute.name, initialChildren: children);
+    : super(NotificationRoute.name, initialChildren: children);
 
   static const String name = 'NotificationRoute';
 
@@ -184,7 +251,7 @@ class NotificationRoute extends PageRouteInfo<void> {
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
-      : super(ProfileRoute.name, initialChildren: children);
+    : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -200,7 +267,7 @@ class ProfileRoute extends PageRouteInfo<void> {
 /// [SendQuestionPage]
 class SendQuestionRoute extends PageRouteInfo<void> {
   const SendQuestionRoute({List<PageRouteInfo>? children})
-      : super(SendQuestionRoute.name, initialChildren: children);
+    : super(SendQuestionRoute.name, initialChildren: children);
 
   static const String name = 'SendQuestionRoute';
 
@@ -216,13 +283,14 @@ class SendQuestionRoute extends PageRouteInfo<void> {
 /// [SignInPage]
 class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
+    Key? key,
     required dynamic Function(bool) onResult,
     List<PageRouteInfo>? children,
   }) : super(
-          SignInRoute.name,
-          args: SignInRouteArgs(onResult: onResult),
-          initialChildren: children,
-        );
+         SignInRoute.name,
+         args: SignInRouteArgs(key: key, onResult: onResult),
+         initialChildren: children,
+       );
 
   static const String name = 'SignInRoute';
 
@@ -230,19 +298,21 @@ class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<SignInRouteArgs>();
-      return SignInPage(onResult: args.onResult);
+      return SignInPage(key: args.key, onResult: args.onResult);
     },
   );
 }
 
 class SignInRouteArgs {
-  const SignInRouteArgs({required this.onResult});
+  const SignInRouteArgs({this.key, required this.onResult});
+
+  final Key? key;
 
   final dynamic Function(bool) onResult;
 
   @override
   String toString() {
-    return 'SignInRouteArgs{ onResult: $onResult}';
+    return 'SignInRouteArgs{key: $key, onResult: $onResult}';
   }
 }
 
@@ -250,7 +320,7 @@ class SignInRouteArgs {
 /// [SignUpPage]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute({List<PageRouteInfo>? children})
-      : super(SignUpRoute.name, initialChildren: children);
+    : super(SignUpRoute.name, initialChildren: children);
 
   static const String name = 'SignUpRoute';
 
