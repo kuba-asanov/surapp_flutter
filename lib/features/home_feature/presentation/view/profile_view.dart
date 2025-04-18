@@ -26,20 +26,21 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text("Профиль"),
-      //   actions: [
-      //     IconButton(
-      //       icon: const Icon(Icons.settings),
-      //       onPressed: () => context.router.push(SettingsRoute()),
-      //     ),
-      //   ],
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Профиль"),
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.settings),
+        //     onPressed: () => context.router.push(SettingsRoute()),
+        //   ),
+        // ],
+      ),
       body: BlocConsumer<UserBloc, UserState>(
         bloc: widget.bloc,
         listener: (context, state) {
           if (state.status.isLogedOut) {
-            context.router.popAndPush(NavigationRoute());
+            context.router.replace(NavigationRoute());
           }
         },
         builder: (context, state) {

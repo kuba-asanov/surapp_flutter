@@ -38,6 +38,6 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
 
   @override
   FutureOr<void> logout() async {
-    secureStorage.deleteValue(SecureStorageKey.authToken);
+    await secureStorage.deleteValue(SecureStorageKey.authToken);
   }
 }

@@ -71,6 +71,7 @@ class _HomeViewState extends State<HomeView> {
             child: Icon(
               Icons.add,
               size: 40,
+              color: Colors.white,
             ),
           ),
           body: BlocBuilder<GetPostsBloc, GetPostsState>(
