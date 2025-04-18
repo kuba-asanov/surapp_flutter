@@ -51,6 +51,7 @@ class GetQuestionsBloc extends Bloc<QuestionsEvent, GetQuestionsState> {
         },
         onSuccess: (_) {
           emit(state.copyWith(status: GetQuestionsStatus.loaded));
+          add(GetQuestionsEvent());
         },
       );
     });
