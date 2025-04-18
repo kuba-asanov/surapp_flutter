@@ -17,11 +17,8 @@ class LoaderContainer extends StatelessWidget {
         child,
         Visibility(
           visible: isLoading,
-          child: Container(
-            color: Colors.black.withOpacity(0.5),
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
+          child: const Center(
+            child: CircularProgressIndicator(),
           ),
         ),
       ],

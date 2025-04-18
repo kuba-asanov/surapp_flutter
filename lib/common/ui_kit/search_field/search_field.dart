@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:flutter/services.dart';
-import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
+import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 
 /// Компонент Search из DesignSystem
 class SearchField extends StatelessWidget {
@@ -28,51 +28,47 @@ class SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 69.0,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColorScheme.tertiary,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.search),
-          const SizedBox(width: 15),
-          Expanded(
-            child: TextField(
-              keyboardType: keyboardType,
-              autofocus: autofocus,
-              onChanged: onChanged,
-              controller: controller,
-              inputFormatters: inputFormatters,
-              // decoration: InputDecorations.search(placeholder),
-              // style: TextStyles.header3(Palette.supplementary900),
-              onEditingComplete: () {
-                FocusScope.of(context).unfocus();
-              },
-            ),
+    return SizedBox(
+      height: 40,
+      child: TextField(
+        keyboardType: keyboardType,
+        autofocus: autofocus,
+        onChanged: onChanged,
+        controller: controller,
+        inputFormatters: inputFormatters,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Color(0xFFF2F2F7),
+          hintText: placeholder,
+          suffixIcon: controller.text.isNotEmpty
+              ? IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    controller.clear();
+                    onChanged(controller.text);
+                    FocusScope.of(context)
+                        .requestFocus(FocusNode()); // remove keyboard
+                  },
+                )
+              : null,
+          hintStyle: SurAppTextStyle.fS14FW600.copyWith(
+            color: Color(0xFF8E8E93),
           ),
-          if (controller.text.isNotEmpty) ...[
-            const SizedBox(width: 15),
-            IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: _clear,
-              icon: Icon(
-                Icons.clear,
-                color: Colors.black,
-                size: 20,
-              ),
-            ),
-          ],
-        ],
+          prefixIcon: Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+        ),
+        style: SurAppTextStyle.fS14FW600,
+        onEditingComplete: () {
+          FocusScope.of(context).unfocus();
+        },
       ),
     );
-  }
-
-  void _clear() {
-    controller.clear();
-    onChanged('');
   }
 }

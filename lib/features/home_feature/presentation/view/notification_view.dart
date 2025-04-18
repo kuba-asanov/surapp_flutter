@@ -8,6 +8,7 @@ import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_questions/get_questions_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/view/empty_home_widget.dart';
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key, required this.bloc});
@@ -44,6 +45,12 @@ class NotificationView extends StatelessWidget {
             );
           }
           if (state.status.isLoaded) {
+            if (state.questions.isEmpty) {
+              return EmptyHomeWidget(
+                title: 'Сизге азырынча эч ким суроо бере элек',
+                description: 'Сизге суроо келип тушсо, бул жерден пайда болот',
+              );
+            }
             return ListView.separated(
               itemCount: state.questions.length,
               separatorBuilder: (context, index) {

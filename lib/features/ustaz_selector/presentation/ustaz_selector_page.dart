@@ -88,6 +88,10 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                               shrinkWrap: true,
                               itemBuilder: (_, index) {
                                 final reciter = reciters[index];
+                                final name = [
+                                  reciter.name ?? '',
+                                  reciter.surname ?? ''
+                                ].join(" ").trim();
 
                                 return GestureDetector(
                                   onTap: () {
@@ -115,11 +119,11 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(reciter.name ?? "",
+                                              Text(name,
                                                   style: SurAppTextStyle
                                                       .fS15FW600),
                                               Text(
-                                                reciter.username,
+                                                "@${reciter.username}",
                                                 style: SurAppTextStyle.fS14FW500
                                                     .copyWith(
                                                         color:

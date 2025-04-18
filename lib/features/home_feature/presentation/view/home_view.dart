@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
+import 'package:surapp_flutter/common/ui_kit/search_field/search_field.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
@@ -53,45 +54,10 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 SvgPicture.asset('assets/images/mosque.svg'),
                 24.toHeight,
-                SizedBox(
-                  height: 40,
-                  child: TextField(
-                    controller: _controller,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xFFF2F2F7),
-                      hintText: 'Search',
-                      suffixIcon: _controller.text.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                _controller.clear();
-                                FocusScope.of(context).requestFocus(
-                                    FocusNode()); // remove keyboard
-                              },
-                            )
-                          : null,
-                      hintStyle: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF8E8E93),
-                      ),
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                  ),
+                SearchField(
+                  placeholder: "Издоо",
+                  controller: _controller,
+                  onChanged: (val) {},
                 ),
               ],
             ),
@@ -122,9 +88,11 @@ class _HomeViewState extends State<HomeView> {
               }
               if (state is GetPostsFetched) {
                 if (state.data.isEmpty) {
-                  return EmptyHomeWidget(onAddPressed: () {
-                    context.router.push(SendQuestionRoute());
-                  });
+                  return EmptyHomeWidget(
+                    title: 'Азырынча бир да суроо жок',
+                    description:
+                        'Биринчилерден болуп суроо беруу учун "+" баскычын басыныз',
+                  );
                 }
                 return ListView.separated(
                   itemCount: state.data.length,
@@ -136,6 +104,10 @@ class _HomeViewState extends State<HomeView> {
                   },
                   itemBuilder: (context, index) {
                     final post = state.data[index];
+                    final name = [
+                      post.recipient?.name ?? '',
+                      post.recipient?.surname ?? ''
+                    ].join(" ").trim();
 
                     return Padding(
                       padding: const EdgeInsets.all(12),
@@ -156,9 +128,7 @@ class _HomeViewState extends State<HomeView> {
                                   TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: post.recipient?.name ??
-                                            "" +
-                                                " ${post.recipient?.surname ?? ''}",
+                                        text: name,
                                         style: SurAppTextStyle.fS14FW700,
                                       ),
                                       TextSpan(

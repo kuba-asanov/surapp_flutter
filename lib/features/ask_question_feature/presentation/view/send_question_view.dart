@@ -92,12 +92,11 @@ class _SendQuestioniewState extends State<SendQuestioniew> {
                 onTap: () {
                   showUstazPicker(
                     context,
-                    selectedId: 1,
+                    selectedId: widget.bloc.state.selectedReciter?.id ?? 0,
                     onSelect: (user) {
                       widget.bloc.add(SelectUstazEvent(user));
                     },
                   );
-                  // context.router.push(SelectUstazRoute());
                 },
                 child: BlocBuilder<AskQuestionBloc, AskQuestionState>(
                   buildWhen: (p, c) => p.selectedReciter != c.selectedReciter,
@@ -131,13 +130,12 @@ class _SendQuestioniewState extends State<SendQuestioniew> {
                                           reciter?.username.isNotEmpty == true
                                       ? name
                                       : "Устазды танданыз",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16,
-                                  ),
+                                  style: SurAppTextStyle.fS16FW600,
                                 ),
                                 Text(
-                                  reciter?.username ?? "",
+                                  reciter?.username != null
+                                      ? "@${reciter?.username}"
+                                      : "",
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],
