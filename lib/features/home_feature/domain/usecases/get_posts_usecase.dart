@@ -12,10 +12,19 @@ class GetPostsUsecase extends BaseUseCase<ResponseModel, GetPostsParams> {
 
   @override
   FutureOr<ResponseModel> makeRequest(GetPostsParams params) {
-    return _repository.getPosts();
+    return _repository.getPosts(params);
   }
 }
 
 class GetPostsParams {
-  GetPostsParams();
+  GetPostsParams(this.type, {this.query});
+  final PostType type;
+  final String? query;
+}
+
+enum PostType {
+  myPending,
+  myAnswered,
+  myAnsweredForReciter,
+  allAnswered;
 }

@@ -11,6 +11,9 @@ class AppUrls {
   static const signUp = "/auth/signup";
   static const posts = "/posts";
   static const answeredPosts = "/posts/answered";
+  static const answeredMyPosts = "/posts/my/answered";
+  static const pendingMyPosts = "/posts/my/pending";
+  static const answeredPostsForReciter = "/posts/reciter/answered";
   static const questionsForMe = "/posts/reciter/incoming";
   static  answerToQuestion(id) => "/posts/answer/$id";
   static const getUser = "/users";

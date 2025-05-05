@@ -37,7 +37,6 @@ class AppRouter extends RootStackRouter {
               page: EmptyFirstRoute.page,
               children: [
                 AutoRoute(page: HomeRoute.page),
-                AutoRoute(page: SendQuestionRoute.page),
               ],
             ),
             AutoRoute(
@@ -58,5 +57,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SignUpRoute.page),
         AutoRoute(page: CreatePasswordRoute.page),
         AutoRoute(page: AddPhoneRoute.page),
+        AutoRoute(page: SendQuestionRoute.page),
       ];
 }

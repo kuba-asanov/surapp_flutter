@@ -16,7 +16,7 @@ class GetPostsBloc extends Bloc<GetPostsEvent, GetPostsState> {
     on<GetPostsEvent>((event, emit) async {
       emit(GetPostsLoading());
 
-      final result = await _getPostsUsecase.invoke(GetPostsParams());
+      final result = await _getPostsUsecase.invoke(event.params);
 
       result.fold(
         onFailure: (failure) {

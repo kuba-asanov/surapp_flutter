@@ -23,11 +23,11 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: 'updated_at') required String updatedAt,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, Object?> json) =>
-      _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, Object?> json) => _$UserModelFromJson(json);
 }
 
 extension UserExt on UserModel {
   String get avatarUrl =>
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s";
+  bool get isUstaz => role == 1;
 }

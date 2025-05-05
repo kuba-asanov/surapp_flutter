@@ -74,121 +74,130 @@ class _HomeViewState extends State<HomeView> {
               color: Colors.white,
             ),
           ),
-          body: BlocBuilder<GetPostsBloc, GetPostsState>(
-            bloc: widget.bloc,
-            builder: (context, state) {
-              if (state is GetPostsLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is GetPostsError) {
-                return Center(
-                  child: Text('Error: ${state.errorMessage}'),
-                );
-              }
-              if (state is GetPostsFetched) {
-                if (state.data.isEmpty) {
-                  return EmptyHomeWidget(
-                    title: 'Азырынча бир да суроо жок',
-                    description:
-                        'Биринчилерден болуп суроо беруу учун "+" баскычын басыныз',
-                  );
-                }
-                return ListView.separated(
-                  itemCount: state.data.length,
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      color: Colors.grey,
-                      height: 1,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    final post = state.data[index];
-                    final name = [
-                      post.recipient?.name ?? '',
-                      post.recipient?.surname ?? ''
-                    ].join(" ").trim();
+          body: ListPostsWidget(bloc: widget.bloc),
+        ));
+  }
+}
 
-                    return Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
+class ListPostsWidget extends StatelessWidget {
+  const ListPostsWidget({
+    super.key,
+    required this.bloc,
+  });
+
+  final GetPostsBloc bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GetPostsBloc, GetPostsState>(
+      bloc: bloc,
+      builder: (context, state) {
+        if (state is GetPostsLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is GetPostsError) {
+          return Center(
+            child: Text('Error: ${state.errorMessage}'),
+          );
+        }
+        if (state is GetPostsFetched) {
+          if (state.data.isEmpty) {
+            return EmptyHomeWidget(
+              title: 'Азырынча бир да суроо жок',
+              description: 'Биринчилерден болуп суроо беруу учун "+" баскычын басыныз',
+            );
+          }
+          return ListView.separated(
+            itemCount: state.data.length,
+            separatorBuilder: (context, index) {
+              return Divider(
+                color: Colors.grey,
+                height: 1,
+              );
+            },
+            itemBuilder: (context, index) {
+              final post = state.data[index];
+              final name = [post.recipient?.name ?? '', post.recipient?.surname ?? ''].join(" ").trim();
+
+              return Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      radius: 27,
+                      backgroundImage: NetworkImage(
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s'), // replace with actual avatar
+                    ),
+                    8.toWidth,
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 27,
-                            backgroundImage: NetworkImage(
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s'), // replace with actual avatar
-                          ),
-                          8.toWidth,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          Text.rich(
+                            TextSpan(
                               children: [
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: name,
-                                        style: SurAppTextStyle.fS14FW700,
-                                      ),
-                                      TextSpan(
-                                        text: ' @${post.recipient?.username}',
-                                        style: SurAppTextStyle.fS14FW500,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Суроо:',
+                                TextSpan(
+                                  text: name,
                                   style: SurAppTextStyle.fS14FW700,
                                 ),
-                                SizedBox(height: 8),
-                                ExpandableText(
-                                  post.content,
-                                  style: SurAppTextStyle.fS14FW400,
-                                  maxLines: 3,
-                                  expandText: 'толук коруу',
-                                  collapseText: 'жабуу',
-                                  linkColor: Colors.blue,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  'Жооп:',
-                                  style: SurAppTextStyle.fS14FW700,
-                                ),
-                                SizedBox(height: 8),
-                                ExpandableText(
-                                  post.answer ?? '',
-                                  style: SurAppTextStyle.fS14FW400,
-                                  maxLines: 3,
-                                  expandText: 'толук коруу',
-                                  collapseText: 'жабуу',
-                                  linkColor: Colors.blue,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.ios_share_rounded,
-                                          size: 20),
-                                    ),
-                                  ],
+                                TextSpan(
+                                  text: ' @${post.recipient?.username}',
+                                  style: SurAppTextStyle.fS14FW500,
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Суроо:',
+                            style: SurAppTextStyle.fS14FW700,
+                          ),
+                          SizedBox(height: 8),
+                          ExpandableText(
+                            post.content,
+                            style: SurAppTextStyle.fS14FW400,
+                            maxLines: 3,
+                            expandText: 'толук коруу',
+                            collapseText: 'жабуу',
+                            linkColor: Colors.blue,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Жооп:',
+                            style: SurAppTextStyle.fS14FW700,
+                          ),
+                          SizedBox(height: 8),
+                          ExpandableText(
+                            post.answer ?? '',
+                            style: SurAppTextStyle.fS14FW400,
+                            maxLines: 3,
+                            expandText: 'толук коруу',
+                            collapseText: 'жабуу',
+                            linkColor: Colors.blue,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.ios_share_rounded, size: 20),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                    );
-                  },
-                );
-              }
-              return SizedBox();
+                    ),
+                  ],
+                ),
+              );
             },
-          ),
-        ));
+          );
+        }
+        return SizedBox();
+      },
+    );
   }
 }

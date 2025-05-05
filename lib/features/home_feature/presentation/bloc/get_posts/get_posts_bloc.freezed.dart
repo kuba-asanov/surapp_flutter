@@ -14,48 +14,6 @@ part of 'get_posts_bloc.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$GetPostsEvent {
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is GetPostsEvent);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'GetPostsEvent()';
-  }
-}
-
-/// @nodoc
-class $GetPostsEventCopyWith<$Res> {
-  $GetPostsEventCopyWith(GetPostsEvent _, $Res Function(GetPostsEvent) __);
-}
-
-/// @nodoc
-
-class _Started implements GetPostsEvent {
-  const _Started();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Started);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'GetPostsEvent.started()';
-  }
-}
-
-/// @nodoc
 mixin _$GetPostsState {
   @override
   bool operator ==(Object other) {

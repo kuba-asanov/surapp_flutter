@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:take_it/take_it.dart';
 
@@ -14,10 +15,14 @@ class HomePage extends StatelessWidget {
     return DiScopeBuilder(
       builder: (context, module) {
         return HomeView(
-          bloc: module.get<GetPostsBloc>()..add(GetPostsEvent.started()),
+          bloc: module.get<GetPostsBloc>()
+            ..add(
+              GetPostsEvent(
+                params: GetPostsParams(PostType.allAnswered),
+              ),
+            ),
         );
       },
     );
   }
 }
-  

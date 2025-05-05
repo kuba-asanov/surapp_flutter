@@ -1,40 +1,66 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
+import 'package:surapp_flutter/common/widgets/logout_dialog.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
+import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
+import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/view/home_view.dart';
 
 import '../../../../common/ui_kit/text_styles.dart';
-import '../../../../common/widgets/logout_dialog.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key, required this.bloc});
+  const ProfileView({super.key, required this.bloc, required this.postsUscase});
   final UserBloc bloc;
+  final GetPostsUsecase postsUscase;
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStateMixin {
   final int askedQuestions = 12;
   final int answeredQuestions = 34;
+  late TabController _tabController;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Text("Профиль"),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.settings),
-        //     onPressed: () => context.router.push(SettingsRoute()),
-        //   ),
-        // ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              final resp = await showGeneralDialog(
+                context: context,
+                barrierDismissible: true,
+                barrierLabel: 'LogOutLite',
+                pageBuilder: (context, anim1, anim2) {
+                  return const LogOutDialog();
+                },
+              );
+              if (resp != null) {
+                if (resp == true) {
+                  widget.bloc.add(LogoutUserEvent());
+                }
+              }
+            },
+          ),
+        ],
       ),
       body: BlocConsumer<UserBloc, UserState>(
         bloc: widget.bloc,
@@ -56,11 +82,7 @@ class _ProfileViewState extends State<ProfileView> {
           } else if (state.status.isLoaded) {
             final user = state.user;
             return Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
-                left: 16,
-                right: 16,
-              ),
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: Column(
                 children: [
                   CircleAvatar(
@@ -76,49 +98,91 @@ class _ProfileViewState extends State<ProfileView> {
                     style: SurAppTextStyle.fS18FW600,
                   ),
                   SizedBox(height: 24),
+                  user?.isUstaz ?? false
+                      ? Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.question_answer),
+                              title: Text('Менин жоопторум'),
+                            ),
+                            // Flexible(
+                            //   child: ListPostsWidget(
+                            //     bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
+                            //       ..add(
+                            //         GetPostsEvent(
+                            //           params: GetPostsParams(PostType.myAnsweredForReciter),
+                            //         ),
+                            //       ),
+                            //   ),
+                            // ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            TabBar(
+                              controller: _tabController,
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorColor: Colors.black,
+                              indicatorWeight: 2,
+                              labelColor: Colors.black,
+                              unselectedLabelColor: Colors.grey,
+                              labelStyle: SurAppTextStyle.fS14FW700,
+                              tabs: const [
+                                Tab(text: "Менин суроолорум"),
+                                Tab(text: "Берилген жооптор"),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Expanded(
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  ListPostsWidget(
+                                    bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
+                                      ..add(
+                                        GetPostsEvent(
+                                          params: GetPostsParams(PostType.myPending),
+                                        ),
+                                      ),
+                                  ),
+                                  ListPostsWidget(
+                                    bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
+                                      ..add(
+                                        GetPostsEvent(
+                                          params: GetPostsParams(PostType.myAnswered),
+                                        ),
+                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildStat('Суроолорум', 30, Icons.help_outline),
-                      _buildStat('Жоопторум', 20, Icons.check_circle_outline),
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  ListTile(
-                    leading: Icon(Icons.question_answer,
-                        color: AppColorScheme.primary),
-                    title: Text(
-                      'Менин суроолорум  \nМенин жоопторум',
-                      style: SurAppTextStyle.fS16FW500,
-                    ),
-                    onTap: () {},
-                  ),
+                  // ListTile(
+                  //   leading: Icon(Icons.logout, color: Colors.red),
+                  //   title: Text('Чыгуу',
+                  //       style: TextStyle(color: Colors.red, fontSize: 16)),
+                  //   onTap: () async {
+                  //     final resp = await showGeneralDialog(
+                  //       context: context,
+                  //       barrierDismissible: true,
+                  //       barrierLabel: 'LogOutLite',
+                  //       pageBuilder: (context, anim1, anim2) {
+                  //         return const LogOutDialog();
+                  //       },
+                  //     );
+                  //     if (resp != null) {
+                  //       if (resp == true) {
+                  //         log("loggedout");
+                  //         widget.bloc.add(LogoutUserEvent());
 
-                  ListTile(
-                    leading: Icon(Icons.logout, color: Colors.red),
-                    title: Text('Чыгуу',
-                        style: TextStyle(color: Colors.red, fontSize: 16)),
-                    onTap: () async {
-                      final resp = await showGeneralDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        barrierLabel: 'LogOutLite',
-                        pageBuilder: (context, anim1, anim2) {
-                          return const LogOutDialog();
-                        },
-                      );
-                      if (resp != null) {
-                        if (resp == true) {
-                          log("loggedout");
-                          widget.bloc.add(LogoutUserEvent());
-
-                          // ignore: use_build_context_synchronously
-                          // context.read<LoginBloc>().add(const LoginEvent.logOut());
-                        }
-                      }
-                    },
-                  ),
+                  //         // ignore: use_build_context_synchronously
+                  //         // context.read<LoginBloc>().add(const LoginEvent.logOut());
+                  //       }
+                  //     }
+                  //   },
+                  // ),
 
                   // Delete account button
                   // ListTile(
@@ -142,17 +206,6 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
   }
-}
-
-Widget _buildStat(String label, int count, IconData icon) {
-  return Column(
-    children: [
-      Icon(icon, size: 30, color: AppColorScheme.primary),
-      SizedBox(height: 4),
-      Text('$count', style: SurAppTextStyle.fS16FW500),
-      Text(label, style: TextStyle(color: Colors.black)),
-    ],
-  );
 }
 
 // Future<bool?> showDeleteBottomSheet({

@@ -29,7 +29,7 @@ class App extends StatelessWidget {
               theme: ThemeData(
                 fontFamily: AppTextStyles.defaultFontFamily,
               ),
-              darkTheme: ThemeData.dark(),
+              darkTheme: ThemeData.light(),
               themeMode: state.themeMode,
               routerConfig: _appRouter.config(
                 navigatorObservers: () => [AutoRouteObserver()],

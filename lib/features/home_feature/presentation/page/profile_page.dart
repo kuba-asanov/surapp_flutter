@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:take_it/take_it.dart';
 
@@ -15,6 +16,7 @@ class ProfilePage extends StatelessWidget {
       builder: (context, module) {
         return ProfileView(
           bloc: module.get<UserBloc>(),
+          postsUscase: module.get<GetPostsUsecase>(),
         );
       },
     );
