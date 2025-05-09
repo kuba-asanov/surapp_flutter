@@ -17,9 +17,14 @@ class GetPostsUsecase extends BaseUseCase<ResponseModel, GetPostsParams> {
 }
 
 class GetPostsParams {
-  GetPostsParams(this.type, {this.query});
+  GetPostsParams(
+    this.type, {
+    this.query,
+    this.categories,
+  });
   final PostType type;
   final String? query;
+  final List<int>? categories;
 }
 
 enum PostType {

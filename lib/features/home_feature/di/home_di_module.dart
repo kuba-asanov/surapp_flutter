@@ -1,3 +1,5 @@
+import 'package:surapp_flutter/features/home_feature/domain/usecases/get_categories_usercase.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_categories/get_categories_bloc.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:take_it/take_it.dart';
 
@@ -33,11 +35,21 @@ class HomeDiModule extends DiModule {
           get<HomeRepository>(),
         ),
       )
+      ..registerFactory<GetCategoriesUsecase>(
+        () => GetCategoriesUsecase(
+          get<HomeRepository>(),
+        ),
+      )
       // Presentation
       //
       ..registerFactory<GetPostsBloc>(
         () => GetPostsBloc(
           getPostsUsecase: get<GetPostsUsecase>(),
+        ),
+      )
+      ..registerFactory<GetCategoriesBloc>(
+        () => GetCategoriesBloc(
+          usercase: get<GetCategoriesUsecase>(),
         ),
       );
   }

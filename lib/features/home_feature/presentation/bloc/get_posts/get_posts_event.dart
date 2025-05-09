@@ -7,3 +7,8 @@ class GetPostsEvent extends PostsEvent {
 
   final GetPostsParams params;
 }
+class AddRemoveCategoryEvent extends PostsEvent {
+  AddRemoveCategoryEvent({required this.category});
+
+  final int category;
+}

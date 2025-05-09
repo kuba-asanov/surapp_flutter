@@ -5,6 +5,7 @@ import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_u
 
 import '../../domain/repository_interfaces/home_repository.dart';
 import '../data_sources/remote/home_remote_data_source.dart';
+import '../models/response_categories/response_categories_model.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   HomeRepositoryImpl({
@@ -22,10 +23,14 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<ResponseModel> getQuestions() {
     return _remoteDataSource.getQuestions();
   }
-  
+
   @override
   Future<void> answerToQuestion(AnswerToQuestionParams params) {
     return _remoteDataSource.answerToQuestion(params);
   }
-  
+
+  @override
+  Future<ResponseCategoriesModel> getCategories() {
+    return _remoteDataSource.getCategories();
+  }
 }

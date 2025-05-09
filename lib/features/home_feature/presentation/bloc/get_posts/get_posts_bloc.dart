@@ -6,26 +6,45 @@ import '../../../domain/usecases/get_posts_usecase.dart';
 
 part 'get_posts_event.dart';
 part 'get_posts_state.dart';
+part 'get_posts_status.dart';
 part 'get_posts_bloc.freezed.dart';
 
-class GetPostsBloc extends Bloc<GetPostsEvent, GetPostsState> {
+class GetPostsBloc extends Bloc<PostsEvent, GetPostsState> {
   GetPostsBloc({
     required GetPostsUsecase getPostsUsecase,
   })  : _getPostsUsecase = getPostsUsecase,
         super(GetPostsState.initial()) {
     on<GetPostsEvent>((event, emit) async {
-      emit(GetPostsLoading());
+      emit(state.copyWith(status: GetPostsStatus.loading));
 
       final result = await _getPostsUsecase.invoke(event.params);
 
       result.fold(
         onFailure: (failure) {
-          emit(GetPostsError(errorMessage: failure.message));
+          emit(
+            state.copyWith(errorMessage: failure.message),
+          );
         },
         onSuccess: (data) {
-          emit(GetPostsFetched(data: data.data));
+          emit(state.copyWith(
+            data: data.data,
+            status: GetPostsStatus.loaded,
+          ));
         },
       );
+    });
+    on<AddRemoveCategoryEvent>((event, emit) async {
+      emit(state.copyWith(
+        categories: state.categories.contains(event.category)
+            ? state.categories.where((e) => e != event.category).toList()
+            : [...state.categories, event.category],
+      ));
+      add(GetPostsEvent(
+        params: GetPostsParams(
+          PostType.allAnswered,
+          categories: state.categories,
+        ),
+      ));
     });
   }
   final GetPostsUsecase _getPostsUsecase;

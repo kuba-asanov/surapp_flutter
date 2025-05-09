@@ -7,10 +7,12 @@ class AskQuestionRequest {
   const AskQuestionRequest(
     this.content,
     this.recipientId,
+    this.categoryIds,
   );
 
   final String content;
   final int recipientId;
+  final List<int>? categoryIds;
 
   Map<String, dynamic> toJson() => _$AskQuestionRequestToJson(this);
 }

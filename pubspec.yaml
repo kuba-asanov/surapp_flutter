@@ -38,6 +38,7 @@ dependencies:
   jwt_decode: ^0.3.1
   expandable_text: ^2.3.0
   lottie: ^3.3.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

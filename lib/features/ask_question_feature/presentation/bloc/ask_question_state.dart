@@ -6,6 +6,7 @@ abstract class AskQuestionState with _$AskQuestionState {
     required AskQuestionStatus status,
     @Default("") String question,
     final UserModel? selectedReciter,
+    @Default([]) List<int> categories,
   }) = _AskQuestionState;
 
   factory AskQuestionState.initial() =>

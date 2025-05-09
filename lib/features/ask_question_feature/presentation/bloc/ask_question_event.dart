@@ -19,6 +19,12 @@ class TextChangedEvent extends AskQuestionEvent {
   final String text;
 }
 
+class AddRemoveCategoryEvent extends AskQuestionEvent {
+  const AddRemoveCategoryEvent(this.categoryId);
+
+  final int categoryId;
+}
+
 
 
 class CreateQuestionEvent extends AskQuestionEvent {

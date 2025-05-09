@@ -7,9 +7,9 @@ import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_
 import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/view/home_view.dart';
 
 import '../../../../common/ui_kit/text_styles.dart';
+import '../widgets/list_posts_widget.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key, required this.bloc, required this.postsUscase});

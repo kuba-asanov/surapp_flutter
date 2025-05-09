@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:surapp_flutter/features/home_feature/data/models/response_categories/response_categories_model.dart';
 import 'package:surapp_flutter/features/home_feature/domain/usecases/answer_to_question_usecase.dart';
 import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
 
@@ -11,6 +12,7 @@ abstract interface class HomeRemoteDataSource {
   Future<ResponseModel> getPosts(GetPostsParams params);
   Future<ResponseModel> getQuestions();
   Future<void> answerToQuestion(AnswerToQuestionParams params);
+  Future<ResponseCategoriesModel> getCategories();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -29,7 +31,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         PostType.myAnsweredForReciter => AppUrls.answeredPostsForReciter,
         _ => AppUrls.answeredPosts,
       },
-      params: {'orderField': 'created_at', 'order': 'desc'},
+      params: {
+        'orderField': 'created_at',
+        'order': 'desc',
+        'query': params.query,
+        'categories': params.categories?.join(','),
+      },
       parser: ObjectParser(ResponseModel.fromJson),
     );
   }
@@ -51,6 +58,14 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     return _restClientService.patch(
       AppUrls.answerToQuestion(params.id),
       body: {'answer': params.answer},
+    );
+  }
+
+  @override
+  Future<ResponseCategoriesModel> getCategories() {
+    return _restClientService.get(
+      AppUrls.getCategories,
+      parser: ObjectParser(ResponseCategoriesModel.fromJson),
     );
   }
 }

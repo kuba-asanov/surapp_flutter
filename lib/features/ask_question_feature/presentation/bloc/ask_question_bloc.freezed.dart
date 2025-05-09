@@ -18,6 +18,7 @@ mixin _$AskQuestionState {
   AskQuestionStatus get status;
   String get question;
   UserModel? get selectedReciter;
+  List<int> get categories;
 
   /// Create a copy of AskQuestionState
   /// with the given fields replaced by the non-null parameter values.
@@ -36,16 +37,18 @@ mixin _$AskQuestionState {
             (identical(other.question, question) ||
                 other.question == question) &&
             (identical(other.selectedReciter, selectedReciter) ||
-                other.selectedReciter == selectedReciter));
+                other.selectedReciter == selectedReciter) &&
+            const DeepCollectionEquality()
+                .equals(other.categories, categories));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, question, selectedReciter);
+  int get hashCode => Object.hash(runtimeType, status, question,
+      selectedReciter, const DeepCollectionEquality().hash(categories));
 
   @override
   String toString() {
-    return 'AskQuestionState(status: $status, question: $question, selectedReciter: $selectedReciter)';
+    return 'AskQuestionState(status: $status, question: $question, selectedReciter: $selectedReciter, categories: $categories)';
   }
 }
 
@@ -56,7 +59,10 @@ abstract mixin class $AskQuestionStateCopyWith<$Res> {
       _$AskQuestionStateCopyWithImpl;
   @useResult
   $Res call(
-      {AskQuestionStatus status, String question, UserModel? selectedReciter});
+      {AskQuestionStatus status,
+      String question,
+      UserModel? selectedReciter,
+      List<int> categories});
 
   $UserModelCopyWith<$Res>? get selectedReciter;
 }
@@ -77,6 +83,7 @@ class _$AskQuestionStateCopyWithImpl<$Res>
     Object? status = null,
     Object? question = null,
     Object? selectedReciter = freezed,
+    Object? categories = null,
   }) {
     return _then(_self.copyWith(
       status: null == status
@@ -91,6 +98,10 @@ class _$AskQuestionStateCopyWithImpl<$Res>
           ? _self.selectedReciter
           : selectedReciter // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      categories: null == categories
+          ? _self.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 
@@ -113,8 +124,12 @@ class _$AskQuestionStateCopyWithImpl<$Res>
 
 class _AskQuestionState extends AskQuestionState {
   const _AskQuestionState(
-      {required this.status, this.question = "", this.selectedReciter})
-      : super._();
+      {required this.status,
+      this.question = "",
+      this.selectedReciter,
+      final List<int> categories = const []})
+      : _categories = categories,
+        super._();
 
   @override
   final AskQuestionStatus status;
@@ -123,6 +138,14 @@ class _AskQuestionState extends AskQuestionState {
   final String question;
   @override
   final UserModel? selectedReciter;
+  final List<int> _categories;
+  @override
+  @JsonKey()
+  List<int> get categories {
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categories);
+  }
 
   /// Create a copy of AskQuestionState
   /// with the given fields replaced by the non-null parameter values.
@@ -141,16 +164,18 @@ class _AskQuestionState extends AskQuestionState {
             (identical(other.question, question) ||
                 other.question == question) &&
             (identical(other.selectedReciter, selectedReciter) ||
-                other.selectedReciter == selectedReciter));
+                other.selectedReciter == selectedReciter) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, question, selectedReciter);
+  int get hashCode => Object.hash(runtimeType, status, question,
+      selectedReciter, const DeepCollectionEquality().hash(_categories));
 
   @override
   String toString() {
-    return 'AskQuestionState(status: $status, question: $question, selectedReciter: $selectedReciter)';
+    return 'AskQuestionState(status: $status, question: $question, selectedReciter: $selectedReciter, categories: $categories)';
   }
 }
 
@@ -163,7 +188,10 @@ abstract mixin class _$AskQuestionStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {AskQuestionStatus status, String question, UserModel? selectedReciter});
+      {AskQuestionStatus status,
+      String question,
+      UserModel? selectedReciter,
+      List<int> categories});
 
   @override
   $UserModelCopyWith<$Res>? get selectedReciter;
@@ -185,6 +213,7 @@ class __$AskQuestionStateCopyWithImpl<$Res>
     Object? status = null,
     Object? question = null,
     Object? selectedReciter = freezed,
+    Object? categories = null,
   }) {
     return _then(_AskQuestionState(
       status: null == status
@@ -199,6 +228,10 @@ class __$AskQuestionStateCopyWithImpl<$Res>
           ? _self.selectedReciter
           : selectedReciter // ignore: cast_nullable_to_non_nullable
               as UserModel?,
+      categories: null == categories
+          ? _self._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 

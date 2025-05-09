@@ -9,7 +9,7 @@ abstract class DataParser<T> {
 
 class ListParser<T> implements DataParser<List<T>> {
   ListParser(
-    this._converter, {
+    this._converter, Function(dynamic json) param1, {
     this.forKey,
   });
 

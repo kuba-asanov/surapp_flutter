@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,6 +21,14 @@ class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
     on<SelectUstazEvent>(_onSelectUstaz);
     on<TextChangedEvent>(_onTextChanged);
     on<CreateQuestionEvent>(_onCreateQuestion);
+    on<AddRemoveCategoryEvent>((event, emit) {
+      emit(state.copyWith(
+        categories: state.categories.contains(event.categoryId)
+            ? state.categories.where((e) => e != event.categoryId).toList()
+            : [...state.categories, event.categoryId],
+      ));
+      log(state.categories.toString());
+    });
   }
 
   final AskQuestionUsecase _askQuestionUsecase;
@@ -29,8 +39,11 @@ class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
     if (reciterId != null) {
       emit(state.copyWith(status: AskQuestionStatus.loading));
 
-      final result = await _askQuestionUsecase
-          .invoke(AskQuestionRequest(state.question, reciterId));
+      final result = await _askQuestionUsecase.invoke(AskQuestionRequest(
+        state.question,
+        reciterId,
+        state.categories,
+      ));
 
       result.fold(
         onFailure: (failure) {},
