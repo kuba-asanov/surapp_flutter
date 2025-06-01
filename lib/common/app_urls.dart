@@ -15,7 +15,7 @@ class AppUrls {
   static const pendingMyPosts = "/posts/my/pending";
   static const answeredPostsForReciter = "/posts/reciter/answered";
   static const questionsForMe = "/posts/reciter/incoming";
-  static answerToQuestion(id) => "/posts/answer/$id";
+  static String answerToQuestion(id) => "/posts/answer/$id";
   static const getUser = "/users";
   static const reciters = "/users/reciters";
   static const getCategories = "/categories";

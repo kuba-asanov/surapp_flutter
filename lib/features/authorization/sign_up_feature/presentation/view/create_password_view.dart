@@ -7,8 +7,8 @@ import '../../../../../common/widgets/buttons/app_button.dart';
 import '../../../../../core/navigation/auto_router.dart';
 
 class CreatePasswordView extends StatefulWidget {
-  final String username;
   const CreatePasswordView({super.key, required this.username});
+  final String username;
 
   @override
   State<CreatePasswordView> createState() => _CreatePasswordViewState();
@@ -29,9 +29,9 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
       return;
     }
 
-    if (password.length < 6) {
+    if (password.length < 4) {
       setState(() {
-        _errorText = 'Сырсөз кеминде 6 тамгадан турушу керек';
+        _errorText = 'Сырсөз кеминде 4 символдон турушу керек';
       });
       return;
     }
@@ -66,13 +66,13 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Сырсөздү ойлоп көрүңүз",
+              "Сырсөздү түзүңүз",
               style: SurAppTextStyle.fS24FW700,
               textAlign: TextAlign.center,
             ),
             16.toHeight,
             Text(
-              "Сырсөздү түзүңүз",
+              "Сырсөз кеминде 4 символдон турушу керек",
               style:
                   SurAppTextStyle.fS14FW500.copyWith(color: Color(0xFFC7C7CC)),
               textAlign: TextAlign.center,
@@ -92,40 +92,7 @@ class _CreatePasswordViewState extends State<CreatePasswordView> {
                 ),
               ),
             ),
-            16.toHeight,
-            InkWell(
-              onTap: () {
-                setState(() {
-                  isChecked = !isChecked;
-                });
-              },
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: Checkbox(
-                      value: isChecked,
-                      onChanged: (value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                      activeColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ),
-                  12.toWidth,
-                  const Text(
-                    'Сырсөздү сактоо',
-                    style: TextStyle(color: Color(0xFF8E8E93), fontSize: 13),
-                  ),
-                ],
-              ),
-            ),
-            16.toHeight,
+            26.toHeight,
             AppButton.primary(
               onPressed: _validateAndContinue,
               isLoading: false,

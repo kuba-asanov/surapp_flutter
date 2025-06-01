@@ -113,7 +113,7 @@ class _AddPhoneViewState extends State<AddPhoneView>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Телефон номерин же электрондук  дарегин кошуңуз",
+                  "Телефон номериңизди же электрондук дарегиңизди кошуңуз",
                   style: SurAppTextStyle.fS24FW700,
                   textAlign: TextAlign.center,
                 ),
@@ -183,7 +183,7 @@ class _AddPhoneViewState extends State<AddPhoneView>
                     keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: "707899889",
+                      hintText: "777000000",
                     ),
                     validator: (value) {
                       final trimmed = value?.trim() ?? '';
@@ -223,7 +223,7 @@ class _AddPhoneViewState extends State<AddPhoneView>
                   }
                 },
                 isLoading: state.status.isLoading,
-                child: Text('Жөнөтүү'),
+                child: Text('Улантуу'),
               );
             },
           ),
@@ -244,7 +244,7 @@ class _AddPhoneViewState extends State<AddPhoneView>
                 controller: emailController,
                 style: SurAppTextStyle.fS15FW500,
                 decoration: InputDecoration(
-                  hintText: 'Введите ваш электронный адрес',
+                  hintText: 'Электрондук дарегиңизди киргизиңиз',
                   filled: true,
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(

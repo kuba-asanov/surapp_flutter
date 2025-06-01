@@ -22,13 +22,13 @@ class _SignUpViewState extends State<SignUpView> {
 
     if (username.isEmpty) {
       setState(() {
-        _errorText = 'Колдонуучу атын жазыңыз';
+        _errorText = 'Логин жазыңыз';
       });
       return;
     }
     if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(username)) {
       setState(() {
-        _errorText = 'Ат англис тамгалары менен гана болушу керек';
+        _errorText = 'Логин англис тамгалары менен гана болушу керек';
       });
       return;
     }
@@ -62,13 +62,13 @@ class _SignUpViewState extends State<SignUpView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Колдонуучу атын түзүү",
+              "Жаңы колдонуучу түзүү",
               style: SurAppTextStyle.fS24FW700,
               textAlign: TextAlign.center,
             ),
             16.toHeight,
             Text(
-              "Жаңы каттоо эсебиңиз үчүн колдонуучу атын жазыңыз.",
+              "Жаңы каттоо эсебиңиз үчүн логин жазыңыз.",
               style:
                   SurAppTextStyle.fS14FW500.copyWith(color: Color(0xFFC7C7CC)),
               textAlign: TextAlign.center,
@@ -78,7 +78,7 @@ class _SignUpViewState extends State<SignUpView> {
               controller: _controller,
               style: SurAppTextStyle.fS15FW500,
               decoration: InputDecoration(
-                hintText: 'Колдонуучу аты',
+                hintText: 'Логин',
                 errorText: _errorText,
                 filled: true,
                 fillColor: Colors.grey[200],
@@ -88,8 +88,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            const SizedBox(height: 10),
+            const SizedBox(height: 26),
             AppButton.primary(
               onPressed: _validateAndContinue,
               child: Text('Улантуу'),

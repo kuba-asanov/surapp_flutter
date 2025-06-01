@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   controller: userNameController,
                   style: SurAppTextStyle.fS15FW500,
                   decoration: InputDecoration(
-                    hintText: 'Телефон, колдонуучунун аты',
+                    hintText: 'Логин',
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(
@@ -109,7 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: TextButton(
                     onPressed: () {},
                     child: const Text(
-                      'купуя созду унуттуңузбу?',
+                      'Купуя сөздү унуттуңузбу?',
                       style: TextStyle(color: Colors.blue),
                     ),
                   ),

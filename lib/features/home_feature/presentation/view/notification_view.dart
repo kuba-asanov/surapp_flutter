@@ -80,8 +80,7 @@ class NotificationView extends StatelessWidget {
                                     children: [
                                       TextSpan(
                                         text: question.author.name ??
-                                            "" +
-                                                " ${question.author.surname ?? ''}",
+                                            "" " ${question.author.surname ?? ''}",
                                         style: SurAppTextStyle.fS14FW700,
                                       ),
                                       TextSpan(
