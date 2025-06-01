@@ -5,5 +5,5 @@ class ImageAppAssets {
     return 'assets/images/$path.png';
   }
 
-  String get flutterLogo => _path("flutter_logo");
+  String get logo => _path("logo");
 }

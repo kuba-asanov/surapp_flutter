@@ -3,6 +3,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/app_assets/app_assets.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
 import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
@@ -23,7 +24,7 @@ class NotificationView extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Column(
           children: [
-            SvgPicture.asset('assets/images/mosque.svg'),
+            SvgPicture.asset(AppAssets.svg.mosque),
             Text(
               "Берилген суроолор",
               style: SurAppTextStyle.fS18FW600,

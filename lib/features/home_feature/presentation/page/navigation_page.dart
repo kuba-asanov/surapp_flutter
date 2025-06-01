@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/app_assets/app_assets.dart';
 import 'package:surapp_flutter/features/home_feature/di/home_di_module.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:take_it/take_it.dart';
@@ -98,7 +99,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
     items: [
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
-          'assets/images/navbar1icon.svg',
+          AppAssets.svg.navbar1icon,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
@@ -114,7 +115,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
       if (isUstaz)
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            'assets/images/navbar2icon.svg',
+            AppAssets.svg.navbar2icon,
             width: 24,
             height: 24,
             colorFilter: ColorFilter.mode(
@@ -128,7 +129,7 @@ Widget buildBottomNavigationBar(BuildContext context, TabsRouter tabsRouter,
         ),
       BottomNavigationBarItem(
         icon: SvgPicture.asset(
-          'assets/images/navbar3icon.svg',
+          AppAssets.svg.navbar3icon,
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(

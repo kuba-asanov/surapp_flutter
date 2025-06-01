@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/app_assets/app_assets.dart';
 import 'package:surapp_flutter/common/ui_kit/focus_remover/app_focus_remover.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
 import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
@@ -70,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/images/mosque.svg',
+                  AppAssets.svg.mosque,
                   height: 60,
                   width: 60,
                 ),

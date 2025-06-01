@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:surapp_flutter/common/app_assets/app_assets.dart';
 
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/search_field/search_field.dart';
@@ -58,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
           toolbarHeight: 120,
           title: Column(
             children: [
-              SvgPicture.asset('assets/images/mosque.svg'),
+              SvgPicture.asset(AppAssets.svg.mosque),
               24.toHeight,
               SearchField(
                 placeholder: "Издоо",

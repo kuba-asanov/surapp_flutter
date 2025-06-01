@@ -39,6 +39,7 @@ dependencies:
   expandable_text: ^2.3.0
   lottie: ^3.3.1
   shimmer: ^3.0.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ flutter:
   generate: true
 
   assets:
+    - assets/icons/
     - assets/images/
     - assets/animations/
 
