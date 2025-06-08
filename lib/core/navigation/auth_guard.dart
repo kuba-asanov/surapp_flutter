@@ -1,16 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
-import 'package:surapp_flutter/core/storage/secure_storage_impl.dart';
 
 class AuthGuard extends AutoRouteGuard {
+  AuthGuard({required this.secureStorage});
+
+  final SecureStorage secureStorage;
+  
   @override
   Future<void> onNavigation(
-      NavigationResolver resolver, StackRouter router) async {
+    NavigationResolver resolver,
+    StackRouter router,
+  ) async {
     // the navigation is paused until resolver.next() is called with either
     // true to resume/continue navigation or false to abort navigation
-    final token =
-        await SecureStorageImpl().getValue(SecureStorageKey.authToken);
+    final token = await secureStorage.getValue(SecureStorageKey.authToken);
     if (token?.isNotEmpty ?? false) {
       // if user is authenticated we continue
       resolver.next(true);

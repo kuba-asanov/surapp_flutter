@@ -16,6 +16,7 @@ abstract class LocalStorage {
 
 enum LocalStorageKey {
   themeMode('themeMode'),
+  isFirstRun('isFirstRun'),
   locale('locale');
 
   const LocalStorageKey(this.title);

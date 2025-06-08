@@ -3,12 +3,26 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:surapp_flutter/common/utils/data_parser.dart';
 import 'package:surapp_flutter/common/utils/try_or_utils.dart';
+import 'package:surapp_flutter/core/storage/local_storage.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
 
 class SecureStorageImpl implements SecureStorage {
+  SecureStorageImpl({required this.localStorage});
+
   final FlutterSecureStorage _storage = const FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
   );
+
+  final LocalStorage localStorage;
+
+  @override
+  Future<void> init() async {
+    if (localStorage.getBool(LocalStorageKey.isFirstRun) ?? true) {
+      await deleteAllValues();
+
+      localStorage.setBool(LocalStorageKey.isFirstRun, false);
+    }
+  }
 
   @override
   Future<String?> getValue(SecureStorageKey key) async {

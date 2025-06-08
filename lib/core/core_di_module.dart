@@ -38,14 +38,16 @@ class CoreDiModule extends DiModuleAsync {
         LocalStorageImpl(sharedPreferences),
       )
       ..registerSingleton<SecureStorage>(
-        SecureStorageImpl(),
-      )
-
-      /// Data
-      ///
-      ..registerSingleton<SettingsService>(
-        SettingsService(localStorage: get<LocalStorage>()),
+        SecureStorageImpl(localStorage: get<LocalStorage>()),
       );
+
+    await get<SecureStorage>().init();
+
+    /// Data
+    ///
+    it.registerSingleton<SettingsService>(
+      SettingsService(localStorage: get<LocalStorage>()),
+    );
 
     final themeMode = await get<SettingsService>().themeMode();
     final locale = await get<SettingsService>().locale();

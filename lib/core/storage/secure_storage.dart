@@ -1,6 +1,8 @@
 import 'package:surapp_flutter/common/utils/data_parser.dart';
 
 abstract class SecureStorage {
+  Future<void> init();
+
   Future<String?> getValue(SecureStorageKey key);
 
   Future<void> setValue(SecureStorageKey key, String value);

@@ -2,6 +2,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:surapp_flutter/core/navigation/auth_guard.dart';
+import 'package:surapp_flutter/core/storage/secure_storage.dart';
 import 'package:surapp_flutter/features/home_feature/data/models/post_model/post_model.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_questions/get_questions_bloc.dart';
 
@@ -25,13 +26,17 @@ part 'auto_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen,Route')
 class AppRouter extends RootStackRouter {
+  AppRouter({required this.secureStorage});
+
+  final SecureStorage secureStorage;
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: SignInRoute.page),
         AutoRoute(
           page: NavigationRoute.page,
           initial: true,
-          guards: [AuthGuard()],
+          guards: [AuthGuard(secureStorage: secureStorage)],
           children: [
             AutoRoute(
               page: EmptyFirstRoute.page,
