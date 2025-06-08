@@ -3,9 +3,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import 'package:surapp_flutter/common/utils/widget_ext.dart';
-import 'package:surapp_flutter/core/navigation/auto_router.dart';
 
 import '../../../../../common/ui_kit/focus_remover/app_focus_remover.dart';
 import '../../../../../common/ui_kit/text_styles.dart';
@@ -57,27 +57,8 @@ class _AddPhoneViewState extends State<AddPhoneView>
       listenWhen: (p, c) => p.status != c.status,
       listener: (context, state) {
         if (state.status.isLoaded) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text("Ийгилик"),
-              content: const Text("Каттоо ийгиликтүү аяктады."),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("ОК"),
-                ),
-              ],
-            ),
-          ).then((value) {
-            context.router.replaceAll([
-              SignInRoute(
-                onResult: (p0) => false,
-              )
-            ]);
-          });
+          SmartDialog.showToast("Каттоо ийгиликтүү аяктады.");
+          context.router.popUntilRoot();
         } else if (state.status.isFailure) {
           showDialog(
             context: context,

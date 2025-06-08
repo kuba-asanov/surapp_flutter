@@ -1,7 +1,7 @@
 class AppUrls {
   AppUrls._();
 
-  static const baseUrl = "http://52.59.233.217:9000";
+  static const baseUrl = "http://44.248.37.241:9000";
 
   static const agreement = "$baseUrl/api/agreement.html";
   static const privacyPolicy = "$baseUrl/api/privacy-policy.html";

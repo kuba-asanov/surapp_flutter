@@ -26,7 +26,7 @@ class SignInRepositoryImpl implements SignInRepository {
         params.password,
       ),
     );
-    _secureStorage.setValue(SecureStorageKey.authToken, response.accessToken);
+    await _secureStorage.setValue(SecureStorageKey.authToken, response.accessToken);
     return response.toEntity();
   }
 }

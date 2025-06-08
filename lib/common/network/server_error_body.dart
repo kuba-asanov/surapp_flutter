@@ -6,7 +6,7 @@ class ServerErrorBody {
 
   factory ServerErrorBody.fromJson(Map<String, dynamic> json) =>
       ServerErrorBody(
-        code: json["code"],
+        code: json["error"],
         message: json["message"],
       );
   final String code;

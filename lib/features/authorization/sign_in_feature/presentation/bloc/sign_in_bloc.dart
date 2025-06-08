@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:surapp_flutter/common/network/app_failure.dart';
+import 'package:surapp_flutter/core/utils/commands_bloc.dart';
 
 import '../../domain/usecases/get_some_data_usecase.dart';
 
@@ -10,8 +12,10 @@ part 'sign_in_bloc.freezed.dart';
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 part 'sign_in_status.dart';
+part 'sign_in_ui_commands.dart';
 
-class SignInBloc extends Bloc<SignInEvent, SignInState> {
+class SignInBloc
+    extends CommandsBloc<SignInEvent, SignInState, SignInUiCommands> {
   SignInBloc({
     required SignInUseCase signInUsecase,
   })  : _signInUsecase = signInUsecase,
@@ -34,10 +38,18 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     );
 
     result.fold(
-        onFailure: (failure) {},
-        onSuccess: (data) {
-          emit(SignInState(status: SignInStatus.loaded));
-        });
+      onFailure: (failure) {
+        emit(state.copyWith(status: SignInStatus.failure));
+        addUiCommand(
+          ShowToastUiCommand(
+            type: ToastType.getErrorFromAppFailure(failure),
+          ),
+        );
+      },
+      onSuccess: (data) {
+        emit(state.copyWith(status: SignInStatus.loaded));
+      },
+    );
   }
 
   FutureOr<void> _onUserNameChanged(UserNameChangedEvent event, Emitter emit) {

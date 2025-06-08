@@ -18,15 +18,9 @@ class HomePage extends StatelessWidget {
       builder: (context, module) {
         return HomeView(
           postBloc: module.get<GetPostsBloc>()
-            ..add(
-              GetPostsEvent(
-                params: GetPostsParams(PostType.allAnswered,),
-              ),
-            ),
+            ..add(GetPostsEvent(params: GetPostsParams(PostType.allAnswered))),
           categoriesBloc: module.get<GetCategoriesBloc>()
-            ..add(
-              GetCategoriesEvent.started(),
-            ),
+            ..add(GetCategoriesEvent.started()),
         );
       },
     );

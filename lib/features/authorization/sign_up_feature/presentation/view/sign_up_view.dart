@@ -68,7 +68,7 @@ class _SignUpViewState extends State<SignUpView> {
             ),
             16.toHeight,
             Text(
-              "Жаңы каттоо эсебиңиз үчүн логин жазыңыз.",
+              "Каттоо үчүн логин жазыңыз.",
               style:
                   SurAppTextStyle.fS14FW500.copyWith(color: Color(0xFFC7C7CC)),
               textAlign: TextAlign.center,
@@ -78,7 +78,11 @@ class _SignUpViewState extends State<SignUpView> {
               controller: _controller,
               style: SurAppTextStyle.fS15FW500,
               decoration: InputDecoration(
-                hintText: 'Логин',
+                prefixIcon: IconButton(
+                  onPressed: () {},
+                  icon: Text("@"),
+                ),
+                hintText: 'login',
                 errorText: _errorText,
                 filled: true,
                 fillColor: Colors.grey[200],
