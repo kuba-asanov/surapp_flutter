@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:surapp_flutter/common/network/app_failure.dart';
+import 'package:surapp_flutter/core/utils/commands_bloc.dart';
 import 'package:surapp_flutter/features/ask_question_feature/domain/models/ask_question_request.dart';
 import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
 
@@ -12,8 +14,10 @@ part 'ask_question_bloc.freezed.dart';
 part 'ask_question_event.dart';
 part 'ask_question_state.dart';
 part 'ask_question_status.dart';
+part 'ask_question_ui_commands.dart';
 
-class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
+class AskQuestionBloc extends CommandsBloc<AskQuestionEvent, AskQuestionState,
+    AskQuestionUiCommands> {
   AskQuestionBloc({
     required AskQuestionUsecase askQuestionUsecase,
   })  : _askQuestionUsecase = askQuestionUsecase,
@@ -46,11 +50,13 @@ class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
       ));
 
       result.fold(
-        onFailure: (failure) {},
-        onSuccess: (data) => emit(
-          state.copyWith(status: AskQuestionStatus.loaded),
-        ),
-      );
+          onFailure: (failure) {},
+          onSuccess: (data) {
+            emit(state.copyWith(status: AskQuestionStatus.loaded));
+            addUiCommand(ShowToastUiCommand(type: ToastType.created));
+          });
+    } else {
+      addUiCommand(ShowToastUiCommand(type: ToastType.ustazRequired));
     }
   }
 

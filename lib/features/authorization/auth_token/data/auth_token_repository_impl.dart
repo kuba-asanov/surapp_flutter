@@ -19,8 +19,7 @@ class AuthTokenRepositoryImpl implements AuthTokenRepository {
   @override
   Future<bool> isAuthorized() async {
     final token = await secureStorage.getValue(SecureStorageKey.authToken);
-    var payload = token != null ? Jwt.parseJwt(token) : null;
-    print("__________________________________$payload");
+    print("__________________________________$token");
     return token?.isNotEmpty ?? false;
   }
 
