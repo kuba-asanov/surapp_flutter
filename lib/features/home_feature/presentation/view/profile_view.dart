@@ -20,7 +20,8 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStateMixin {
+class _ProfileViewState extends State<ProfileView>
+    with SingleTickerProviderStateMixin {
   final int askedQuestions = 12;
   final int answeredQuestions = 34;
   late TabController _tabController;
@@ -117,46 +118,55 @@ class _ProfileViewState extends State<ProfileView> with SingleTickerProviderStat
                             // ),
                           ],
                         )
-                      : Column(
-                          children: [
-                            TabBar(
-                              controller: _tabController,
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              indicatorColor: Colors.black,
-                              indicatorWeight: 2,
-                              labelColor: Colors.black,
-                              unselectedLabelColor: Colors.grey,
-                              labelStyle: SurAppTextStyle.fS14FW700,
-                              tabs: const [
-                                Tab(text: "Менин суроолорум"),
-                                Tab(text: "Берилген жооптор"),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            Expanded(
-                              child: TabBarView(
+                      : Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              TabBar(
                                 controller: _tabController,
-                                children: [
-                                  ListPostsWidget(
-                                    bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
-                                      ..add(
-                                        GetPostsEvent(
-                                          params: GetPostsParams(PostType.myPending),
-                                        ),
-                                      ),
-                                  ),
-                                  ListPostsWidget(
-                                    bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
-                                      ..add(
-                                        GetPostsEvent(
-                                          params: GetPostsParams(PostType.myAnswered),
-                                        ),
-                                      ),
-                                  ),
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                indicatorColor: Colors.black,
+                                indicatorWeight: 2,
+                                labelColor: Colors.black,
+                                unselectedLabelColor: Colors.grey,
+                                labelStyle: SurAppTextStyle.fS14FW700,
+                                tabs: const [
+                                  Tab(text: "Менин суроолорум"),
+                                  Tab(text: "Берилген жооптор"),
                                 ],
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 16),
+                              Expanded(
+                                child: TabBarView(
+                                  controller: _tabController,
+                                  children: [
+                                    ListPostsWidget(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      bloc: GetPostsBloc(
+                                          getPostsUsecase: widget.postsUscase)
+                                        ..add(
+                                          GetPostsEvent(
+                                              params: GetPostsParams(
+                                                  PostType.myPending)),
+                                        ),
+                                    ),
+                                    ListPostsWidget(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      bloc: GetPostsBloc(
+                                          getPostsUsecase: widget.postsUscase)
+                                        ..add(
+                                          GetPostsEvent(
+                                              params: GetPostsParams(
+                                                  PostType.myAnswered)),
+                                        ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
 
                   // ListTile(
