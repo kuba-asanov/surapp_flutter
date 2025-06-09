@@ -11,18 +11,10 @@ Future<void> showUstazPicker(
   ValueChanged<UserModel>? onSelect,
   required int selectedId,
 }) {
-  final mediaQuery = MediaQuery.of(context);
-  final screenPadding = mediaQuery.padding.vertical;
-  final screenHeight = mediaQuery.size.height;
-
-  return CustomBottomSheet.showStaticBottomSheet<void>(
+  return CustomBottomSheet.showScrollBottomSheet<void>(
     context,
-    showCloseButton: true,
-    title: "Устаздар",
-    fixedHeight: screenHeight -
-        kBottomNavigationBarHeight -
-        kToolbarHeight -
-        screenPadding,
+    // showCloseButton: true,
+    title: "",
     child: DiScopeBuilder(
       createModule: UstazPickerDiModule.new,
       builder: (_, module) {

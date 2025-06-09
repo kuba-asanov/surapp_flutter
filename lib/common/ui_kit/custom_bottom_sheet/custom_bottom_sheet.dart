@@ -72,7 +72,7 @@ class CustomBottomSheet {
     String? description,
     bool withoutTitleAndClose = false,
   }) {
-    return showModalBottomSheet(
+    return showModalBottomSheet<T>(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(12)),

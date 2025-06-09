@@ -13,7 +13,7 @@ class ResizeIndicator extends StatelessWidget {
           Center(
             child: Container(
               decoration: BoxDecoration(
-                color: AppColorScheme.onSupplementary,
+                color: AppColorScheme.lightGray,
                 borderRadius: BorderRadius.circular(5),
               ),
               width: 36,

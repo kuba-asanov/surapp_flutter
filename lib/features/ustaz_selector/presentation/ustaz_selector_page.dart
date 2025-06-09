@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/ui_kit/app_color_scheme.dart';
 import 'package:surapp_flutter/common/ui_kit/app_text_styles.dart';
+import 'package:surapp_flutter/common/ui_kit/custom_bottom_sheet/custom_bottom_sheet.dart';
+import 'package:surapp_flutter/common/ui_kit/resize_indicator.dart';
 import 'package:surapp_flutter/common/ui_kit/search_field/search_field.dart';
 import 'package:surapp_flutter/common/ui_kit/text_styles.dart';
-import 'package:surapp_flutter/common/widgets/loaders/loader_container.dart';
 import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
 import 'package:surapp_flutter/features/ustaz_selector/presentation/bloc/ustaz_selector_bloc.dart';
 
@@ -59,25 +60,39 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
       builder: (context, state) {
         final reciters = state.reciters;
 
-        return SafeArea(
-          child: Ink(
-            color: AppColorScheme.onSupplementary,
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: SearchField(
-                    controller: _searchController,
-                    placeholder: "Поиск",
-                    onChanged: (text) =>
-                        widget.bloc.add(GetRecitersEvent(query: text)),
+        return Container(
+          height: CustomBottomSheet.getMaxHeight(context),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ResizeIndicator(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  "Устаздар",
+                  style: AppTextStyles.heading3(
+                    AppColorScheme.secondary,
                   ),
                 ),
-                const SizedBox(height: 16),
-                LoaderContainer(
-                  isLoading: state.isLoading,
-                  child: state.reciters.isEmpty
+              ),
+              SearchField(
+                controller: _searchController,
+                placeholder: "Поиск",
+                onChanged: (text) =>
+                    widget.bloc.add(GetRecitersEvent(query: text)),
+              ),
+              const SizedBox(height: 16),
+              state.isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : state.reciters.isEmpty
                       ? const _Empty()
                       : Expanded(
                           child: ListView.builder(
@@ -85,7 +100,6 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                                   ScrollViewKeyboardDismissBehavior.onDrag,
                               itemCount: state.reciters.length,
                               controller: _scrollController,
-                              shrinkWrap: true,
                               itemBuilder: (_, index) {
                                 final reciter = reciters[index];
                                 final name = [
@@ -101,7 +115,7 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                                   },
                                   child: Container(
                                     margin: EdgeInsets.only(bottom: 12),
-                                    padding: EdgeInsets.all(12),
+                                    padding: EdgeInsets.all(8),
                                     decoration: BoxDecoration(
                                       color: Color(0xFFF2F2F7),
                                       borderRadius: BorderRadius.circular(16),
@@ -114,23 +128,20 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                                               NetworkImage(reciter.avatarUrl),
                                         ),
                                         SizedBox(width: 12),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(name,
-                                                  style: SurAppTextStyle
-                                                      .fS15FW600),
-                                              Text(
-                                                "@${reciter.username}",
-                                                style: SurAppTextStyle.fS14FW500
-                                                    .copyWith(
-                                                        color:
-                                                            Color(0xFFAEAEB2)),
-                                              ),
-                                            ],
-                                          ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(name,
+                                                style:
+                                                    SurAppTextStyle.fS15FW600),
+                                            Text(
+                                              "@${reciter.username}",
+                                              style: SurAppTextStyle.fS14FW500
+                                                  .copyWith(
+                                                      color: Color(0xFFAEAEB2)),
+                                            ),
+                                          ],
                                         ),
                                         if (reciter.id == widget.selectedId)
                                           Container(
@@ -148,9 +159,7 @@ class _UstazSelectorPageState extends State<UstazSelectorPage> {
                                 );
                               }),
                         ),
-                )
-              ],
-            ),
+            ],
           ),
         );
       },

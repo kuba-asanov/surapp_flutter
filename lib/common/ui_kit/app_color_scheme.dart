@@ -60,4 +60,6 @@ class AppColorScheme {
   static Color get onBackground => const Color(0xFF178D9E);
 
   static Color get onBackground2 => const Color(0xFF888888);
+
+  static Color get lightGray => const Color(0xFFE2E2E2);
 }

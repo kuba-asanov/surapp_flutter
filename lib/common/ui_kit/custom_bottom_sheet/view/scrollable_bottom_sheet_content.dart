@@ -6,7 +6,7 @@ class ScrollableBottomSheetContent extends StatelessWidget {
     required this.title,
     this.withIndicator = true,
     required this.showCloseButton,
-    required this.child,
+    this.child,
     this.description,
     this.withoutTitleAndClose = false,
   });
@@ -14,7 +14,7 @@ class ScrollableBottomSheetContent extends StatelessWidget {
   final String title;
   final bool withIndicator;
   final bool showCloseButton;
-  final Widget child;
+  final Widget? child;
   final String? description;
   final bool withoutTitleAndClose;
 
@@ -24,17 +24,17 @@ class ScrollableBottomSheetContent extends StatelessWidget {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
           color: AppColorScheme.onSupplementary,
         ),
-        child: ListView(
-          children: [
-            BottomSheetAppBar(
-              title: title,
-              withIndicator: withIndicator,
-              showCloseButton: showCloseButton,
-              withoutTitleAndClose: withoutTitleAndClose,
-              description: description,
+        child: child ??
+            ListView(
+              children: [
+                BottomSheetAppBar(
+                  title: title,
+                  withIndicator: withIndicator,
+                  showCloseButton: showCloseButton,
+                  withoutTitleAndClose: withoutTitleAndClose,
+                  description: description,
+                ),
+              ],
             ),
-            child,
-          ],
-        ),
       );
 }
