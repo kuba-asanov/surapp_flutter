@@ -1,4 +1,5 @@
 {
   "dart.flutterSdkPath": ".fvm/versions/3.32.1",
   "dart.lineLength": 80,
+  "java.configuration.updateBuildConfiguration": "interactive",
 }
