@@ -9,16 +9,17 @@ part 'get_categories_state.dart';
 part 'get_categories_bloc.freezed.dart';
 
 class GetCategoriesBloc extends Bloc<GetCategoriesEvent, GetCategoriesState> {
-  GetCategoriesBloc({required  GetCategoriesUsecase usercase
-}) :_usercase=usercase, super(const GetCategoriesState.initial()) {
-    on<GetCategoriesEvent>((event, emit)async {
-       emit(GetCategoriesLoading());
+  GetCategoriesBloc({required GetCategoriesUsecase usercase})
+      : _usercase = usercase,
+        super(const GetCategoriesState.initial()) {
+    on<GetCategoriesEvent>((event, emit) async {
+      emit(GetCategoriesLoading());
 
       final result = await _usercase.invoke(GetCategoriesParams());
 
       result.fold(
         onFailure: (failure) {
-          emit(GetCategoriesError(errorMessage: failure.message));
+          emit(GetCategoriesFetched(data: []));
         },
         onSuccess: (data) {
           emit(GetCategoriesFetched(data: data.data));

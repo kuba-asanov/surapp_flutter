@@ -284,7 +284,7 @@ class SendQuestionRoute extends PageRouteInfo<void> {
 class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
     Key? key,
-    required dynamic Function(bool) onResult,
+    dynamic Function(bool)? onResult,
     List<PageRouteInfo>? children,
   }) : super(
          SignInRoute.name,
@@ -297,18 +297,20 @@ class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<SignInRouteArgs>();
+      final args = data.argsAs<SignInRouteArgs>(
+        orElse: () => const SignInRouteArgs(),
+      );
       return SignInPage(key: args.key, onResult: args.onResult);
     },
   );
 }
 
 class SignInRouteArgs {
-  const SignInRouteArgs({this.key, required this.onResult});
+  const SignInRouteArgs({this.key, this.onResult});
 
   final Key? key;
 
-  final dynamic Function(bool) onResult;
+  final dynamic Function(bool)? onResult;
 
   @override
   String toString() {

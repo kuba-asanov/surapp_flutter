@@ -1,19 +1,22 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:surapp_flutter/common/widgets/logout_dialog.dart';
-import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
 import 'package:surapp_flutter/features/home_feature/domain/usecases/get_posts_usecase.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_posts/get_posts_bloc.dart';
-import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 
 import '../../../../common/ui_kit/text_styles.dart';
 import '../widgets/list_posts_widget.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key, required this.bloc, required this.postsUscase});
-  final UserBloc bloc;
+  const ProfileView({
+    super.key,
+    required this.user,
+    required this.onLogout,
+    required this.postsUscase,
+  });
+
+  final UserModel user;
+  final VoidCallback onLogout;
   final GetPostsUsecase postsUscase;
 
   @override
@@ -54,165 +57,136 @@ class _ProfileViewState extends State<ProfileView>
                   return const LogOutDialog();
                 },
               );
-              if (resp != null) {
-                if (resp == true) {
-                  widget.bloc.add(LogoutUserEvent());
-                }
+              if (resp == true) {
+                widget.onLogout();
               }
             },
           ),
         ],
       ),
-      body: BlocConsumer<UserBloc, UserState>(
-        bloc: widget.bloc,
-        listener: (context, state) {
-          if (state.status.isLogedOut) {
-            context.router.replace(NavigationRoute());
-          }
-        },
-        builder: (context, state) {
-          if (state.status.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state.status.isFailure) {
-            return Center(
-              child: Text(
-                "state.errorMessage",
-                style: const TextStyle(color: Colors.red),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        child: Column(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s', // Random avatar
               ),
-            );
-          } else if (state.status.isLoaded) {
-            final user = state.user;
-            return Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_kSSoomJ9hiFXmiF2RdZlwx72Y23XsT6iwQ&s', // Random avatar
-                    ),
-                  ),
-                  SizedBox(height: 16),
+            ),
+            SizedBox(height: 16),
 
-                  Text(
-                    user?.username ?? '',
-                    style: SurAppTextStyle.fS18FW600,
-                  ),
-                  SizedBox(height: 24),
-                  user?.isUstaz ?? false
-                      ? Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.question_answer),
-                              title: Text('Менин жоопторум'),
-                            ),
-                            // Flexible(
-                            //   child: ListPostsWidget(
-                            //     bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
-                            //       ..add(
-                            //         GetPostsEvent(
-                            //           params: GetPostsParams(PostType.myAnsweredForReciter),
-                            //         ),
-                            //       ),
-                            //   ),
-                            // ),
+            Text(
+              widget.user.username,
+              style: SurAppTextStyle.fS18FW600,
+            ),
+            SizedBox(height: 24),
+            widget.user.isUstaz
+                ? Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.question_answer),
+                        title: Text('Менин жоопторум'),
+                      ),
+                      // Flexible(
+                      //   child: ListPostsWidget(
+                      //     bloc: GetPostsBloc(getPostsUsecase: widget.postsUscase)
+                      //       ..add(
+                      //         GetPostsEvent(
+                      //           params: GetPostsParams(PostType.myAnsweredForReciter),
+                      //         ),
+                      //       ),
+                      //   ),
+                      // ),
+                    ],
+                  )
+                : Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        TabBar(
+                          controller: _tabController,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorColor: Colors.black,
+                          indicatorWeight: 2,
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          labelStyle: SurAppTextStyle.fS14FW700,
+                          tabs: const [
+                            Tab(text: "Менин суроолорум"),
+                            Tab(text: "Берилген жооптор"),
                           ],
-                        )
-                      : Expanded(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                        ),
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
                             children: [
-                              TabBar(
-                                controller: _tabController,
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                indicatorColor: Colors.black,
-                                indicatorWeight: 2,
-                                labelColor: Colors.black,
-                                unselectedLabelColor: Colors.grey,
-                                labelStyle: SurAppTextStyle.fS14FW700,
-                                tabs: const [
-                                  Tab(text: "Менин суроолорум"),
-                                  Tab(text: "Берилген жооптор"),
-                                ],
+                              ListPostsWidget(
+                                physics: const NeverScrollableScrollPhysics(),
+                                bloc: GetPostsBloc(
+                                    getPostsUsecase: widget.postsUscase)
+                                  ..add(
+                                    GetPostsEvent(
+                                        params:
+                                            GetPostsParams(PostType.myPending)),
+                                  ),
                               ),
-                              const SizedBox(height: 16),
-                              Expanded(
-                                child: TabBarView(
-                                  controller: _tabController,
-                                  children: [
-                                    ListPostsWidget(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      bloc: GetPostsBloc(
-                                          getPostsUsecase: widget.postsUscase)
-                                        ..add(
-                                          GetPostsEvent(
-                                              params: GetPostsParams(
-                                                  PostType.myPending)),
-                                        ),
-                                    ),
-                                    ListPostsWidget(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      bloc: GetPostsBloc(
-                                          getPostsUsecase: widget.postsUscase)
-                                        ..add(
-                                          GetPostsEvent(
-                                              params: GetPostsParams(
-                                                  PostType.myAnswered)),
-                                        ),
-                                    ),
-                                  ],
-                                ),
+                              ListPostsWidget(
+                                physics: const NeverScrollableScrollPhysics(),
+                                bloc: GetPostsBloc(
+                                    getPostsUsecase: widget.postsUscase)
+                                  ..add(
+                                    GetPostsEvent(
+                                        params: GetPostsParams(
+                                            PostType.myAnswered)),
+                                  ),
                               ),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
 
-                  // ListTile(
-                  //   leading: Icon(Icons.logout, color: Colors.red),
-                  //   title: Text('Чыгуу',
-                  //       style: TextStyle(color: Colors.red, fontSize: 16)),
-                  //   onTap: () async {
-                  //     final resp = await showGeneralDialog(
-                  //       context: context,
-                  //       barrierDismissible: true,
-                  //       barrierLabel: 'LogOutLite',
-                  //       pageBuilder: (context, anim1, anim2) {
-                  //         return const LogOutDialog();
-                  //       },
-                  //     );
-                  //     if (resp != null) {
-                  //       if (resp == true) {
-                  //         log("loggedout");
-                  //         widget.bloc.add(LogoutUserEvent());
+            // ListTile(
+            //   leading: Icon(Icons.logout, color: Colors.red),
+            //   title: Text('Чыгуу',
+            //       style: TextStyle(color: Colors.red, fontSize: 16)),
+            //   onTap: () async {
+            //     final resp = await showGeneralDialog(
+            //       context: context,
+            //       barrierDismissible: true,
+            //       barrierLabel: 'LogOutLite',
+            //       pageBuilder: (context, anim1, anim2) {
+            //         return const LogOutDialog();
+            //       },
+            //     );
+            //     if (resp != null) {
+            //       if (resp == true) {
+            //         log("loggedout");
+            //         widget.bloc.add(LogoutUserEvent());
 
-                  //         // ignore: use_build_context_synchronously
-                  //         // context.read<LoginBloc>().add(const LoginEvent.logOut());
-                  //       }
-                  //     }
-                  //   },
-                  // ),
+            //         // ignore: use_build_context_synchronously
+            //         // context.read<LoginBloc>().add(const LoginEvent.logOut());
+            //       }
+            //     }
+            //   },
+            // ),
 
-                  // Delete account button
-                  // ListTile(
-                  //   leading:
-                  //       Icon(Icons.delete_forever, color: Colors.redAccent),
-                  //   title: Text('Аккаунтту өчүрүү',
-                  //       style:
-                  //           TextStyle(color: Colors.redAccent, fontSize: 16)),
-                  //   onTap: () {
-                  //     showDeleteBottomSheet(context: context);
-                  //   },
-                  // ),
-                ],
-              ),
-            );
-          }
-          return const Center(
-            child: Text('Unknown state'),
-          );
-        },
+            // Delete account button
+            // ListTile(
+            //   leading:
+            //       Icon(Icons.delete_forever, color: Colors.redAccent),
+            //   title: Text('Аккаунтту өчүрүү',
+            //       style:
+            //           TextStyle(color: Colors.redAccent, fontSize: 16)),
+            //   onTap: () {
+            //     showDeleteBottomSheet(context: context);
+            //   },
+            // ),
+          ],
+        ),
       ),
     );
   }

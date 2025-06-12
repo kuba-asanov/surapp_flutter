@@ -3,18 +3,35 @@ import 'dart:async';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:surapp_flutter/core/storage/secure_storage.dart';
 import 'package:surapp_flutter/features/ask_question_feature/domain/models/user_model.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/data/mappers/login_data_mapper.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/data/models/sign_in_request.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/domain/models/login_data.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/domain/usecases/get_some_data_usecase.dart';
 
 import '../domain/auth_token_repository.dart';
 import 'data_sources/remote/get_user_remote_data_source.dart';
 
 class AuthTokenRepositoryImpl implements AuthTokenRepository {
-  AuthTokenRepositoryImpl(
-      {required this.secureStorage,
-      required GetUserRemoteDataSource remoteDataSource})
-      : _remoteDataSource = remoteDataSource;
+  AuthTokenRepositoryImpl({
+    required this.secureStorage,
+    required UserRemoteDataSource remoteDataSource,
+  }) : _remoteDataSource = remoteDataSource;
 
   final SecureStorage secureStorage;
-  final GetUserRemoteDataSource _remoteDataSource;
+  final UserRemoteDataSource _remoteDataSource;
+
+  @override
+  Future<LoginData> signIn(SignInParams params) async {
+    final response = await _remoteDataSource.signIn(
+      SignInRequest(
+        params.username,
+        params.password,
+      ),
+    );
+    await secureStorage.setValue(
+        SecureStorageKey.authToken, response.accessToken);
+    return response.toEntity();
+  }
 
   @override
   Future<bool> isAuthorized() async {

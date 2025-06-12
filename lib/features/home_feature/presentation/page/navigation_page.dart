@@ -32,9 +32,8 @@ class _NavigationPageState extends State<NavigationPage> {
     return DiScopeBuilder(
       createModule: HomeDiModule.new,
       builder: (context, module) {
-        final bloc = module.get<UserBloc>()..add(GetUserEvent());
         return BlocBuilder<UserBloc, UserState>(
-          bloc: bloc,
+          bloc: module.get<UserBloc>(),
           builder: (context, state) {
             final isUstaz = state.user?.role == 1;
             return AutoTabsScaffold(

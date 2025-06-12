@@ -10,16 +10,21 @@ import 'package:surapp_flutter/common/widgets/buttons/app_button.dart';
 import 'package:surapp_flutter/core/navigation/auto_router.dart';
 import 'package:surapp_flutter/core/utils/ui_commands_consumer.dart';
 import 'package:surapp_flutter/features/authorization/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({
     super.key,
     required this.bloc,
-    required this.onResult,
+    required this.userBloc,
+    this.onResult,
+    this.notGuard = false,
   });
 
   final SignInBloc bloc;
-  final Function(bool) onResult;
+  final UserBloc userBloc;
+  final Function(bool)? onResult;
+  final bool notGuard;
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -75,7 +80,14 @@ class _SignInScreenState extends State<SignInScreen> {
         listenWhen: (p, c) => p.status != c.status,
         listener: (context, state) {
           if (state.status.isLoaded) {
-            widget.onResult(true);
+            final onResult = widget.onResult;
+            if (onResult == null) {
+              context.router.pop();
+            } else {
+              onResult(true);
+            }
+
+            widget.userBloc.add(GetUserEvent());
             // context.router.replaceAll([NavigationRoute()]);
           }
         },

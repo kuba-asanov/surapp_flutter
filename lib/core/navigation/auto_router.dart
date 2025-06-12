@@ -36,7 +36,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: NavigationRoute.page,
           initial: true,
-          guards: [AuthGuard(secureStorage: secureStorage)],
           children: [
             AutoRoute(
               page: EmptyFirstRoute.page,
@@ -62,6 +61,9 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SignUpRoute.page),
         AutoRoute(page: CreatePasswordRoute.page),
         AutoRoute(page: AddPhoneRoute.page),
-        AutoRoute(page: SendQuestionRoute.page),
+        AutoRoute(
+          page: SendQuestionRoute.page,
+          guards: [AuthGuard(secureStorage: secureStorage)],
+        ),
       ];
 }

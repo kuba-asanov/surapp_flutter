@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 // import 'package:go_router/go_router.dart';
 import 'package:take_it/take_it.dart';
 
-import '../../di/sign_in_di_module.dart';
 import '../bloc/sign_in_bloc.dart';
 import 'sign_in_screen.dart';
 
@@ -27,18 +27,18 @@ import 'sign_in_screen.dart';
 class SignInPage extends StatelessWidget {
   const SignInPage({
     super.key,
-    required this.onResult,
+     this.onResult,
   });
 
-  final Function(bool) onResult;
+  final Function(bool)? onResult;
 
   @override
   Widget build(BuildContext context) {
     return DiScopeBuilder(
-      createModule: SignInDiModule.new,
       builder: (context, module) {
         return SignInScreen(
           bloc: module.get<SignInBloc>(),
+          userBloc: module.get<UserBloc>(),
           onResult: onResult,
         );
       },

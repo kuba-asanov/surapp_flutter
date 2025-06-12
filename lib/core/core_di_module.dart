@@ -17,8 +17,9 @@ import 'package:surapp_flutter/features/authorization/auth_token/data/data_sourc
 import 'package:surapp_flutter/features/authorization/auth_token/domain/auth_token_repository.dart';
 import 'package:surapp_flutter/features/authorization/auth_token/domain/check_is_authorized_usecase.dart';
 import 'package:surapp_flutter/features/authorization/auth_token/domain/get_user_usecase.dart';
-import 'package:surapp_flutter/features/authorization/auth_token/domain/initial_auth_status.dart';
 import 'package:surapp_flutter/features/authorization/auth_token/domain/logout_usecase.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/domain/usecases/get_some_data_usecase.dart';
+import 'package:surapp_flutter/features/authorization/sign_in_feature/presentation/bloc/sign_in_bloc.dart';
 import 'package:surapp_flutter/features/home_feature/presentation/bloc/get_user/user_bloc.dart';
 import 'package:surapp_flutter/features/settings/data/settings_service.dart';
 import 'package:surapp_flutter/features/settings/domain/usecases/update_locale_usecase.dart';
@@ -104,8 +105,8 @@ class CoreDiModule extends DiModuleAsync {
       ///
       ///
       ///
-      ..registerFactory<GetUserRemoteDataSource>(
-        () => GetUserRemoteDataSourceImpl(
+      ..registerFactory<UserRemoteDataSource>(
+        () => UserRemoteDataSourceImpl(
           restClientService: get<AuthRestClient>(),
         ),
       )
@@ -115,20 +116,35 @@ class CoreDiModule extends DiModuleAsync {
       ..registerFactory<UpdateLocaleUsecase>(
         () => UpdateLocaleUsecase(get<SettingsService>()),
       )
-      ..registerFactory<AuthTokenRepository>(
+      ..registerLazySingleton<AuthTokenRepository>(
         () => AuthTokenRepositoryImpl(
             secureStorage: get<SecureStorage>(),
-            remoteDataSource: get<GetUserRemoteDataSource>()),
+            remoteDataSource: get<UserRemoteDataSource>()),
       )
       ..registerFactory(
           () => CheckIsAuthorizedUseCase(get<AuthTokenRepository>()))
-      ..registerSingletonAsync<InitialAuthStatus>(() async {
-        final isAuth = await get<CheckIsAuthorizedUseCase>().isAuthorized;
-        return isAuth ? InitialAuthStatus.auth : InitialAuthStatus.unauth;
-      })
+      // ..registerSingletonAsync<InitialAuthStatus>(() async {
+      //   final isAuth = await get<CheckIsAuthorizedUseCase>().isAuthorized;
+      //   return isAuth ? InitialAuthStatus.auth : InitialAuthStatus.unauth;
+      // })
       ..registerFactory<GetUserUseCase>(
         () => GetUserUseCase(
           get<AuthTokenRepository>(),
+        ),
+      )
+
+      // Domain
+      //
+      ..registerFactory<SignInUseCase>(
+        () => SignInUseCase(
+          get<AuthTokenRepository>(),
+        ),
+      )
+      // Presentation
+      //
+      ..registerFactory<SignInBloc>(
+        () => SignInBloc(
+          signInUsecase: get<SignInUseCase>(),
         ),
       )
       ..registerFactory<LogoutUseCase>(
@@ -142,7 +158,7 @@ class CoreDiModule extends DiModuleAsync {
         UserBloc(
           getUserUsecase: get<GetUserUseCase>(),
           logoutUseCase: get<LogoutUseCase>(),
-        ),
+        )..add(GetUserEvent()),
       );
 
     /// Presentation

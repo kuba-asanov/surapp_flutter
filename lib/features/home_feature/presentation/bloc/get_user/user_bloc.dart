@@ -22,7 +22,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   })  : _getUserUsecase = getUserUsecase,
         _logoutUseCase = logoutUseCase,
         super(UserState.initial()) {
-    on<UserEvent>((event, emit) async {
+    on<GetUserEvent>((event, emit) async {
       emit(state.copyWith(status: UserStatus.loading));
 
       final result = await _getUserUsecase.invoke(GetUserParams());
@@ -52,7 +52,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           emit(state.copyWith(status: UserStatus.failure));
         },
         onSuccess: (_) {
-          emit(state.copyWith(status: UserStatus.logedOut));
+          emit(UserState(status: UserStatus.logedOut));
         },
       );
     });
